@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.percepta.mgrankvi.floorplanner.gwt.client.CommandObject;
 import org.percepta.mgrankvi.floorplanner.gwt.client.InfoButton;
+import org.percepta.mgrankvi.floorplanner.gwt.client.geometry.GeometryUtil;
 import org.percepta.mgrankvi.floorplanner.gwt.client.geometry.Point;
 import org.percepta.mgrankvi.floorplanner.gwt.client.paint.GridUtils;
 import org.percepta.mgrankvi.floorplanner.gwt.client.room.CRoom;
@@ -246,7 +247,7 @@ public class CFloorGrid extends Widget implements ClickHandler, MouseDownHandler
 					final CommandObject cmd = new CommandObject(value);
 					switch (cmd.getCommand()) {
 					case MOVE_TO:
-						room.setPosition(cmd.getPosition());
+						room.setPosition(GeometryUtil.combine(origo, cmd.getPosition()));
 						typeAndEdit.setValue("");
 						break;
 					case MOVE_BY:
