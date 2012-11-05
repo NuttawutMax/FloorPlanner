@@ -5,22 +5,18 @@ import java.util.List;
 import org.percepta.mgrankvi.floorplanner.gwt.client.geometry.Line;
 import org.percepta.mgrankvi.floorplanner.gwt.client.geometry.Point;
 
-import com.google.gwt.canvas.client.Canvas;
+import com.google.gwt.canvas.dom.client.Context2d;
 import com.google.gwt.user.client.ui.Widget;
 
 public abstract class VisualItem extends Widget {
 
-	public abstract void paint(final Canvas canvas);
+	public abstract void paint(final Context2d context);
 
 	public abstract boolean pointInObject(final int x, final int y);
 
 	public Double getArea(final Point p1, final Point p2, final Point p3) {
 		return Math.abs((p1.getX() * p2.getY() + p2.getX() * p3.getY() + p3.getX() * p1.getY() - p1.getX() * p3.getY() - p3.getX() * p2.getY() - p2.getX()
 				* p1.getY()) / 2.0);
-	}
-
-	public Point combine(final Point p1, final Point p2) {
-		return new Point(p1.getX() + p2.getX(), p1.getY() + p2.getY());
 	}
 
 	public int minX(final List<Point> points) {

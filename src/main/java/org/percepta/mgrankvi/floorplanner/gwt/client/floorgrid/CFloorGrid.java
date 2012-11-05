@@ -8,6 +8,7 @@ import java.util.Map;
 import org.percepta.mgrankvi.floorplanner.gwt.client.CommandObject;
 import org.percepta.mgrankvi.floorplanner.gwt.client.InfoButton;
 import org.percepta.mgrankvi.floorplanner.gwt.client.geometry.Point;
+import org.percepta.mgrankvi.floorplanner.gwt.client.paint.GridUtils;
 import org.percepta.mgrankvi.floorplanner.gwt.client.room.CRoom;
 import org.percepta.mgrankvi.floorplanner.gwt.client.room.RoomState;
 
@@ -52,6 +53,7 @@ public class CFloorGrid extends Widget implements ClickHandler, MouseDownHandler
 
 	private InfoButton hoverElement = null;
 
+	private final int gridSize = 50;
 	private int offsetX = 0;
 	private int offsetY = 0;
 	private final Point origo = new Point(0, 0);
@@ -88,7 +90,6 @@ public class CFloorGrid extends Widget implements ClickHandler, MouseDownHandler
 		final Style editStyle = typeAndEdit.getElement().getStyle();
 		typeAndEdit.addChangeHandler(this);
 		editStyle.setPosition(Position.RELATIVE);
-		// editStyle.setTop(0.0, Style.Unit.PX);
 		editStyle.setLeft(0.0, Style.Unit.PX);
 		typeAndEdit.setWidth(Window.getClientWidth() + "px");
 
@@ -101,54 +102,27 @@ public class CFloorGrid extends Widget implements ClickHandler, MouseDownHandler
 
 	public void addRoom(final RoomState roomState) {
 		if (roomState.id != null && !roomMap.containsKey(roomState.id)) {
-			// VConsole.log("Adding room " + roomState.id);
 			final CRoom room = new CRoom(roomState.id, roomState.getPoints(), roomState.getPosition());
 			rooms.add(room);
 			roomMap.put(roomState.id, room);
-			room.paint(canvas);
+			room.paint(canvas.getContext2d());
 		}
 	}
 
 	public void paintRooms() {
 		for (final CRoom room : rooms) {
-			room.paint(canvas);
+			room.paint(canvas.getContext2d());
 		}
 	}
 
 	private void paint() {
 		final Context2d context = canvas.getContext2d();
-		int x = offsetX - 50;
-		int y = offsetY - 50;
-		context.setStrokeStyle("gray");
-		context.beginPath();
-		context.strokeRect(0, 0, Window.getClientWidth(), Window.getClientHeight() - typeAndEdit.getOffsetHeight() - 4);
 
-		do {
-			do {
-				context.strokeRect(x, y, 1, 1);
-				x += 50;
-			} while (x < Window.getClientWidth());
-			y += 50;
-			x = offsetX - 50;
-		} while (y < Window.getClientHeight());
-		context.closePath();
-		context.stroke();
-
-		// Mark grid 0,0
-		context.setStrokeStyle("RED");
-		context.beginPath();
-		// context.strokeRect(origo.getX(), origo.getY(), 1, 1);
-		context.moveTo(origo.getX(), origo.getY() - 4);
-		context.lineTo(origo.getX(), origo.getY() + 4);
-		context.moveTo(origo.getX() - 4, origo.getY());
-		context.lineTo(origo.getX() + 4, origo.getY());
-		context.closePath();
-		context.stroke();
-
+		GridUtils.paintGrid(context, new Point(offsetX, offsetY), gridSize, origo);
 		paintRooms();
 
 		if (hoverElement != null) {
-			hoverElement.paint(canvas);
+			hoverElement.paint(canvas.getContext2d());
 		}
 	}
 

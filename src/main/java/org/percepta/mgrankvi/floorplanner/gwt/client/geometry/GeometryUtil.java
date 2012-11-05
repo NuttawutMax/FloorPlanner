@@ -21,4 +21,8 @@ public class GeometryUtil {
 
 		return Math.sqrt(x_diff * x_diff + y_diff * y_diff);
 	}
+
+	public static Point combine(final Point p1, final Point p2) {
+		return new Point(p1.getX() + p2.getX(), p1.getY() + p2.getY());
+	}
 }

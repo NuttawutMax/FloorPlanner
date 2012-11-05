@@ -4,7 +4,6 @@ import org.percepta.mgrankvi.floorplanner.gwt.client.geometry.Point;
 import org.percepta.mgrankvi.floorplanner.gwt.client.geometry.Rectangle;
 import org.percepta.mgrankvi.floorplanner.gwt.client.room.CRoom;
 
-import com.google.gwt.canvas.client.Canvas;
 import com.google.gwt.canvas.dom.client.Context2d;
 
 public class InfoButton extends VisualItem {
@@ -28,10 +27,8 @@ public class InfoButton extends VisualItem {
 	}
 
 	@Override
-	public void paint(final Canvas canvas) {
+	public void paint(final Context2d context) {
 		offset = new Point(maxX(room.getPoints()) + room.getPositionX() - OFFSET_X, minY(room.getPoints()) + room.getPositionY() + OFFSET_Y);
-
-		final Context2d context = canvas.getContext2d();
 
 		context.setStrokeStyle("gray");
 		context.beginPath();

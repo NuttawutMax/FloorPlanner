@@ -4,10 +4,10 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.percepta.mgrankvi.floorplanner.gwt.client.VisualItem;
+import org.percepta.mgrankvi.floorplanner.gwt.client.geometry.GeometryUtil;
 import org.percepta.mgrankvi.floorplanner.gwt.client.geometry.Line;
 import org.percepta.mgrankvi.floorplanner.gwt.client.geometry.Point;
 
-import com.google.gwt.canvas.client.Canvas;
 import com.google.gwt.canvas.dom.client.Context2d;
 import com.google.gwt.canvas.dom.client.CssColor;
 
@@ -58,8 +58,7 @@ public class CRoom extends VisualItem {
 	}
 
 	@Override
-	public void paint(final Canvas canvas) {
-		final Context2d context = canvas.getContext2d();
+	public void paint(final Context2d context) {
 
 		final Point first = points.getFirst();
 		if (selected) {
@@ -118,12 +117,16 @@ public class CRoom extends VisualItem {
 
 	public Point selectedPoint(final int x, final int y) {
 		for (final Point point : points) {
-			final int pointXMin = position.getX() + point.getX() - 2;
-			final int pointYMin = position.getY() + point.getY() - 2;
-			if (x > pointXMin && x < pointXMin + 5 && y > pointYMin && y < pointYMin + 5) {
+			final int pointXMin = position.getX() + point.getX() - 4;
+			final int pointYMin = position.getY() + point.getY() - 4;
+			if (x > pointXMin && x < pointXMin + 8 && y > pointYMin && y < pointYMin + 8) {
 				return point;
 			}
 		}
 		return null;
+	}
+
+	private Point combine(final Point p1, final Point p2) {
+		return GeometryUtil.combine(p1, p2);
 	}
 }
