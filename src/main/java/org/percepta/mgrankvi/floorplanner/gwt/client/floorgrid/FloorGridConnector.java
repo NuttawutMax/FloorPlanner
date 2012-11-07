@@ -70,6 +70,8 @@ public class FloorGridConnector extends AbstractComponentConnector implements Me
 			}
 			break;
 		case OPEN_ROOM_INFO:
+			final CRoom clientRoom = getWidget().getRoom(event.getRoomId());
+			rpc.updateVisualItem(clientRoom.getId(), clientRoom.getPosition(), clientRoom.getPoints());
 			rpc.openRoomInformationWindow(event.getRoomId());
 			break;
 		}

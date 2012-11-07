@@ -6,6 +6,7 @@ import org.percepta.mgrankvi.floorplanner.gwt.client.VisualItem;
 import org.percepta.mgrankvi.floorplanner.gwt.client.geometry.GeometryUtil;
 import org.percepta.mgrankvi.floorplanner.gwt.client.geometry.Line;
 import org.percepta.mgrankvi.floorplanner.gwt.client.geometry.Point;
+import org.percepta.mgrankvi.floorplanner.gwt.client.paint.GridUtils;
 
 import com.google.gwt.canvas.dom.client.Context2d;
 import com.google.gwt.canvas.dom.client.CssColor;
@@ -39,35 +40,11 @@ public class CRoom extends VisualItem {
 
 	@Override
 	public void paint(final Context2d context) {
-
-		final Point first = points.getFirst();
 		if (selected) {
-			context.setStrokeStyle(CssColor.make("GREEN"));
+			GridUtils.paintPointToPoint(context, points, position, CssColor.make("GREEN"));
+			GridUtils.paintPointSelections(context, points, position, CssColor.make("PURPLE"));
 		} else {
-			context.setStrokeStyle(CssColor.make("BLACK"));
-		}
-
-		context.beginPath();
-		context.moveTo(position.getX() + first.getX(), position.getY() + first.getY());
-
-		for (final Point point : points) {
-			context.lineTo(position.getX() + point.getX(), position.getY() + point.getY());
-		}
-		context.lineTo(position.getX() + first.getX(), position.getY() + first.getY());
-
-		context.closePath();
-		context.stroke();
-		if (selected) {
-			context.setStrokeStyle(CssColor.make("PURPLE"));
-
-			context.beginPath();
-
-			for (final Point point : points) {
-				context.rect(position.getX() + point.getX() - 2, position.getY() + point.getY() - 2, 5, 5);
-			}
-
-			context.closePath();
-			context.stroke();
+			GridUtils.paintPointToPoint(context, points, position, CssColor.make("BLACK"));
 		}
 	}
 
