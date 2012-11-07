@@ -1,6 +1,5 @@
 package org.percepta.mgrankvi.floorplanner.gwt.client.room;
 
-import java.util.LinkedList;
 import java.util.List;
 
 import org.percepta.mgrankvi.floorplanner.gwt.client.VisualItem;
@@ -13,19 +12,12 @@ import com.google.gwt.canvas.dom.client.CssColor;
 
 public class CRoom extends VisualItem {
 
-	private final LinkedList<Point> points = new LinkedList<Point>();
-	private Point position = new Point(0, 0);
 	private boolean selected = false;
-	private final String id;
 
 	public CRoom(final String id, final List<Point> points, final Point position) {
 		this.points.addAll(points);
 		this.position = position;
 		this.id = id;
-	}
-
-	public String getId() {
-		return id;
 	}
 
 	public void setPosition(final Point position) {
@@ -43,18 +35,6 @@ public class CRoom extends VisualItem {
 
 	public boolean isSelected() {
 		return selected;
-	}
-
-	public List<Point> getPoints() {
-		return new LinkedList<Point>(points);
-	}
-
-	public int getPositionX() {
-		return position.getX();
-	}
-
-	public int getPositionY() {
-		return position.getY();
 	}
 
 	@Override

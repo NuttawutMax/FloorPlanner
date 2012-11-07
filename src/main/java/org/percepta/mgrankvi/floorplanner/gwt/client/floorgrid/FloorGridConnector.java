@@ -3,6 +3,7 @@ package org.percepta.mgrankvi.floorplanner.gwt.client.floorgrid;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.percepta.mgrankvi.floorplanner.gwt.client.room.CRoom;
 import org.percepta.mgrankvi.floorplanner.gwt.client.room.RoomState;
 
 import com.google.gwt.core.client.GWT;
@@ -61,6 +62,12 @@ public class FloorGridConnector extends AbstractComponentConnector implements Me
 			break;
 		case REMOVE_ROOM:
 			rpc.removeRoom(event.getRoomId());
+			break;
+		case UPDATE_ROOMS:
+			for (final RoomState item : getState().rooms) {
+				final CRoom clientRoom = getWidget().getRoom(item.id);
+				rpc.updateVisualItem(clientRoom.getId(), clientRoom.getPosition(), clientRoom.getPoints());
+			}
 			break;
 		case OPEN_ROOM_INFO:
 			rpc.openRoomInformationWindow(event.getRoomId());

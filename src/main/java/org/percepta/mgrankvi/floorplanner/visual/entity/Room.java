@@ -1,5 +1,6 @@
 package org.percepta.mgrankvi.floorplanner.visual.entity;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.percepta.mgrankvi.floorplanner.gwt.client.geometry.Point;
@@ -26,5 +27,9 @@ public class Room {
 
 	public void setPosition(final Point position) {
 		state.setPosition(position);
+	}
+
+	public void setPoints(final List<Point> points) {
+		state.setPoints(points);
 	}
 }

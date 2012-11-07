@@ -5,7 +5,7 @@ import org.percepta.mgrankvi.floorplanner.gwt.client.geometry.Point;
 public class CommandObject {
 
 	public enum Command {
-		INVALID_STRING, PARSE_FAILED, MOVE_TO, MOVE_BY
+		INVALID_STRING, PARSE_FAILED, MOVE_TO, MOVE_BY, SAVE
 	}
 
 	Command command = Command.INVALID_STRING;
@@ -22,6 +22,8 @@ public class CommandObject {
 					this.command = Command.MOVE_BY;
 				} else if (command.startsWith("m")) {
 					this.command = Command.MOVE_TO;
+				} else if (command.startsWith("s")) {
+					this.command = Command.SAVE;
 				}
 			} catch (final NumberFormatException nfe) {
 				this.command = Command.PARSE_FAILED;

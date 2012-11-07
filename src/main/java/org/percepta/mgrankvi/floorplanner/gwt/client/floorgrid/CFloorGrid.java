@@ -110,6 +110,14 @@ public class CFloorGrid extends Widget implements ClickHandler, MouseDownHandler
 		}
 	}
 
+	public List<CRoom> getRooms() {
+		return new LinkedList<CRoom>(rooms);
+	}
+
+	public CRoom getRoom(final String id) {
+		return roomMap.get(id);
+	}
+
 	public void paintRooms() {
 		for (final CRoom room : rooms) {
 			room.paint(canvas.getContext2d());
@@ -254,6 +262,10 @@ public class CFloorGrid extends Widget implements ClickHandler, MouseDownHandler
 						room.movePosition(cmd.getX(), cmd.getY());
 						typeAndEdit.setValue("");
 						break;
+					case SAVE:
+						fireEvent(new MenuEvent(MenuEvent.MenuEventType.UPDATE_ROOMS));
+						typeAndEdit.setValue("");
+						break;
 					case INVALID_STRING:
 						Window.alert("Command String was invalid");
 						break;
@@ -310,6 +322,15 @@ public class CFloorGrid extends Widget implements ClickHandler, MouseDownHandler
 		style.setProperty("borderStyle", "solid");
 
 		chekcForRemoveAndAddItem(rootMenu);
+
+		rootMenu.addItem(new MenuItem("Push states to server", new Command() {
+			@Override
+			public void execute() {
+				fireEvent(new MenuEvent(MenuEvent.MenuEventType.UPDATE_ROOMS));
+				contextMenu.hide();
+				contextMenu = null;
+			}
+		}));
 
 		contextMenu.setPopupPosition(x, y);
 		contextMenu.show();

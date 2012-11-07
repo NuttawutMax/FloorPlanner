@@ -49,6 +49,17 @@ public class FloorGrid extends AbstractComponent {
 		public void openRoomInformationWindow(final String id) {
 			Notification.show("Room information for: " + findRoom(id));
 		}
+
+		@Override
+		public void updateVisualItem(final String id, final Point position, final List<Point> points) {
+			for (final Room room : rooms) {
+				if (room.getId().equals(id)) {
+					room.setPosition(position);
+					room.setPoints(points);
+					break;
+				}
+			}
+		}
 	};
 
 	private Room findRoom(final String id) {

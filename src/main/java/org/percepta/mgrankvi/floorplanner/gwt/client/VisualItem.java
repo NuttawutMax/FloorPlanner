@@ -1,5 +1,6 @@
 package org.percepta.mgrankvi.floorplanner.gwt.client;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import org.percepta.mgrankvi.floorplanner.gwt.client.geometry.Line;
@@ -14,10 +15,36 @@ public abstract class VisualItem extends Widget {
 
 	public abstract boolean pointInObject(final int x, final int y);
 
-	public Double getArea(final Point p1, final Point p2, final Point p3) {
-		return Math.abs((p1.getX() * p2.getY() + p2.getX() * p3.getY() + p3.getX() * p1.getY() - p1.getX() * p3.getY() - p3.getX() * p2.getY() - p2.getX()
-				* p1.getY()) / 2.0);
+	protected String id;
+	protected final LinkedList<Point> points = new LinkedList<Point>();
+	protected Point position = new Point(0, 0);
+
+	public String getId() {
+		return id;
 	}
+
+	public int getPositionX() {
+		return position.getX();
+	}
+
+	public int getPositionY() {
+		return position.getY();
+	}
+
+	public Point getPosition() {
+		return new Point(getPositionX(), getPositionY());
+	}
+
+	public List<Point> getPoints() {
+		return new LinkedList<Point>(points);
+	}
+
+	// public Double getArea(final Point p1, final Point p2, final Point p3) {
+	// return Math.abs((p1.getX() * p2.getY() + p2.getX() * p3.getY() +
+	// p3.getX() * p1.getY() - p1.getX() * p3.getY() - p3.getX() * p2.getY() -
+	// p2.getX()
+	// * p1.getY()) / 2.0);
+	// }
 
 	public int minX(final List<Point> points) {
 		int min = Integer.MAX_VALUE;
@@ -81,27 +108,6 @@ public abstract class VisualItem extends Widget {
 	 * l1.end.getY()) and (l2.start.getX(), l2.start.getY())--(l2.end.getX(),
 	 * l2.end.getY()) intersect?
 	 */
-	// public boolean lineSegmentsIntersect(final Line l1, final Line l2) {
-	// final int d1 = computeDirection(l2.start.getX(), l2.start.getY(),
-	// l2.end.getX(), l2.end.getY(), l1.start.getX(), l1.start.getY());
-	// final int d2 = computeDirection(l2.start.getX(), l2.start.getY(),
-	// l2.end.getX(), l2.end.getY(), l1.end.getX(), l1.end.getY());
-	// final int d3 = computeDirection(l1.start.getX(), l1.start.getY(),
-	// l1.end.getX(), l1.end.getY(), l2.start.getX(), l2.start.getY());
-	// final int d4 = computeDirection(l1.start.getX(), l1.start.getY(),
-	// l1.end.getX(), l1.end.getY(), l2.end.getX(), l2.end.getY());
-	// return (((d1 > 0 && d2 < 0) || (d1 < 0 && d2 > 0)) && ((d3 > 0 && d4 < 0)
-	// || (d3 < 0 && d4 > 0)))
-	// || (d1 == 0 && isOnSegment(l2.start.getX(), l2.start.getY(),
-	// l2.end.getX(), l2.end.getY(), l1.start.getX(), l1.start.getY()))
-	// || (d2 == 0 && isOnSegment(l2.start.getX(), l2.start.getY(),
-	// l2.end.getX(), l2.end.getY(), l1.end.getX(), l1.end.getY()))
-	// || (d3 == 0 && isOnSegment(l1.start.getX(), l1.start.getY(),
-	// l1.end.getX(), l1.end.getY(), l2.start.getX(), l2.start.getY()))
-	// || (d4 == 0 && isOnSegment(l1.start.getX(), l1.start.getY(),
-	// l1.end.getX(), l1.end.getY(), l2.end.getX(), l2.end.getY()));
-	// }
-
 	public boolean lineSegmentsIntersect(final Line l1, final Line l2) {
 		final int d1 = computeDirection(l2, l1.start);
 		final int d2 = computeDirection(l2, l1.end);
