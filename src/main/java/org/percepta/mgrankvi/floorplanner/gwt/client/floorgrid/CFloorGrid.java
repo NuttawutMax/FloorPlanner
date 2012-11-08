@@ -9,6 +9,7 @@ import org.percepta.mgrankvi.floorplanner.gwt.client.CommandObject;
 import org.percepta.mgrankvi.floorplanner.gwt.client.InfoButton;
 import org.percepta.mgrankvi.floorplanner.gwt.client.geometry.GeometryUtil;
 import org.percepta.mgrankvi.floorplanner.gwt.client.geometry.Point;
+import org.percepta.mgrankvi.floorplanner.gwt.client.info.CInfoEditor;
 import org.percepta.mgrankvi.floorplanner.gwt.client.paint.GridUtils;
 import org.percepta.mgrankvi.floorplanner.gwt.client.room.CRoom;
 import org.percepta.mgrankvi.floorplanner.gwt.client.room.RoomState;
@@ -152,7 +153,12 @@ public class CFloorGrid extends Widget implements ClickHandler, MouseDownHandler
 				return;
 			}
 			if (hoverElement != null && hoverElement.pointInObject(event.getClientX(), event.getClientY())) {
-				fireEvent(new MenuEvent(MenuEvent.MenuEventType.OPEN_ROOM_INFO, hoverElement.getRoom().getId()));
+				// fireEvent(new
+				// MenuEvent(MenuEvent.MenuEventType.OPEN_ROOM_INFO,
+				// hoverElement.getRoom().getId()));
+				final CInfoEditor info = new CInfoEditor(hoverElement.getRoom());
+				info.setPopupPosition((Window.getClientWidth() / 2) - 350, (Window.getClientHeight() / 2) - 200);
+				info.show();
 			}
 			boolean selected = false;
 			for (final CRoom room : rooms) {
