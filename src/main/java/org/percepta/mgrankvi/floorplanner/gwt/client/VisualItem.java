@@ -39,12 +39,21 @@ public abstract class VisualItem extends Widget {
 		return new LinkedList<Point>(points);
 	}
 
-	// public Double getArea(final Point p1, final Point p2, final Point p3) {
-	// return Math.abs((p1.getX() * p2.getY() + p2.getX() * p3.getY() +
-	// p3.getX() * p1.getY() - p1.getX() * p3.getY() - p3.getX() * p2.getY() -
-	// p2.getX()
-	// * p1.getY()) / 2.0);
-	// }
+	public int minX() {
+		return minX(points);
+	}
+
+	public int minY() {
+		return minY(points);
+	}
+
+	public int maxX() {
+		return maxX(points);
+	}
+
+	public int maxY() {
+		return maxY(points);
+	}
 
 	public int minX(final List<Point> points) {
 		int min = Integer.MAX_VALUE;

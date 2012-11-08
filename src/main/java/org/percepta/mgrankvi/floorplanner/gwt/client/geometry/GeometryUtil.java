@@ -2,6 +2,11 @@ package org.percepta.mgrankvi.floorplanner.gwt.client.geometry;
 
 public class GeometryUtil {
 
+	public Double getArea(final Point p1, final Point p2, final Point p3) {
+		return Math.abs((p1.getX() * p2.getY() + p2.getX() * p3.getY() + p3.getX() * p1.getY() - p1.getX() * p3.getY() - p3.getX() * p2.getY() - p2.getX()
+				* p1.getY()) / 2.0);
+	}
+
 	public static Double getDirectionalCoefficient(final Point point1, final Point point2) {
 
 		return (1.0 * (point2.getY() - point1.getY())) / (point2.getX() - point1.getX());
