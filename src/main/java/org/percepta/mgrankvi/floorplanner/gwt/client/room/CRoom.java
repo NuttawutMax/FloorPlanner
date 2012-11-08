@@ -6,7 +6,7 @@ import org.percepta.mgrankvi.floorplanner.gwt.client.VisualItem;
 import org.percepta.mgrankvi.floorplanner.gwt.client.geometry.GeometryUtil;
 import org.percepta.mgrankvi.floorplanner.gwt.client.geometry.Line;
 import org.percepta.mgrankvi.floorplanner.gwt.client.geometry.Point;
-import org.percepta.mgrankvi.floorplanner.gwt.client.paint.GridUtils;
+import org.percepta.mgrankvi.floorplanner.gwt.client.paint.ItemUtils;
 
 import com.google.gwt.canvas.dom.client.Context2d;
 import com.google.gwt.canvas.dom.client.CssColor;
@@ -41,10 +41,10 @@ public class CRoom extends VisualItem {
 	@Override
 	public void paint(final Context2d context) {
 		if (selected) {
-			GridUtils.paintPointToPoint(context, points, position, CssColor.make("GREEN"));
-			GridUtils.paintPointSelections(context, points, position, CssColor.make("PURPLE"));
+			ItemUtils.paintPointToPoint(context, points, position, CssColor.make("GREEN"));
+			ItemUtils.paintPointSelections(context, points, position, CssColor.make("PURPLE"));
 		} else {
-			GridUtils.paintPointToPoint(context, points, position, CssColor.make("BLACK"));
+			ItemUtils.paintPointToPoint(context, points, position, CssColor.make("BLACK"));
 		}
 	}
 
