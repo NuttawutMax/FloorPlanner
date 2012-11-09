@@ -4,6 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.percepta.mgrankvi.floorplanner.gwt.client.geometry.Point;
+import org.percepta.mgrankvi.floorplanner.gwt.client.item.ItemState;
 
 import com.vaadin.shared.ComponentState;
 
@@ -13,6 +14,7 @@ public class RoomState extends ComponentState {
 
 	private List<Point> points = new LinkedList<Point>();
 	private Point position = new Point(0, 0);
+	private List<ItemState> items = new LinkedList<ItemState>();
 
 	public void addPoint(final Point point) {
 		points.add(point);
@@ -32,6 +34,22 @@ public class RoomState extends ComponentState {
 
 	public void setPosition(final Point position) {
 		this.position = position;
+	}
+
+	public void addItem(final ItemState item) {
+		items.add(item);
+	}
+
+	public void removeItem(final ItemState item) {
+		items.remove(item);
+	}
+
+	public void setItems(final List<ItemState> items) {
+		this.items = items;
+	}
+
+	public List<ItemState> getItems() {
+		return items;
 	}
 
 }

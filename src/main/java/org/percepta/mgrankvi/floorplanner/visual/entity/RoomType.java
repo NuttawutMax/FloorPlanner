@@ -44,4 +44,10 @@ public class RoomType {
 		room.setPosition(offset);
 		return room;
 	}
+
+	public static Room customRoom(final Point offset, final Point... points) {
+		final Room room = new Room(points);
+		room.setPosition(offset);
+		return room;
+	}
 }

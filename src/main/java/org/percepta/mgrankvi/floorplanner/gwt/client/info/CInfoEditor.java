@@ -29,6 +29,9 @@ public class CInfoEditor extends PopupPanel implements ClickHandler, MouseDownHa
 
 	private static final String CLASSNAME = "c-infoeditor";
 
+	private static final int CANVAS_WIDTH = 350;
+	private static final int CANVAS_HEIGHT = 300;
+
 	private final Canvas canvas;
 	private final TextBox pointX, pointY;
 	private final Label xLabel, yLabel;
@@ -44,7 +47,7 @@ public class CInfoEditor extends PopupPanel implements ClickHandler, MouseDownHa
 
 	public CInfoEditor(final CRoom room) {
 		this.room = room;
-		offset = new Point((300 - (room.maxX() - room.minX())) / 2, (200 - (room.maxY() - room.minY())) / 2);
+		offset = new Point((CANVAS_WIDTH - (room.maxX() - room.minX())) / 2, (CANVAS_HEIGHT - (room.maxY() - room.minY())) / 2);
 
 		addDomHandler(this, ClickEvent.getType());
 		addDomHandler(this, MouseDownEvent.getType());
@@ -67,9 +70,9 @@ public class CInfoEditor extends PopupPanel implements ClickHandler, MouseDownHa
 
 		canvas = Canvas.createIfSupported();
 		if (canvas != null) {
-			canvas.setCoordinateSpaceWidth(300);
-			canvas.setCoordinateSpaceHeight(200);
-			content.add(canvas, 50, 100);
+			canvas.setCoordinateSpaceWidth(CANVAS_WIDTH);
+			canvas.setCoordinateSpaceHeight(CANVAS_HEIGHT);
+			content.add(canvas, 0, 50);
 			paint();
 		} else {
 			getElement().setInnerHTML("Canvas not supported");
@@ -87,17 +90,6 @@ public class CInfoEditor extends PopupPanel implements ClickHandler, MouseDownHa
 		close = new Button("X");
 		close.setWidth("25px");
 		close.setHeight("25px");
-		close.addClickHandler(new ClickHandler() {
-
-			@Override
-			public void onClick(final ClickEvent event) {
-				if (select != null) {
-					select.setX(Integer.parseInt(pointX.getValue()));
-					select.setY(Integer.parseInt(pointY.getValue()));
-				}
-				hide();
-			}
-		});
 		content.add(close, 670, 5);
 
 		getElement().appendChild(content.getElement());
@@ -105,16 +97,18 @@ public class CInfoEditor extends PopupPanel implements ClickHandler, MouseDownHa
 
 	private void paint() {
 
+		final LinkedList<Point> points = (LinkedList<Point>) room.getPoints();
+
 		final Context2d context = canvas.getContext2d();
 		context.beginPath();
-		context.rect(0, 0, 299, 199);
+		context.rect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 		context.closePath();
 		context.stroke();
 
-		GridUtils.paintGrid(context, new Point(0, 0), 50, new Point(0, 0));
+		GridUtils.paintGrid(context, new Point(0, 0), 50, offset);
 
-		ItemUtils.paintPointToPoint(context, (LinkedList<Point>) room.getPoints(), offset, CssColor.make("BLACK"));
-		ItemUtils.paintPointSelections(context, (LinkedList<Point>) room.getPoints(), offset, CssColor.make("BLACK"));
+		ItemUtils.paintPointToPoint(context, points, offset, CssColor.make("BLACK"));
+		ItemUtils.paintPointSelections(context, points, offset, CssColor.make("BLACK"));
 	}
 
 	@Override
@@ -145,12 +139,14 @@ public class CInfoEditor extends PopupPanel implements ClickHandler, MouseDownHa
 
 	@Override
 	public void onClick(final ClickEvent event) {
-		if (click) {
+		if (click && canvas.getElement().equals(event.getNativeEvent().getEventTarget())) {
 			select = getSelectPoint(event.getClientX() - getPopupLeft() - offset.getX() - 50, event.getClientY() - offset.getY() - 100 - getPopupTop());
 			if (select != null) {
 				pointX.setValue(Integer.toString(select.getX()));
 				pointY.setValue(Integer.toString(select.getY()));
 			}
+		} else if (close.getElement().equals(event.getNativeEvent().getEventTarget())) {
+			hide();
 		}
 		click = true;
 	}
