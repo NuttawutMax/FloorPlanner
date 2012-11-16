@@ -6,30 +6,34 @@ import java.util.UUID;
 import org.percepta.mgrankvi.floorplanner.gwt.client.geometry.Point;
 import org.percepta.mgrankvi.floorplanner.gwt.client.room.RoomState;
 
-public class Room {
+import com.vaadin.ui.AbstractComponent;
 
-	private final RoomState state = new RoomState();
+public class Room extends AbstractComponent {
+
+	private static final long serialVersionUID = 1050249067936900003L;
 
 	public Room(final Point... points) {
 		for (final Point point : points) {
-			state.addPoint(point);
+			getState().addPoint(point);
 		}
-		state.id = UUID.randomUUID().toString();
+		getState().id = UUID.randomUUID().toString();
 	}
 
+	@Override
 	public RoomState getState() {
-		return state;
+		return (RoomState) super.getState();
 	}
 
+	@Override
 	public String getId() {
-		return state.id;
+		return getState().id;
 	}
 
 	public void setPosition(final Point position) {
-		state.setPosition(position);
+		getState().setPosition(position);
 	}
 
 	public void setPoints(final List<Point> points) {
-		state.setPoints(points);
+		getState().setPoints(points);
 	}
 }

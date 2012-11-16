@@ -4,19 +4,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.percepta.mgrankvi.floorplanner.gwt.client.room.CRoom;
+import org.percepta.mgrankvi.floorplanner.gwt.client.room.RoomConnector;
 import org.percepta.mgrankvi.floorplanner.gwt.client.room.RoomState;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.ui.Widget;
-import com.vaadin.client.VConsole;
+import com.vaadin.client.ComponentConnector;
+import com.vaadin.client.ConnectorHierarchyChangeEvent;
 import com.vaadin.client.communication.RpcProxy;
 import com.vaadin.client.communication.StateChangeEvent;
-import com.vaadin.client.ui.AbstractComponentConnector;
+import com.vaadin.client.ui.AbstractComponentContainerConnector;
 import com.vaadin.shared.ui.Connect;
 
 @Connect(org.percepta.mgrankvi.floorplanner.FloorGrid.class)
-public class FloorGridConnector extends AbstractComponentConnector implements MenuEventHandler {
+public class FloorGridConnector extends AbstractComponentContainerConnector implements MenuEventHandler {
 
 	private static final long serialVersionUID = 7482779025242695758L;
 
@@ -51,7 +53,11 @@ public class FloorGridConnector extends AbstractComponentConnector implements Me
 		for (final RoomState room : getState().rooms) {
 			getWidget().addRoom(room);
 		}
-		VConsole.log("StateChanged: " + getState().rooms.size() + " rooms.");
+		// for (final ComponentConnector child : getChildComponents()) {
+		// if (child instanceof RoomConnector) {
+		// getWidget().addRoom(((RoomConnector) child).getWidget());
+		// }
+		// }
 	}
 
 	@Override
@@ -64,9 +70,11 @@ public class FloorGridConnector extends AbstractComponentConnector implements Me
 			rpc.removeRoom(event.getRoomId());
 			break;
 		case UPDATE_ROOMS:
-			for (final RoomState item : getState().rooms) {
-				final CRoom clientRoom = getWidget().getRoom(item.id);
-				rpc.updateVisualItem(clientRoom.getId(), clientRoom.getPosition(), clientRoom.getPoints());
+			for (final ComponentConnector child : getChildComponents()) {
+				if (child instanceof RoomConnector) {
+					final CRoom clientRoom = getWidget().getRoom(((RoomConnector) child).getWidget().getId());
+					rpc.updateVisualItem(clientRoom.getId(), clientRoom.getPosition(), clientRoom.getPoints());
+				}
 			}
 			break;
 		case OPEN_ROOM_INFO:
@@ -75,5 +83,20 @@ public class FloorGridConnector extends AbstractComponentConnector implements Me
 			rpc.openRoomInformationWindow(event.getRoomId());
 			break;
 		}
+	}
+
+	@Override
+	public void updateCaption(final ComponentConnector connector) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void onConnectorHierarchyChange(final ConnectorHierarchyChangeEvent connectorHierarchyChangeEvent) {
+		// for (final ComponentConnector child : getChildComponents()) {
+		// if (child instanceof RoomConnector) {
+		// getWidget().addRoom(((RoomConnector) child).getWidget());
+		// }
+		// }
 	}
 }

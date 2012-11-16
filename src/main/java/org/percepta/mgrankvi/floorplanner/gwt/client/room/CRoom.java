@@ -10,14 +10,28 @@ import org.percepta.mgrankvi.floorplanner.gwt.client.paint.ItemUtils;
 
 import com.google.gwt.canvas.dom.client.Context2d;
 import com.google.gwt.canvas.dom.client.CssColor;
+import com.google.gwt.dom.client.Document;
 
 public class CRoom extends VisualItem {
 
 	private boolean selected = false;
 
+	public CRoom() {
+		// dummy element
+		setElement(Document.get().createDivElement());
+	}
+
 	public CRoom(final String id, final List<Point> points, final Point position) {
 		this.points.addAll(points);
 		this.position = position;
+		this.id = id;
+	}
+
+	public void setPoints(final List<Point> points) {
+		this.points.addAll(points);
+	}
+
+	public void setId(final String id) {
 		this.id = id;
 	}
 
@@ -60,6 +74,9 @@ public class CRoom extends VisualItem {
 		int intercepts = 0;
 		for (int i = 0; i + 2 <= points.size(); i++) {
 			final Line line = new Line(combine(position, points.get(i)), combine(position, points.get(i + 1)));
+			if ((line.start.getX() > x && line.end.getX() > x) || (line.start.getY() > y && line.end.getY() > y)) {
+				continue;
+			}
 			if (lineSegmentsIntersect(line, targetLine)) {
 				intercepts++;
 			}

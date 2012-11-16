@@ -106,7 +106,17 @@ public class CFloorGrid extends Widget implements ClickHandler, MouseDownHandler
 		if (roomState.id != null && !roomMap.containsKey(roomState.id)) {
 			final CRoom room = new CRoom(roomState.id, roomState.getPoints(), roomState.getPosition());
 			rooms.add(room);
-			roomMap.put(roomState.id, room);
+			roomMap.put(room.getId(), room);
+			room.paint(canvas.getContext2d());
+		}
+	}
+
+	public void addRoom(final CRoom room) {
+		if (room.getId() != null && !roomMap.containsKey(room.getId())) {
+			// final CRoom room = new CRoom(roomState.id, roomState.getPoints(),
+			// roomState.getPosition());
+			rooms.add(room);
+			roomMap.put(room.getId(), room);
 			room.paint(canvas.getContext2d());
 		}
 	}

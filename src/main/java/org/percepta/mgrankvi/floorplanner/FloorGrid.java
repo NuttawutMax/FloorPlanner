@@ -1,5 +1,6 @@
 package org.percepta.mgrankvi.floorplanner;
 
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -10,13 +11,15 @@ import org.percepta.mgrankvi.floorplanner.visual.entity.Room;
 import org.percepta.mgrankvi.floorplanner.visual.entity.RoomType;
 
 import com.vaadin.ui.AbstractComponent;
+import com.vaadin.ui.Component;
+import com.vaadin.ui.HasComponents;
 import com.vaadin.ui.Notification;
 
-public class FloorGrid extends AbstractComponent {
+public class FloorGrid extends AbstractComponent implements HasComponents {
 
 	private static final long serialVersionUID = 6976301197921043544L;
 
-	private final List<Room> rooms = new LinkedList<Room>();
+	private final List<Component> components = new LinkedList<Component>();
 
 	private final FloorGridServerRpc rpc = new FloorGridServerRpc() {
 		private static final long serialVersionUID = -1335858817145455775L;
@@ -52,11 +55,14 @@ public class FloorGrid extends AbstractComponent {
 
 		@Override
 		public void updateVisualItem(final String id, final Point position, final List<Point> points) {
-			for (final Room room : rooms) {
-				if (room.getId().equals(id)) {
-					room.setPosition(position);
-					room.setPoints(points);
-					break;
+			for (final Component component : components) {
+				if (component instanceof Room) {
+					final Room room = (Room) component;
+					if (room.getId().equals(id)) {
+						room.setPosition(position);
+						room.setPoints(points);
+						break;
+					}
 				}
 			}
 		}
@@ -64,9 +70,12 @@ public class FloorGrid extends AbstractComponent {
 
 	private Room findRoom(final String id) {
 		Room found = null;
-		for (final Room room : rooms) {
-			if (room.getId().equals(id)) {
-				found = room;
+		for (final Component component : components) {
+			if (component instanceof Room) {
+				final Room room = (Room) component;
+				if (room.getId().equals(id)) {
+					found = room;
+				}
 			}
 		}
 		return found;
@@ -79,12 +88,16 @@ public class FloorGrid extends AbstractComponent {
 	}
 
 	public void addRoom(final Room room) {
-		rooms.add(room);
+		components.add(room);
+		if (room.getParent() != this) {
+			room.setParent(this);
+		}
 		getState().addRoom(room.getState());
 	}
 
 	public void removeRoom(final Room room) {
-		rooms.remove(room);
+		components.remove(room);
+		room.setParent(null);
 		getState().removeRoom(room.getState());
 	}
 
@@ -92,4 +105,15 @@ public class FloorGrid extends AbstractComponent {
 	protected FloorGridState getState() {
 		return (FloorGridState) super.getState();
 	}
+
+	@Override
+	public Iterator<Component> iterator() {
+		return components.iterator();
+	}
+
+	@Override
+	public boolean isComponentVisible(final Component childComponent) {
+		return true;
+	}
+
 }
