@@ -15,12 +15,20 @@ public abstract class VisualItem extends Widget {
 
 	public abstract boolean pointInObject(final int x, final int y);
 
-	protected String id;
+	protected String id, name;
 	protected final LinkedList<Point> points = new LinkedList<Point>();
 	protected Point position = new Point(0, 0);
 
 	public String getId() {
 		return id;
+	}
+
+	public void setName(final String name) {
+		this.name = name;
+	}
+
+	public String getName() {
+		return name;
 	}
 
 	public int getPositionX() {

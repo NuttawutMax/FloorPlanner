@@ -15,6 +15,7 @@ public class RoomState extends ComponentState {
 	private List<Point> points = new LinkedList<Point>();
 	private Point position = new Point(0, 0);
 	private List<ItemState> items = new LinkedList<ItemState>();
+	private String name = "";
 
 	public void addPoint(final Point point) {
 		points.add(point);
@@ -50,6 +51,14 @@ public class RoomState extends ComponentState {
 
 	public List<ItemState> getItems() {
 		return items;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(final String name) {
+		this.name = name;
 	}
 
 }

@@ -56,9 +56,13 @@ public class CFloorGrid extends Widget implements ClickHandler, MouseDownHandler
 	private InfoButton hoverElement = null;
 
 	private final int gridSize = 50;
+	private double zoom = 0;
 	private int offsetX = 0;
 	private int offsetY = 0;
 	private final Point origo = new Point(0, 0);
+
+	private String buttonColorPlus = "LAVENDER";
+	private String buttonColorMinus = "LAVENDER";
 
 	private boolean mouseDown = false;
 	private boolean mouseMoved = true;
@@ -105,6 +109,7 @@ public class CFloorGrid extends Widget implements ClickHandler, MouseDownHandler
 	public void addRoom(final RoomState roomState) {
 		if (roomState.id != null && !roomMap.containsKey(roomState.id)) {
 			final CRoom room = new CRoom(roomState.id, roomState.getPoints(), roomState.getPosition());
+			room.setName(roomState.getName());
 			rooms.add(room);
 			roomMap.put(room.getId(), room);
 			room.paint(canvas.getContext2d());
@@ -139,6 +144,8 @@ public class CFloorGrid extends Widget implements ClickHandler, MouseDownHandler
 		final Context2d context = canvas.getContext2d();
 
 		GridUtils.paintGrid(context, new Point(offsetX, offsetY), gridSize, origo);
+		GridUtils.paintZoomInButton(context, new Point(Window.getClientWidth() - 50, 25), 25, buttonColorPlus);
+		GridUtils.paintZoomOutButton(context, new Point(Window.getClientWidth() - 50, 51), 25, buttonColorMinus);
 		paintRooms();
 
 		if (hoverElement != null) {
@@ -162,7 +169,21 @@ public class CFloorGrid extends Widget implements ClickHandler, MouseDownHandler
 				mouseMoved = false;
 				return;
 			}
-			if (hoverElement != null && hoverElement.pointInObject(event.getClientX(), event.getClientY())) {
+			final int clientX = event.getClientX();
+			final int clientY = event.getClientY();
+			if (clientX > Window.getClientWidth() - 50 && clientX < Window.getClientWidth() - 25) {
+				if (clientY > 25 && clientY < 50) {
+					zoom += 0.1;
+					repaint();
+					return;
+				} else if (clientY > 51 && clientY < 76) {
+					zoom -= 0.1;
+					repaint();
+					return;
+				}
+			}
+
+			if (hoverElement != null && hoverElement.pointInObject(clientX, clientY)) {
 				// fireEvent(new
 				// MenuEvent(MenuEvent.MenuEventType.OPEN_ROOM_INFO,
 				// hoverElement.getRoom().getId()));
@@ -172,7 +193,7 @@ public class CFloorGrid extends Widget implements ClickHandler, MouseDownHandler
 			}
 			boolean selected = false;
 			for (final CRoom room : rooms) {
-				if (room.pointInObject(event.getClientX(), event.getClientY()) && !selected) {
+				if (room.pointInObject(clientX, clientY) && !selected) {
 					room.setSelection(true);
 					selected = true;
 				} else {
@@ -211,6 +232,8 @@ public class CFloorGrid extends Widget implements ClickHandler, MouseDownHandler
 
 	@Override
 	public void onMouseMove(final MouseMoveEvent event) {
+		final int clientX = event.getClientX();
+		final int clientY = event.getClientY();
 		if (mouseDown) {
 			mouseMoved = true;
 
@@ -220,21 +243,35 @@ public class CFloorGrid extends Widget implements ClickHandler, MouseDownHandler
 				moveRoom(selected, event);
 			}
 
-			downX = event.getClientX();
-			downY = event.getClientY();
+			downX = clientX;
+			downY = clientY;
 
 			repaint();
 		} else if (hoverElement == null) {
 			for (final CRoom room : rooms) {
-				if (room.pointInObject(event.getClientX(), event.getClientY())) {
+				if (room.pointInObject(clientX, clientY)) {
 					hoverElement = new InfoButton(room);
 					break;
 				}
 			}
 		} else {
-			if (!hoverElement.getRoom().pointInObject(event.getClientX(), event.getClientY())) {
+			if (!hoverElement.getRoom().pointInObject(clientX, clientY)) {
 				hoverElement = null;
 			}
+		}
+
+		// Change coloring of + and - buttons if hovered over.
+		if (clientX > Window.getClientWidth() - 50 && clientX < Window.getClientWidth() - 25) {
+			if (clientY > 25 && clientY < 50) {
+				buttonColorPlus = "SILVER";
+				buttonColorMinus = "LAVENDER";
+			} else if (clientY > 51 && clientY < 76) {
+				buttonColorMinus = "SILVER";
+				buttonColorPlus = "LAVENDER";
+			}
+		} else {
+			buttonColorPlus = "LAVENDER";
+			buttonColorMinus = "LAVENDER";
 		}
 		repaint();
 	}

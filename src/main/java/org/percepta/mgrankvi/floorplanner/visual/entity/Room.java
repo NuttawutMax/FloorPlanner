@@ -36,4 +36,12 @@ public class Room extends AbstractComponent {
 	public void setPoints(final List<Point> points) {
 		getState().setPoints(points);
 	}
+
+	public void setName(final String name) {
+		getState().setName(name);
+	}
+
+	public String getName() {
+		return getState().getName();
+	}
 }

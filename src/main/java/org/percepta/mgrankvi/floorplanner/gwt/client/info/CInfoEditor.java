@@ -24,6 +24,7 @@ import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.TextBox;
+import com.vaadin.client.VConsole;
 
 public class CInfoEditor extends PopupPanel implements ClickHandler, MouseDownHandler, MouseUpHandler, MouseMoveHandler {
 
@@ -33,8 +34,8 @@ public class CInfoEditor extends PopupPanel implements ClickHandler, MouseDownHa
 	private static final int CANVAS_HEIGHT = 300;
 
 	private final Canvas canvas;
-	private final TextBox pointX, pointY;
-	private final Label xLabel, yLabel;
+	private final TextBox pointX, pointY, name;
+	private final Label xLabel, yLabel, nameLabel;
 	private final Button close;
 
 	private final CRoom room;
@@ -79,13 +80,20 @@ public class CInfoEditor extends PopupPanel implements ClickHandler, MouseDownHa
 		}
 
 		xLabel = new Label("X position");
-		yLabel = new Label("Y position");
 		pointX = new TextBox();
-		pointY = new TextBox();
 		content.add(xLabel, 400, 100);
-		content.add(yLabel, 400, 125);
 		content.add(pointX, 475, 97);
+
+		yLabel = new Label("Y position");
+		pointY = new TextBox();
+		content.add(yLabel, 400, 125);
 		content.add(pointY, 475, 122);
+
+		nameLabel = new Label("Name");
+		name = new TextBox();
+		name.setText(room.getName());
+		content.add(nameLabel, 400, 75);
+		content.add(name, 475, 72);
 
 		close = new Button("X");
 		close.setWidth("25px");
@@ -109,6 +117,17 @@ public class CInfoEditor extends PopupPanel implements ClickHandler, MouseDownHa
 
 		ItemUtils.paintPointToPoint(context, points, offset, CssColor.make("BLACK"));
 		ItemUtils.paintPointSelections(context, points, offset, CssColor.make("BLACK"));
+
+		if (select != null) {
+			context.setStrokeStyle("LIMEGREEN");
+
+			context.beginPath();
+
+			context.rect(offset.getX() + select.getX() - 2, offset.getY() + select.getY() - 2, 5, 5);
+
+			context.closePath();
+			context.stroke();
+		}
 	}
 
 	@Override
@@ -140,7 +159,7 @@ public class CInfoEditor extends PopupPanel implements ClickHandler, MouseDownHa
 	@Override
 	public void onClick(final ClickEvent event) {
 		if (click && canvas.getElement().equals(event.getNativeEvent().getEventTarget())) {
-			select = getSelectPoint(event.getClientX() - getPopupLeft() - offset.getX() - 50, event.getClientY() - offset.getY() - 100 - getPopupTop());
+			select = getSelectPoint(event.getClientX() - getPopupLeft() - offset.getX(), event.getClientY() - offset.getY() - 50 - getPopupTop());
 			if (select != null) {
 				pointX.setValue(Integer.toString(select.getX()));
 				pointY.setValue(Integer.toString(select.getY()));
@@ -152,6 +171,7 @@ public class CInfoEditor extends PopupPanel implements ClickHandler, MouseDownHa
 	}
 
 	private Point getSelectPoint(final int x, final int y) {
+		VConsole.log(x + "," + y);
 		for (final Point point : room.getPoints()) {
 			final int pointXMin = point.getX() - 4;
 			final int pointYMin = point.getY() - 4;

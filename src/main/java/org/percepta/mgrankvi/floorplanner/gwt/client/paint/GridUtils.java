@@ -7,9 +7,9 @@ import com.google.gwt.user.client.Window;
 
 public class GridUtils {
 
-	public static void paintGrid(final Context2d context, final Point offset, final int gridSize, final Point origo) {
-		int x = offset.getX() - gridSize;
-		int y = offset.getY() - gridSize;
+	public static void paintGrid(final Context2d context, final Point offset, final double gridSize, final Point origo) {
+		double x = offset.getX() - gridSize;
+		double y = offset.getY() - gridSize;
 		context.setStrokeStyle("gray");
 		context.beginPath();
 
@@ -35,5 +35,41 @@ public class GridUtils {
 
 		context.closePath();
 		context.stroke();
+	}
+
+	public static void paintZoomInButton(final Context2d context, final Point position, final int size, final String color) {
+		final double half = size / 2.0;
+		context.setFillStyle(color);
+		context.beginPath();
+
+		context.fillRect(position.getX(), position.getY(), size, 2);
+		context.fillRect(position.getX(), position.getY(), 2, size);
+		context.fillRect(position.getX(), position.getY() + size - 2, size, 2);
+		context.fillRect(position.getX() + size - 2, position.getY(), 2, size);
+
+		context.fillRect(position.getX(), position.getY(), half - 2, half - 2);
+		context.fillRect(position.getX() + half + 2, position.getY(), half - 2, half - 2);
+		context.fillRect(position.getX(), position.getY() + half + 2, half - 2, half - 2);
+		context.fillRect(position.getX() + half + 2, position.getY() + half + 2, half - 2, half - 2);
+
+		context.closePath();
+		context.fill();
+	}
+
+	public static void paintZoomOutButton(final Context2d context, final Point position, final int size, final String color) {
+		final double half = size / 2.0;
+		context.setFillStyle(color);
+		context.beginPath();
+
+		context.fillRect(position.getX(), position.getY(), size, 2);
+		context.fillRect(position.getX(), position.getY(), 2, size);
+		context.fillRect(position.getX(), position.getY() + size - 2, size, 2);
+		context.fillRect(position.getX() + size - 2, position.getY(), 2, size);
+
+		context.fillRect(position.getX(), position.getY(), size, half - 2);
+		context.fillRect(position.getX(), position.getY() + half + 2, size, half - 2);
+
+		context.closePath();
+		context.fill();
 	}
 }
