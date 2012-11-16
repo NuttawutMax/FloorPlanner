@@ -22,14 +22,14 @@ public class FloorPlanner extends UI {
 		// grid.addRoom(RoomType.square(new Point()));
 
 		// Tiina
-		grid.addRoom(RoomType.customRoom("Tiina Wasberg", new Point(0, 0), new Point(0, 0), new Point(105, 0), new Point(105, 20), new Point(90, 50),
+		grid.addRoom(RoomType.customRoom("Tiina", new Point(0, 0), new Point(0, 0), new Point(105, 0), new Point(105, 20), new Point(90, 50),
 				new Point(90, 150), new Point(0, 150)));
 		// Vappula
-		grid.addRoom(RoomType.customRoom("Mikael Vappula", new Point(90, 0), new Point(15, 0), new Point(65, 0), new Point(65, 20), new Point(80, 50),
-				new Point(80, 120), new Point(0, 120), new Point(0, 50), new Point(15, 20)));
+		grid.addRoom(RoomType.customRoom("Vappula", new Point(90, 0), new Point(15, 0), new Point(65, 0), new Point(65, 20), new Point(80, 50), new Point(80,
+				120), new Point(0, 120), new Point(0, 50), new Point(15, 20)));
 		// Muurimaa
-		grid.addRoom(RoomType.customRoom("Henri Muurimaa", new Point(155, 0), new Point(0, 0), new Point(105, 0), new Point(105, 150), new Point(15, 150),
-				new Point(15, 50), new Point(0, 20)));
+		grid.addRoom(RoomType.customRoom("Muurimaa", new Point(155, 0), new Point(0, 0), new Point(105, 0), new Point(105, 150), new Point(15, 150), new Point(
+				15, 50), new Point(0, 20)));
 		// GuitarHero
 		grid.addRoom(RoomType.square("Guitar Hero", new Point(35, 150)));
 		// PikkuNeukkari

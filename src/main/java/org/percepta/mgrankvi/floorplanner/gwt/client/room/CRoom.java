@@ -1,11 +1,13 @@
 package org.percepta.mgrankvi.floorplanner.gwt.client.room;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import org.percepta.mgrankvi.floorplanner.gwt.client.VisualItem;
 import org.percepta.mgrankvi.floorplanner.gwt.client.geometry.GeometryUtil;
 import org.percepta.mgrankvi.floorplanner.gwt.client.geometry.Line;
 import org.percepta.mgrankvi.floorplanner.gwt.client.geometry.Point;
+import org.percepta.mgrankvi.floorplanner.gwt.client.item.CLabel;
 import org.percepta.mgrankvi.floorplanner.gwt.client.paint.ItemUtils;
 
 import com.google.gwt.canvas.dom.client.Context2d;
@@ -15,6 +17,7 @@ import com.google.gwt.dom.client.Document;
 public class CRoom extends VisualItem {
 
 	private boolean selected = false;
+	private final List<VisualItem> roomItems = new LinkedList<VisualItem>();
 
 	public CRoom() {
 		// dummy element
@@ -27,8 +30,25 @@ public class CRoom extends VisualItem {
 		this.id = id;
 	}
 
+	@Override
+	public void setName(final String name) {
+		super.setName(name);
+		final Point pos = combine(position, getCenter());
+		pos.move(-25, 0);
+		final CLabel label = new CLabel(name, pos);
+		roomItems.add(label);
+	}
+
 	public void setPoints(final List<Point> points) {
 		this.points.addAll(points);
+	}
+
+	public void addRoomItem(final VisualItem item) {
+		roomItems.add(item);
+	}
+
+	public void removeRoomItem(final VisualItem item) {
+		roomItems.remove(item);
 	}
 
 	public void setId(final String id) {
@@ -39,9 +59,12 @@ public class CRoom extends VisualItem {
 		this.position = position;
 	}
 
+	@Override
 	public void movePosition(final int x, final int y) {
-		position.setX(position.getX() + x);
-		position.setY(position.getY() + y);
+		super.movePosition(x, y);
+		for (final VisualItem item : roomItems) {
+			item.movePosition(x, y);
+		}
 	}
 
 	public void setSelection(final boolean selected) {
@@ -59,6 +82,9 @@ public class CRoom extends VisualItem {
 			ItemUtils.paintPointSelections(context, points, position, CssColor.make("PURPLE"));
 		} else {
 			ItemUtils.paintPointToPoint(context, points, position, CssColor.make("BLACK"));
+		}
+		for (final VisualItem item : roomItems) {
+			item.paint(context);
 		}
 	}
 

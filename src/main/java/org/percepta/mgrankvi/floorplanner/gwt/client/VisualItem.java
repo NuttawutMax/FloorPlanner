@@ -43,6 +43,11 @@ public abstract class VisualItem extends Widget {
 		return new Point(getPositionX(), getPositionY());
 	}
 
+	public void movePosition(final int x, final int y) {
+		position.setX(position.getX() + x);
+		position.setY(position.getY() + y);
+	}
+
 	public List<Point> getPoints() {
 		return new LinkedList<Point>(points);
 	}
@@ -101,6 +106,12 @@ public abstract class VisualItem extends Widget {
 			}
 		}
 		return max;
+	}
+
+	public Point getCenter() {
+		final int x = (maxX() - minX()) / 2;
+		final int y = (maxY() - minY()) / 2;
+		return new Point(x, y);
 	}
 
 	/* Line segments intersect */
