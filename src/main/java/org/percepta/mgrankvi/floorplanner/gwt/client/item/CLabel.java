@@ -7,13 +7,17 @@ import com.google.gwt.canvas.dom.client.Context2d;
 
 public class CLabel extends VisualItem {
 
+	private int width = 0;
+
 	public CLabel(final String name) {
-		setName(name);
+		this(name, new Point(0, 0));
 	}
 
 	public CLabel(final String name, final Point position) {
 		setName(name);
 		setPosition(position);
+		width = name.length() * 6;
+		this.position.move(-(width / 2), 0);
 	}
 
 	public void setPosition(final Point position) {
@@ -25,17 +29,18 @@ public class CLabel extends VisualItem {
 		context.setFillStyle("GREEN");
 		context.beginPath();
 
-		context.arc(position.getX() + 10, position.getY() + 10, 10, 0, Math.PI * 2.0, true);
-		context.fillRect(position.getX() + 10, position.getY(), 50, 20);
-		context.arc(position.getX() + 60, position.getY() + 10, 10, 0, Math.PI * 2.0, true);
+		context.arc(position.getX(), position.getY() + 10, 10, 0, Math.PI * 2.0, true);
+		context.fillRect(position.getX(), position.getY(), width, 20);
+		context.arc(position.getX() + width, position.getY() + 10, 10, 0, Math.PI * 2.0, true);
 
 		context.closePath();
 		context.fill();
 
 		context.setFillStyle("WHITE");
 		context.beginPath();
-		context.setFont("bold 12px Monospaced");
-		context.fillText(getName(), position.getX() + 10, position.getY() + 12);
+
+		context.setFont("bold 10px Courier New");
+		context.fillText(getName(), position.getX(), position.getY() + 12);
 		context.closePath();
 	}
 

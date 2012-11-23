@@ -34,9 +34,10 @@ public class CRoom extends VisualItem {
 	public void setName(final String name) {
 		super.setName(name);
 		final Point pos = combine(position, getCenter());
-		pos.move(-25, 0);
-		final CLabel label = new CLabel(name, pos);
-		roomItems.add(label);
+		if (!name.isEmpty()) {
+			final CLabel label = new CLabel(name, pos);
+			roomItems.add(label);
+		}
 	}
 
 	public void setPoints(final List<Point> points) {
