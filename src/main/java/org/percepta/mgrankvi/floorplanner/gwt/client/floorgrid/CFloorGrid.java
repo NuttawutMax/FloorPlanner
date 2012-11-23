@@ -12,6 +12,7 @@ import org.percepta.mgrankvi.floorplanner.gwt.client.geometry.Point;
 import org.percepta.mgrankvi.floorplanner.gwt.client.info.CInfoEditor;
 import org.percepta.mgrankvi.floorplanner.gwt.client.paint.GridUtils;
 import org.percepta.mgrankvi.floorplanner.gwt.client.room.CRoom;
+import org.percepta.mgrankvi.floorplanner.gwt.client.room.DoorState;
 import org.percepta.mgrankvi.floorplanner.gwt.client.room.RoomState;
 
 import com.google.gwt.canvas.client.Canvas;
@@ -110,6 +111,9 @@ public class CFloorGrid extends Widget implements ClickHandler, MouseDownHandler
 		if (roomState.id != null && !roomMap.containsKey(roomState.id)) {
 			final CRoom room = new CRoom(roomState.id, roomState.getPoints(), roomState.getPosition());
 			room.setName(roomState.getName());
+			for (final DoorState door : roomState.getDoor()) {
+				room.addDoor(door);
+			}
 			rooms.add(room);
 			roomMap.put(room.getId(), room);
 			room.paint(canvas.getContext2d());
@@ -173,11 +177,15 @@ public class CFloorGrid extends Widget implements ClickHandler, MouseDownHandler
 			final int clientY = event.getClientY();
 			if (clientX > Window.getClientWidth() - 50 && clientX < Window.getClientWidth() - 25) {
 				if (clientY > 25 && clientY < 50) {
-					zoom += 0.1;
+					zoom += 0.1;// sx = sy = 0.1
+					// x2 = sx*x1
+					// y2 = sy*y1
 					repaint();
 					return;
 				} else if (clientY > 51 && clientY < 76) {
-					zoom -= 0.1;
+					zoom -= 0.1;// sx = sy = -0.1
+					// x2 = sx*x1
+					// y2 = sy*y1
 					repaint();
 					return;
 				}

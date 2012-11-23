@@ -13,6 +13,8 @@ public abstract class VisualItem extends Widget {
 
 	public abstract void paint(final Context2d context);
 
+	public abstract void paint(final Context2d context, Point offset);
+
 	public abstract boolean pointInObject(final int x, final int y);
 
 	protected String id, name;

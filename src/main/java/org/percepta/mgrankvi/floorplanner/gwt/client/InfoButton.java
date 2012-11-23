@@ -50,4 +50,9 @@ public class InfoButton extends VisualItem {
 		return x > offset.getX() && x < (offset.getX() + rect.getWidth()) && y > rect.getY() && y < (offset.getY() + rect.getHeight());
 	}
 
+	@Override
+	public void paint(final Context2d context, final Point offset) {
+		paint(context);
+	}
+
 }

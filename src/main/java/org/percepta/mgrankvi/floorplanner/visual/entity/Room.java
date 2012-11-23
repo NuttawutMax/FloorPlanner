@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.UUID;
 
 import org.percepta.mgrankvi.floorplanner.gwt.client.geometry.Point;
+import org.percepta.mgrankvi.floorplanner.gwt.client.room.DoorState;
+import org.percepta.mgrankvi.floorplanner.gwt.client.room.DoorState.Direction;
 import org.percepta.mgrankvi.floorplanner.gwt.client.room.RoomState;
 
 import com.vaadin.ui.AbstractComponent;
@@ -43,5 +45,12 @@ public class Room extends AbstractComponent {
 
 	public String getName() {
 		return getState().getName();
+	}
+
+	public void addDoor(final Direction openingDirection, final Point position) {
+		final DoorState door = new DoorState();
+		door.setOpeningDirection(openingDirection);
+		door.setPosition(position);
+		getState().addDoor(door);
 	}
 }

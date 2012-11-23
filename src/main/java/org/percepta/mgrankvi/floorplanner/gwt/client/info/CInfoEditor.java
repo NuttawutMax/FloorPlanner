@@ -1,15 +1,11 @@
 package org.percepta.mgrankvi.floorplanner.gwt.client.info;
 
-import java.util.LinkedList;
-
 import org.percepta.mgrankvi.floorplanner.gwt.client.geometry.Point;
 import org.percepta.mgrankvi.floorplanner.gwt.client.paint.GridUtils;
-import org.percepta.mgrankvi.floorplanner.gwt.client.paint.ItemUtils;
 import org.percepta.mgrankvi.floorplanner.gwt.client.room.CRoom;
 
 import com.google.gwt.canvas.client.Canvas;
 import com.google.gwt.canvas.dom.client.Context2d;
-import com.google.gwt.canvas.dom.client.CssColor;
 import com.google.gwt.dom.client.Style;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
@@ -105,7 +101,8 @@ public class CInfoEditor extends PopupPanel implements ClickHandler, MouseDownHa
 
 	private void paint() {
 
-		final LinkedList<Point> points = (LinkedList<Point>) room.getPoints();
+		// final LinkedList<Point> points = (LinkedList<Point>)
+		// room.getPoints();
 
 		final Context2d context = canvas.getContext2d();
 		context.beginPath();
@@ -114,9 +111,11 @@ public class CInfoEditor extends PopupPanel implements ClickHandler, MouseDownHa
 		context.stroke();
 
 		GridUtils.paintGrid(context, new Point(0, 0), 50, offset);
-
-		ItemUtils.paintPointToPoint(context, points, offset, CssColor.make("BLACK"));
-		ItemUtils.paintPointSelections(context, points, offset, CssColor.make("BLACK"));
+		room.paint(context, offset);
+		// ItemUtils.paintPointToPoint(context, points, offset,
+		// CssColor.make("BLACK"));
+		// ItemUtils.paintPointSelections(context, points, offset,
+		// CssColor.make("BLACK"));
 
 		if (select != null) {
 			context.setStrokeStyle("LIMEGREEN");

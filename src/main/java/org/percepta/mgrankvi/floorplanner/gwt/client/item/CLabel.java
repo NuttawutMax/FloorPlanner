@@ -1,6 +1,7 @@
 package org.percepta.mgrankvi.floorplanner.gwt.client.item;
 
 import org.percepta.mgrankvi.floorplanner.gwt.client.VisualItem;
+import org.percepta.mgrankvi.floorplanner.gwt.client.geometry.GeometryUtil;
 import org.percepta.mgrankvi.floorplanner.gwt.client.geometry.Point;
 
 import com.google.gwt.canvas.dom.client.Context2d;
@@ -26,12 +27,19 @@ public class CLabel extends VisualItem {
 
 	@Override
 	public void paint(final Context2d context) {
+		paint(context, new Point(0, 0));
+	}
+
+	@Override
+	public void paint(final Context2d context, final Point offset) {
+		final Point drawPosition = GeometryUtil.combine(position, offset);
+
 		context.setFillStyle("GREEN");
 		context.beginPath();
 
-		context.arc(position.getX(), position.getY() + 10, 10, 0, Math.PI * 2.0, true);
-		context.fillRect(position.getX(), position.getY(), width, 20);
-		context.arc(position.getX() + width, position.getY() + 10, 10, 0, Math.PI * 2.0, true);
+		context.arc(drawPosition.getX(), drawPosition.getY() + 10, 10, 0, Math.PI * 2.0, true);
+		context.fillRect(drawPosition.getX(), drawPosition.getY(), width, 20);
+		context.arc(drawPosition.getX() + width, drawPosition.getY() + 10, 10, 0, Math.PI * 2.0, true);
 
 		context.closePath();
 		context.fill();
@@ -40,7 +48,7 @@ public class CLabel extends VisualItem {
 		context.beginPath();
 
 		context.setFont("bold 10px Courier New");
-		context.fillText(getName(), position.getX(), position.getY() + 12);
+		context.fillText(getName(), drawPosition.getX(), drawPosition.getY() + 12);
 		context.closePath();
 	}
 

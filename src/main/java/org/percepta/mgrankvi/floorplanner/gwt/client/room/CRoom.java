@@ -7,6 +7,7 @@ import org.percepta.mgrankvi.floorplanner.gwt.client.VisualItem;
 import org.percepta.mgrankvi.floorplanner.gwt.client.geometry.GeometryUtil;
 import org.percepta.mgrankvi.floorplanner.gwt.client.geometry.Line;
 import org.percepta.mgrankvi.floorplanner.gwt.client.geometry.Point;
+import org.percepta.mgrankvi.floorplanner.gwt.client.item.CDoor;
 import org.percepta.mgrankvi.floorplanner.gwt.client.item.CLabel;
 import org.percepta.mgrankvi.floorplanner.gwt.client.paint.ItemUtils;
 
@@ -33,9 +34,8 @@ public class CRoom extends VisualItem {
 	@Override
 	public void setName(final String name) {
 		super.setName(name);
-		final Point pos = combine(position, getCenter());
 		if (!name.isEmpty()) {
-			final CLabel label = new CLabel(name, pos);
+			final CLabel label = new CLabel(name, getCenter());
 			roomItems.add(label);
 		}
 	}
@@ -63,9 +63,9 @@ public class CRoom extends VisualItem {
 	@Override
 	public void movePosition(final int x, final int y) {
 		super.movePosition(x, y);
-		for (final VisualItem item : roomItems) {
-			item.movePosition(x, y);
-		}
+		// for (final VisualItem item : roomItems) {
+		// item.movePosition(x, y);
+		// }
 	}
 
 	public void setSelection(final boolean selected) {
@@ -78,14 +78,19 @@ public class CRoom extends VisualItem {
 
 	@Override
 	public void paint(final Context2d context) {
+		paint(context, position);
+	}
+
+	@Override
+	public void paint(final Context2d context, final Point offset) {
 		if (selected) {
-			ItemUtils.paintPointToPoint(context, points, position, CssColor.make("GREEN"));
-			ItemUtils.paintPointSelections(context, points, position, CssColor.make("PURPLE"));
+			ItemUtils.paintPointToPoint(context, points, offset, CssColor.make("GREEN"));
+			ItemUtils.paintPointSelections(context, points, offset, CssColor.make("PURPLE"));
 		} else {
-			ItemUtils.paintPointToPoint(context, points, position, CssColor.make("BLACK"));
+			ItemUtils.paintPointToPoint(context, points, offset, CssColor.make("BLACK"));
 		}
 		for (final VisualItem item : roomItems) {
-			item.paint(context);
+			item.paint(context, offset);
 		}
 	}
 
@@ -129,5 +134,11 @@ public class CRoom extends VisualItem {
 
 	private Point combine(final Point p1, final Point p2) {
 		return GeometryUtil.combine(p1, p2);
+	}
+
+	public void addDoor(final DoorState doorState) {
+		final CDoor door = new CDoor(20, doorState.getOpeningDirection());
+		door.setPosition(doorState.getPosition());
+		addRoomItem(door);
 	}
 }
