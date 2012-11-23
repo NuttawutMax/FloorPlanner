@@ -61,6 +61,6 @@ public class FloorPlanner extends UI {
 		// grid.addRoom(RoomType.fivePoints(new Point(100, 400)));
 		// grid.addRoom(new Room(new Hexagon(50, 50).getCorners()));
 
-		addComponent(grid);
+		layout.addComponent(grid);
 	}
 }
