@@ -27,7 +27,7 @@ public class CInfoEditor extends PopupPanel implements ClickHandler, MouseDownHa
 	private static final String CLASSNAME = "c-infoeditor";
 
 	private static final int CANVAS_WIDTH = 350;
-	private static final int CANVAS_HEIGHT = 300;
+	private static final int CANVAS_HEIGHT = 400;
 
 	private final Canvas canvas;
 	private final TextBox pointX, pointY, name;
@@ -69,7 +69,7 @@ public class CInfoEditor extends PopupPanel implements ClickHandler, MouseDownHa
 		if (canvas != null) {
 			canvas.setCoordinateSpaceWidth(CANVAS_WIDTH);
 			canvas.setCoordinateSpaceHeight(CANVAS_HEIGHT);
-			content.add(canvas, 0, 50);
+			content.add(canvas, 0, 0);
 			paint();
 		} else {
 			getElement().setInnerHTML("Canvas not supported");
