@@ -86,6 +86,7 @@ public class CRoom extends VisualItem {
 		if (selected) {
 			ItemUtils.paintPointToPoint(context, points, offset, CssColor.make("GREEN"));
 			ItemUtils.paintPointSelections(context, points, offset, CssColor.make("PURPLE"));
+			context.setStrokeStyle(CssColor.make("GREEN"));
 		} else {
 			ItemUtils.paintPointToPoint(context, points, offset, CssColor.make("BLACK"));
 		}
