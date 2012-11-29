@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.percepta.mgrankvi.floorplanner.gwt.client.geometry.Point;
 import org.percepta.mgrankvi.floorplanner.gwt.client.item.ItemState;
+import org.percepta.mgrankvi.floorplanner.gwt.client.item.door.DoorState;
 
 import com.vaadin.shared.ComponentState;
 

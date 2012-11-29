@@ -34,6 +34,9 @@ public class CLabel extends VisualItem {
 	public void paint(final Context2d context, final Point offset) {
 		final Point drawPosition = GeometryUtil.combine(position, offset);
 
+		context.setFont("bold 10px Courier New");
+		width = (int) Math.ceil(context.measureText(getName()).getWidth());
+
 		context.setFillStyle("GREEN");
 		context.beginPath();
 
@@ -47,8 +50,8 @@ public class CLabel extends VisualItem {
 		context.setFillStyle("WHITE");
 		context.beginPath();
 
-		context.setFont("bold 10px Courier New");
 		context.fillText(getName(), drawPosition.getX(), drawPosition.getY() + 12);
+
 		context.closePath();
 	}
 

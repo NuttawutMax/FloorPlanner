@@ -37,6 +37,13 @@ public class RoomType {
 		return room;
 	}
 
+	public static Room square(final int modifier, final String name, final Point offset) {
+		final Room room = new Room(new Rectangle(modifier * 100, modifier * 100).getCorners());
+		room.setPosition(offset);
+		room.setName(name);
+		return room;
+	}
+
 	public static Room fivePoints() {
 		return new Room(new Point(0, 0), new Point(100, 0), new Point(100, 75), new Point(75, 100), new Point(0, 100));
 	}

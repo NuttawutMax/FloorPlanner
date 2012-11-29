@@ -1,4 +1,4 @@
-package org.percepta.mgrankvi.floorplanner.gwt.client.item;
+package org.percepta.mgrankvi.floorplanner.gwt.client.item.table;
 
 import org.percepta.mgrankvi.floorplanner.gwt.client.VisualItem;
 import org.percepta.mgrankvi.floorplanner.gwt.client.geometry.Point;

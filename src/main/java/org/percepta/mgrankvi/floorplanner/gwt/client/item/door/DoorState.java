@@ -1,4 +1,4 @@
-package org.percepta.mgrankvi.floorplanner.gwt.client.room;
+package org.percepta.mgrankvi.floorplanner.gwt.client.item.door;
 
 import org.percepta.mgrankvi.floorplanner.gwt.client.geometry.Point;
 

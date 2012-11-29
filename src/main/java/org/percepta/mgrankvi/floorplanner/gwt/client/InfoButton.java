@@ -1,5 +1,6 @@
 package org.percepta.mgrankvi.floorplanner.gwt.client;
 
+import org.percepta.mgrankvi.floorplanner.gwt.client.geometry.GeometryUtil;
 import org.percepta.mgrankvi.floorplanner.gwt.client.geometry.Point;
 import org.percepta.mgrankvi.floorplanner.gwt.client.geometry.Rectangle;
 import org.percepta.mgrankvi.floorplanner.gwt.client.room.CRoom;
@@ -19,7 +20,8 @@ public class InfoButton extends VisualItem {
 
 	public InfoButton(final CRoom room) {
 		this.room = room;
-		offset = new Point(maxX(room.getPoints()) + room.getPositionX() - OFFSET_X, minY(room.getPoints()) + room.getPositionY() + OFFSET_Y);
+		offset = new Point(GeometryUtil.maxX(room.getPoints()) + room.getPositionX() - OFFSET_X, GeometryUtil.minY(room.getPoints()) + room.getPositionY()
+				+ OFFSET_Y);
 	}
 
 	public CRoom getRoom() {
@@ -28,7 +30,8 @@ public class InfoButton extends VisualItem {
 
 	@Override
 	public void paint(final Context2d context) {
-		offset = new Point(maxX(room.getPoints()) + room.getPositionX() - OFFSET_X, minY(room.getPoints()) + room.getPositionY() + OFFSET_Y);
+		offset = new Point(GeometryUtil.maxX(room.getPoints()) + room.getPositionX() - OFFSET_X, GeometryUtil.minY(room.getPoints()) + room.getPositionY()
+				+ OFFSET_Y);
 
 		context.setStrokeStyle("gray");
 		context.beginPath();

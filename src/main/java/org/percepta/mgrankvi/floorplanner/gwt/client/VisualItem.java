@@ -3,6 +3,7 @@ package org.percepta.mgrankvi.floorplanner.gwt.client;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.percepta.mgrankvi.floorplanner.gwt.client.geometry.GeometryUtil;
 import org.percepta.mgrankvi.floorplanner.gwt.client.geometry.Line;
 import org.percepta.mgrankvi.floorplanner.gwt.client.geometry.Point;
 
@@ -20,6 +21,7 @@ public abstract class VisualItem extends Widget {
 	protected String id, name;
 	protected final LinkedList<Point> points = new LinkedList<Point>();
 	protected Point position = new Point(0, 0);
+	protected Integer minX, maxX, minY, maxY;
 
 	public String getId() {
 		return id;
@@ -50,64 +52,40 @@ public abstract class VisualItem extends Widget {
 		position.setY(position.getY() + y);
 	}
 
+	public void pointMoved() {
+		minX = maxX = minY = maxY = null;
+	}
+
 	public List<Point> getPoints() {
 		return new LinkedList<Point>(points);
 	}
 
 	public int minX() {
-		return minX(points);
+		if (minX == null) {
+			minX = GeometryUtil.minX(points);
+		}
+		return minX;
 	}
 
 	public int minY() {
-		return minY(points);
+		if (minY == null) {
+			minY = GeometryUtil.minY(points);
+		}
+		return minY;
 	}
 
 	public int maxX() {
-		return maxX(points);
+		if (maxX == null) {
+			maxX = GeometryUtil.maxX(points);
+		}
+		return maxX;
 	}
 
 	public int maxY() {
-		return maxY(points);
-	}
-
-	public int minX(final List<Point> points) {
-		int min = Integer.MAX_VALUE;
-		for (final Point p : points) {
-			if (p.getX() < min) {
-				min = p.getX();
-			}
+		if (maxY == null) {
+			maxY = GeometryUtil.maxY(points);
 		}
-		return min;
-	}
-
-	public int minY(final List<Point> points) {
-		int min = Integer.MAX_VALUE;
-		for (final Point p : points) {
-			if (p.getY() < min) {
-				min = p.getY();
-			}
-		}
-		return min;
-	}
-
-	public int maxX(final List<Point> points) {
-		int max = Integer.MIN_VALUE;
-		for (final Point p : points) {
-			if (p.getX() > max) {
-				max = p.getX();
-			}
-		}
-		return max;
-	}
-
-	public int maxY(final List<Point> points) {
-		int max = Integer.MIN_VALUE;
-		for (final Point p : points) {
-			if (p.getY() > max) {
-				max = p.getY();
-			}
-		}
-		return max;
+		return maxY;
 	}
 
 	public Point getCenter() {

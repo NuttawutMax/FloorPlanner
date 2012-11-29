@@ -4,8 +4,8 @@ import java.util.List;
 import java.util.UUID;
 
 import org.percepta.mgrankvi.floorplanner.gwt.client.geometry.Point;
-import org.percepta.mgrankvi.floorplanner.gwt.client.room.DoorState;
-import org.percepta.mgrankvi.floorplanner.gwt.client.room.DoorState.Direction;
+import org.percepta.mgrankvi.floorplanner.gwt.client.item.door.DoorState;
+import org.percepta.mgrankvi.floorplanner.gwt.client.item.door.DoorState.Direction;
 import org.percepta.mgrankvi.floorplanner.gwt.client.room.RoomState;
 
 import com.vaadin.ui.AbstractComponent;

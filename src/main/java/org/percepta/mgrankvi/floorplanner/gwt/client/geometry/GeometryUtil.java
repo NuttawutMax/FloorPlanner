@@ -1,5 +1,7 @@
 package org.percepta.mgrankvi.floorplanner.gwt.client.geometry;
 
+import java.util.List;
+
 public class GeometryUtil {
 
 	public Double getArea(final Point p1, final Point p2, final Point p3) {
@@ -29,5 +31,45 @@ public class GeometryUtil {
 
 	public static Point combine(final Point p1, final Point p2) {
 		return new Point(p1.getX() + p2.getX(), p1.getY() + p2.getY());
+	}
+
+	public static int minX(final List<Point> points) {
+		int min = Integer.MAX_VALUE;
+		for (final Point p : points) {
+			if (p.getX() < min) {
+				min = p.getX();
+			}
+		}
+		return min;
+	}
+
+	public static int minY(final List<Point> points) {
+		int min = Integer.MAX_VALUE;
+		for (final Point p : points) {
+			if (p.getY() < min) {
+				min = p.getY();
+			}
+		}
+		return min;
+	}
+
+	public static int maxX(final List<Point> points) {
+		int max = Integer.MIN_VALUE;
+		for (final Point p : points) {
+			if (p.getX() > max) {
+				max = p.getX();
+			}
+		}
+		return max;
+	}
+
+	public static int maxY(final List<Point> points) {
+		int max = Integer.MIN_VALUE;
+		for (final Point p : points) {
+			if (p.getY() > max) {
+				max = p.getY();
+			}
+		}
+		return max;
 	}
 }

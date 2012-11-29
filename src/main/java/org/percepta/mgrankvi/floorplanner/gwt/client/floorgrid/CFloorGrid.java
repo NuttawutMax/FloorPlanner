@@ -10,9 +10,9 @@ import org.percepta.mgrankvi.floorplanner.gwt.client.InfoButton;
 import org.percepta.mgrankvi.floorplanner.gwt.client.geometry.GeometryUtil;
 import org.percepta.mgrankvi.floorplanner.gwt.client.geometry.Point;
 import org.percepta.mgrankvi.floorplanner.gwt.client.info.CInfoEditor;
+import org.percepta.mgrankvi.floorplanner.gwt.client.item.door.DoorState;
 import org.percepta.mgrankvi.floorplanner.gwt.client.paint.GridUtils;
 import org.percepta.mgrankvi.floorplanner.gwt.client.room.CRoom;
-import org.percepta.mgrankvi.floorplanner.gwt.client.room.DoorState;
 import org.percepta.mgrankvi.floorplanner.gwt.client.room.RoomState;
 
 import com.google.gwt.canvas.client.Canvas;
@@ -153,7 +153,8 @@ public class CFloorGrid extends Widget implements ClickHandler, MouseDownHandler
 		paintRooms();
 
 		if (hoverElement != null) {
-			hoverElement.paint(canvas.getContext2d());
+			hoverElement.paint(context);
+			hoverElement.getRoom().paintLabel(context);
 		}
 	}
 
@@ -303,6 +304,7 @@ public class CFloorGrid extends Widget implements ClickHandler, MouseDownHandler
 			}
 			room.movePosition(event.getClientX() - downX, event.getClientY() - downY);
 		} else {
+			room.pointMoved();
 			targetPoint.move(event.getClientX() - downX, event.getClientY() - downY);
 		}
 	}

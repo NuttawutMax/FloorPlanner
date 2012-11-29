@@ -1,9 +1,9 @@
-package org.percepta.mgrankvi.floorplanner.gwt.client.item;
+package org.percepta.mgrankvi.floorplanner.gwt.client.item.door;
 
 import org.percepta.mgrankvi.floorplanner.gwt.client.VisualItem;
 import org.percepta.mgrankvi.floorplanner.gwt.client.geometry.GeometryUtil;
 import org.percepta.mgrankvi.floorplanner.gwt.client.geometry.Point;
-import org.percepta.mgrankvi.floorplanner.gwt.client.room.DoorState.Direction;
+import org.percepta.mgrankvi.floorplanner.gwt.client.item.door.DoorState.Direction;
 
 import com.google.gwt.canvas.dom.client.Context2d;
 

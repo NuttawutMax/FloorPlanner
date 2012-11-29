@@ -7,8 +7,9 @@ import org.percepta.mgrankvi.floorplanner.gwt.client.VisualItem;
 import org.percepta.mgrankvi.floorplanner.gwt.client.geometry.GeometryUtil;
 import org.percepta.mgrankvi.floorplanner.gwt.client.geometry.Line;
 import org.percepta.mgrankvi.floorplanner.gwt.client.geometry.Point;
-import org.percepta.mgrankvi.floorplanner.gwt.client.item.CDoor;
 import org.percepta.mgrankvi.floorplanner.gwt.client.item.CLabel;
+import org.percepta.mgrankvi.floorplanner.gwt.client.item.door.CDoor;
+import org.percepta.mgrankvi.floorplanner.gwt.client.item.door.DoorState;
 import org.percepta.mgrankvi.floorplanner.gwt.client.paint.ItemUtils;
 
 import com.google.gwt.canvas.dom.client.Context2d;
@@ -19,6 +20,7 @@ public class CRoom extends VisualItem {
 
 	private boolean selected = false;
 	private final List<VisualItem> roomItems = new LinkedList<VisualItem>();
+	private CLabel roomLabel;
 
 	public CRoom() {
 		// dummy element
@@ -35,8 +37,7 @@ public class CRoom extends VisualItem {
 	public void setName(final String name) {
 		super.setName(name);
 		if (!name.isEmpty()) {
-			final CLabel label = new CLabel(name, getCenter());
-			roomItems.add(label);
+			roomLabel = new CLabel(name, getCenter());
 		}
 	}
 
@@ -63,9 +64,6 @@ public class CRoom extends VisualItem {
 	@Override
 	public void movePosition(final int x, final int y) {
 		super.movePosition(x, y);
-		// for (final VisualItem item : roomItems) {
-		// item.movePosition(x, y);
-		// }
 	}
 
 	public void setSelection(final boolean selected) {
@@ -74,6 +72,12 @@ public class CRoom extends VisualItem {
 
 	public boolean isSelected() {
 		return selected;
+	}
+
+	public void paintLabel(final Context2d context) {
+		if (roomLabel != null) {
+			roomLabel.paint(context, position);
+		}
 	}
 
 	@Override
@@ -97,13 +101,13 @@ public class CRoom extends VisualItem {
 
 	@Override
 	public boolean pointInObject(final int x, final int y) {
-		if (x < (position.getX() + minX(points)) || x > (position.getX() + maxX(points)) || y < (position.getY() + minY(points))
-				|| y > (position.getY() + maxY(points))) {
+		if (x < (position.getX() + minX()) || x > (position.getX() + maxX()) || y < (position.getY() + minY()) || y > (position.getY() + maxY())) {
 			return false;
 		}
 
 		final Point target = new Point(x, y);
-		final Line targetLine = new Line(new Point(position.getX() + minX(points) - 50, position.getY() + minY(points) - 50), target);
+		// First point clearly outside shape.
+		final Line targetLine = new Line(new Point(position.getX() + minX() - 50, position.getY() + minY() - 50), target);
 		int intercepts = 0;
 		for (int i = 0; i + 2 <= points.size(); i++) {
 			final Line line = new Line(combine(position, points.get(i)), combine(position, points.get(i + 1)));
