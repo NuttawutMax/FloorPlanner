@@ -87,10 +87,11 @@ public class CRoom extends VisualItem {
 			}
 		}
 		if (roomLabel != null) {
-			roomLabel.getPosition().setX((int) Math.floor(roomLabel.getPosition().getX() * scale));
-			roomLabel.getPosition().setY((int) Math.floor(roomLabel.getPosition().getY() * scale));
+			final Point position = roomLabel.getPosition();
+			position.setX((int) Math.floor(position.getX() * scale));
+			position.setY((int) Math.floor(position.getY() * scale));
+			roomLabel.setPosition(position);
 		}
-		VConsole.log(position.toString());
 	}
 
 	public void setSelection(final boolean selected) {

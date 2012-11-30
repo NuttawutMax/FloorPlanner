@@ -32,6 +32,9 @@ public class InfoButton extends VisualItem {
 	public void paint(final Context2d context) {
 		offset = new Point(GeometryUtil.maxX(room.getPoints()) + room.getPositionX() - OFFSET_X, GeometryUtil.minY(room.getPoints()) + room.getPositionY()
 				+ OFFSET_Y);
+		while (!room.pointInObject(offset.getX(), offset.getY())) {
+			offset.move(-SIDE_LENGTH, 0);
+		}
 
 		context.setStrokeStyle("gray");
 		context.beginPath();

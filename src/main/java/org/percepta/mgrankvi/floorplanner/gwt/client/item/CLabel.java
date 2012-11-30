@@ -23,6 +23,7 @@ public class CLabel extends VisualItem {
 
 	public void setPosition(final Point position) {
 		this.position = position;
+		this.position.move(-(width / 2), 0);
 	}
 
 	@Override
@@ -35,6 +36,7 @@ public class CLabel extends VisualItem {
 		final Point drawPosition = GeometryUtil.combine(position, offset);
 
 		context.setFont("bold 10px Courier New");
+
 		width = (int) Math.ceil(context.measureText(getName()).getWidth());
 
 		context.setFillStyle("GREEN");
