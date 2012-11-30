@@ -28,16 +28,27 @@ public class FloorPlanner extends UI {
 		Room room = RoomType.customRoom("Tiina", new Point(0, 0), new Point(0, 0), new Point(315, 0), new Point(315, 60), new Point(270, 150), new Point(270,
 				450), new Point(0, 450));
 		room.addDoor(Direction.UP_LEFT, new Point(270, 445), 80);
+		Table table = new Table("Tiina Wasberg", new Point(2, 150));
+		table.setSize(150, 50);
+		room.addItem(table.getState());
 		grid.addRoom(room);
 		// Vappula
 		room = RoomType.customRoom("Vappula", new Point(270, 0), new Point(45, 0), new Point(195, 0), new Point(195, 60), new Point(240, 150), new Point(240,
 				360), new Point(0, 360), new Point(0, 150), new Point(45, 60));
 		room.addDoor(Direction.UP_LEFT, new Point(230, 360), 70);
+
+		table = new Table("Mikael Vappula", new Point(2, 310));
+		table.setSize(150, 50);
+		room.addItem(table.getState());
 		grid.addRoom(room);
 		// Muurimaa
 		room = RoomType.customRoom("Muurimaa", new Point(465, 0), new Point(0, 0), new Point(315, 0), new Point(315, 450), new Point(45, 450), new Point(45,
 				150), new Point(0, 60));
 		room.addDoor(Direction.UP_RIGHT, new Point(45, 445), 80);
+
+		table = new Table("Henri Muurimaa", new Point(165, 100));
+		table.setSize(150, 50);
+		room.addItem(table.getState());
 		grid.addRoom(room);
 		// GuitarHero
 		room = RoomType.square(3, "Guitar Hero", new Point(105, 450));
@@ -64,6 +75,7 @@ public class FloorPlanner extends UI {
 						540), new Point(0, 540));
 		room.addDoor(Direction.DOWN_RIGHT, new Point(1360, 1560), 80);
 		room.addDoor(Direction.DOWN_LEFT, new Point(1480, 1560), 40);
+		addMainHallTables(room);
 		grid.addRoom(room);
 
 		// 140, 130
@@ -74,7 +86,7 @@ public class FloorPlanner extends UI {
 		// MetsäNeukkari
 		room = RoomType.customRoom("Metsä neukkari", new Point(0, 2910), new Point(0, 0), new Point(480, 0), new Point(480, 390), new Point(0, 390));
 		room.addDoor(Direction.UP_LEFT, new Point(460, 0), 80);
-		final Table table = new Table();
+		table = new Table();
 		table.setSize(200, 200);
 		table.setPosition(new Point(100, 70));
 		room.addItem(table.getState());
@@ -90,6 +102,20 @@ public class FloorPlanner extends UI {
 		grid.addRoom(room);
 
 		layout.addComponent(grid);
+	}
+
+	private void addMainHallTables(final Room room) {
+		Table table = new Table("Joonas Lehtinen", new Point(1140, 200));
+		table.setSize(50, 150);
+		room.addItem(table.getState());
+
+		table = new Table("Jurka Rahikkala", new Point(1140, 400));
+		table.setSize(50, 150);
+		room.addItem(table.getState());
+
+		table = new Table("Kim Leppänen", new Point(155, 3));
+		table.setSize(50, 150);
+		room.addItem(table.getState());
 	}
 }
 

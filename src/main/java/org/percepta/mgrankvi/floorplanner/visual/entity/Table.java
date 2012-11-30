@@ -16,6 +16,13 @@ public class Table extends AbstractItem {
 		getState().id = UUID.randomUUID().toString();
 	}
 
+	public Table(final String name, final Point position) {
+		getState().type = ItemType.TABLE;
+		getState().id = UUID.randomUUID().toString();
+		setName(name);
+		setPosition(position);
+	}
+
 	public void setName(final String name) {
 		getState().setName(name);
 	}

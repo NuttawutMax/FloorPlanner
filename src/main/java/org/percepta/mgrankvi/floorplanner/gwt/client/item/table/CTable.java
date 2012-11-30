@@ -32,13 +32,13 @@ public class CTable extends VisualItem {
 		ItemUtils.paintPointToPoint(context, points, drawPosition, CssColor.make("BLACK"));
 
 		if (getName() != null) {
-			paintName(context, offset);
+			paintName(context);
 		}
 	}
 
-	public void paintName(final Context2d context, final Point offset) {
+	public void paintName(final Context2d context) {
 		final Point drawPosition = GeometryUtil.combine(this.drawPosition,
-				new Point((int) Math.floor((maxX - minX) * 0.25), (int) Math.floor((maxY - minY) * 0.4)));
+				new Point((int) Math.floor((maxX() - minX()) * 0.25), (int) Math.floor((maxY() - minY()) * 0.4)));
 
 		context.setFont("bold 10px Courier New");
 

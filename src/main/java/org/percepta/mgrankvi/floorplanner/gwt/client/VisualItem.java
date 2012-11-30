@@ -21,7 +21,7 @@ public abstract class VisualItem extends Widget {
 	protected String id, name;
 	protected final LinkedList<Point> points = new LinkedList<Point>();
 	protected Point position = new Point(0, 0);
-	protected Integer minX, maxX, minY, maxY;
+	private Integer minX, maxX, minY, maxY;
 
 	public String getId() {
 		return id;

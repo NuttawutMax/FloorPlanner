@@ -231,11 +231,11 @@ public class CFloorGrid extends Widget implements ClickHandler, MouseDownHandler
 		for (final CRoom room : rooms) {
 			room.scale(scale);
 		}
-		offsetX = (int) Math.floor(offsetX * scale);
-		offsetY = (int) Math.floor(offsetY * scale);
-		gridSize = (int) Math.floor(gridSize * scale);
-		origo.setX((int) Math.floor(origo.getX() * scale));
-		origo.setY((int) Math.floor(origo.getY() * scale));
+		offsetX = (int) Math.ceil(offsetX * scale);
+		offsetY = (int) Math.ceil(offsetY * scale);
+		gridSize = (int) Math.ceil(gridSize * scale);
+		origo.setX((int) Math.ceil(origo.getX() * scale));
+		origo.setY((int) Math.ceil(origo.getY() * scale));
 	}
 
 	@Override

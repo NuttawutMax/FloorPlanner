@@ -71,25 +71,30 @@ public class CRoom extends VisualItem {
 
 	public void scale(final double scale) {
 		for (final Point p : points) {
-			p.setX((int) Math.floor(p.getX() * scale));
-			p.setY((int) Math.floor(p.getY() * scale));
+			p.setX((int) Math.ceil(p.getX() * scale));
+			p.setY((int) Math.ceil(p.getY() * scale));
 		}
-		position.setX((int) Math.floor(position.getX() * scale));
-		position.setY((int) Math.floor(position.getY() * scale));
+		position.setX((int) Math.ceil(position.getX() * scale));
+		position.setY((int) Math.ceil(position.getY() * scale));
 
 		for (final VisualItem item : roomItems) {
 			final Point position = item.getPosition();
-			position.setX((int) Math.floor(position.getX() * scale));
-			position.setY((int) Math.floor(position.getY() * scale));
+			position.setX((int) Math.ceil(position.getX() * scale));
+			position.setY((int) Math.ceil(position.getY() * scale));
 			item.setPosition(position);
 			if (item instanceof CDoor) {
-				((CDoor) item).setSize((int) Math.floor(((CDoor) item).getSize() * scale));
+				((CDoor) item).setSize((int) Math.ceil(((CDoor) item).getSize() * scale));
 			}
+			for (final Point p : item.getPoints()) {
+				p.setX((int) Math.ceil(p.getX() * scale));
+				p.setY((int) Math.ceil(p.getY() * scale));
+			}
+			item.pointMoved();
 		}
 		if (roomLabel != null) {
 			final Point position = roomLabel.getPosition();
-			position.setX((int) Math.floor(position.getX() * scale));
-			position.setY((int) Math.floor(position.getY() * scale));
+			position.setX((int) Math.ceil(position.getX() * scale));
+			position.setY((int) Math.ceil(position.getY() * scale));
 			roomLabel.setPosition(position);
 		}
 	}
