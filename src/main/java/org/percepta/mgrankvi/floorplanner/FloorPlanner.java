@@ -26,59 +26,63 @@ public class FloorPlanner extends UI {
 		// Tiina
 		Room room = RoomType.customRoom("Tiina", new Point(0, 0), new Point(0, 0), new Point(315, 0), new Point(315, 60), new Point(270, 150), new Point(270,
 				450), new Point(0, 450));
-		room.addDoor(Direction.UP_LEFT, new Point(270, 435));
+		room.addDoor(Direction.UP_LEFT, new Point(270, 445), 80);
 		grid.addRoom(room);
 		// Vappula
 		room = RoomType.customRoom("Vappula", new Point(270, 0), new Point(45, 0), new Point(195, 0), new Point(195, 60), new Point(240, 150), new Point(240,
 				360), new Point(0, 360), new Point(0, 150), new Point(45, 60));
-		room.addDoor(Direction.UP_LEFT, new Point(75, 360));
+		room.addDoor(Direction.UP_LEFT, new Point(230, 360), 70);
 		grid.addRoom(room);
 		// Muurimaa
 		room = RoomType.customRoom("Muurimaa", new Point(465, 0), new Point(0, 0), new Point(315, 0), new Point(315, 450), new Point(45, 450), new Point(45,
 				150), new Point(0, 60));
-		room.addDoor(Direction.UP_RIGHT, new Point(45, 435));
+		room.addDoor(Direction.UP_RIGHT, new Point(45, 445), 80);
 		grid.addRoom(room);
 		// GuitarHero
 		room = RoomType.square(3, "Guitar Hero", new Point(105, 450));
-		room.addDoor(Direction.UP_LEFT, new Point(300, 285));
+		room.addDoor(Direction.UP_LEFT, new Point(300, 285), 80);
 		grid.addRoom(room);
 		// PikkuNeukkari
 		room = RoomType.square(3, "Pikku Neukkari", new Point(105, 750));
-		room.addDoor(Direction.DOWN_RIGHT, new Point(300, 9));
+		room.addDoor(Direction.DOWN_RIGHT, new Point(300, 9), 80);
 		grid.addRoom(room);
 		// Kitchen
 		room = RoomType.customRoom("Kitchen", new Point(0, 1050), new Point(0, 15), new Point(105, 15), new Point(105, 0), new Point(405, 0), new Point(405,
 				300), new Point(0, 300));
-		room.addDoor(Direction.DOWN_LEFT, new Point(405, 9));
+		room.addDoor(Direction.DOWN_LEFT, new Point(405, 9), 80);
 		grid.addRoom(room);
 		// Lounge
 		room = RoomType.customRoom("Lounge", new Point(405, 450), new Point(0, 0), new Point(375, 0), new Point(375, 900), new Point(0, 900));
-		room.addDoor(Direction.DOWN_RIGHT, new Point(15, 0));
-		room.addDoor(Direction.DOWN_RIGHT, new Point(15, 900));
+		room.addDoor(Direction.DOWN_RIGHT, new Point(15, 0), 80);
+		room.addDoor(Direction.DOWN_RIGHT, new Point(15, 900), 80);
 		grid.addRoom(room);
 
 		// MainHall width: 560 height: 520, toilet: w80, h100
-		grid.addRoom(RoomType.customRoom("Main Hall", new Point(-450, 1350), new Point(0, 0), new Point(1680, 0), new Point(1680, 540), new Point(1440, 540),
+		room = RoomType.customRoom("Main Hall", new Point(-450, 1350), new Point(0, 0), new Point(1680, 0), new Point(1680, 540), new Point(1440, 540),
 				new Point(1440, 840), new Point(1680, 840), new Point(1680, 1560), new Point(0, 1560), new Point(0, 840), new Point(240, 840), new Point(240,
-						540), new Point(0, 540)));
+						540), new Point(0, 540));
+		room.addDoor(Direction.DOWN_RIGHT, new Point(1360, 2910), 80);
+		room.addDoor(Direction.DOWN_LEFT, new Point(1420, 2910), 20);
+		grid.addRoom(room);
 
 		// 140, 130
 		room = RoomType.customRoom(new Point(-420, 2910), new Point(0, 0), new Point(420, 0), new Point(420, 390), new Point(0, 390));
-		room.addDoor(Direction.DOWN_LEFT, new Point(330, 0));
+		room.addDoor(Direction.DOWN_LEFT, new Point(330, 0), 80);
 		grid.addRoom(room);
 
 		// MetsäNeukkari
 		room = RoomType.customRoom("Metsä neukkari", new Point(0, 2910), new Point(0, 0), new Point(480, 0), new Point(480, 390), new Point(0, 390));
-		room.addDoor(Direction.UP_LEFT, new Point(460, 0));
+		room.addDoor(Direction.UP_LEFT, new Point(460, 0), 80);
+		// room.add
 		grid.addRoom(room);
 
 		// StuffRomm
 		room = RoomType.customRoom("Storage", new Point(480, 2910), new Point(0, 0), new Point(210, 0), new Point(210, 390), new Point(0, 390));
-		room.addDoor(Direction.UP_LEFT, new Point(180, 0));
+		room.addDoor(Direction.UP_LEFT, new Point(180, 0), 80);
 		grid.addRoom(room);
 		// ServerRoom
 		room = RoomType.customRoom("Server room", new Point(690, 2910), new Point(0, 0), new Point(150, 0), new Point(150, 390), new Point(0, 390));
-		room.addDoor(Direction.UP_RIGHT, new Point(30, 0));
+		room.addDoor(Direction.UP_RIGHT, new Point(30, 0), 80);
 		grid.addRoom(room);
 
 		layout.addComponent(grid);

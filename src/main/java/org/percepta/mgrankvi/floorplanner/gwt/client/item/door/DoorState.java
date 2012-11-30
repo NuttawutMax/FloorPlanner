@@ -14,6 +14,7 @@ public class DoorState extends ComponentState {
 
 	private Direction openingDirection;
 	private Point position;
+	private int size = 20;
 
 	public Direction getOpeningDirection() {
 		return openingDirection;
@@ -29,6 +30,14 @@ public class DoorState extends ComponentState {
 
 	public void setPosition(final Point position) {
 		this.position = position;
+	}
+
+	public int getSize() {
+		return size;
+	}
+
+	public void setSize(final int size) {
+		this.size = size;
 	}
 
 }
