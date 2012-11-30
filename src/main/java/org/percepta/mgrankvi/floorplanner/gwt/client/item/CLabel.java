@@ -21,9 +21,9 @@ public class CLabel extends VisualItem {
 		this.position.move(-(width / 2), 0);
 	}
 
+	@Override
 	public void setPosition(final Point position) {
 		this.position = position;
-		this.position.move(-(width / 2), 0);
 	}
 
 	@Override

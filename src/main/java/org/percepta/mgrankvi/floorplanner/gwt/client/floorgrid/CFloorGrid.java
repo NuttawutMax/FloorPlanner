@@ -34,6 +34,8 @@ import com.google.gwt.event.dom.client.MouseDownEvent;
 import com.google.gwt.event.dom.client.MouseDownHandler;
 import com.google.gwt.event.dom.client.MouseMoveEvent;
 import com.google.gwt.event.dom.client.MouseMoveHandler;
+import com.google.gwt.event.dom.client.MouseOutEvent;
+import com.google.gwt.event.dom.client.MouseOutHandler;
 import com.google.gwt.event.dom.client.MouseUpEvent;
 import com.google.gwt.event.dom.client.MouseUpHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
@@ -45,7 +47,8 @@ import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 
-public class CFloorGrid extends Widget implements ClickHandler, MouseDownHandler, MouseUpHandler, MouseMoveHandler, ContextMenuHandler, ChangeHandler {
+public class CFloorGrid extends Widget implements ClickHandler, MouseDownHandler, MouseUpHandler, MouseMoveHandler, MouseOutHandler, ContextMenuHandler,
+		ChangeHandler {
 
 	private static final String CLASSNAME = "c-floorgrid";
 
@@ -84,6 +87,7 @@ public class CFloorGrid extends Widget implements ClickHandler, MouseDownHandler
 		addDomHandler(this, ClickEvent.getType());
 		addDomHandler(this, ContextMenuEvent.getType());
 		addDomHandler(this, ChangeEvent.getType());
+		addDomHandler(this, MouseOutEvent.getType());
 
 		canvas = Canvas.createIfSupported();
 		if (canvas != null) {
@@ -475,5 +479,11 @@ public class CFloorGrid extends Widget implements ClickHandler, MouseDownHandler
 			contextMenu = null;
 			repaint();
 		}
+	}
+
+	@Override
+	public void onMouseOut(final MouseOutEvent event) {
+		mouseDown = false;
+		selected = null;
 	}
 }
