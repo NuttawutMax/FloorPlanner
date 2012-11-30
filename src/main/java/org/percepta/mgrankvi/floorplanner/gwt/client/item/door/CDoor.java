@@ -26,6 +26,14 @@ public class CDoor extends VisualItem {
 		this.position = position;
 	}
 
+	public void setSize(final int size) {
+		this.size = size;
+	}
+
+	public int getSize() {
+		return size;
+	}
+
 	@Override
 	public void paint(final Context2d context) {
 		context.beginPath();

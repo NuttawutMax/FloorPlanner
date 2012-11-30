@@ -52,6 +52,10 @@ public abstract class VisualItem extends Widget {
 		position.setY(position.getY() + y);
 	}
 
+	public void setPosition(final Point position) {
+		this.position = position;
+	}
+
 	public void pointMoved() {
 		minX = maxX = minY = maxY = null;
 	}

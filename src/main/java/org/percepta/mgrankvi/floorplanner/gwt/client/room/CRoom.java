@@ -15,6 +15,7 @@ import org.percepta.mgrankvi.floorplanner.gwt.client.paint.ItemUtils;
 import com.google.gwt.canvas.dom.client.Context2d;
 import com.google.gwt.canvas.dom.client.CssColor;
 import com.google.gwt.dom.client.Document;
+import com.vaadin.client.VConsole;
 
 public class CRoom extends VisualItem {
 
@@ -57,13 +58,39 @@ public class CRoom extends VisualItem {
 		this.id = id;
 	}
 
+	@Override
 	public void setPosition(final Point position) {
 		this.position = position;
+		VConsole.log("Start position: " + position.toString());
 	}
 
 	@Override
 	public void movePosition(final int x, final int y) {
 		super.movePosition(x, y);
+	}
+
+	public void scale(final double scale) {
+		for (final Point p : points) {
+			p.setX((int) Math.floor(p.getX() * scale));
+			p.setY((int) Math.floor(p.getY() * scale));
+		}
+		position.setX((int) Math.floor(position.getX() * scale));
+		position.setY((int) Math.floor(position.getY() * scale));
+
+		for (final VisualItem item : roomItems) {
+			final Point position = item.getPosition();
+			position.setX((int) Math.floor(position.getX() * scale));
+			position.setY((int) Math.floor(position.getY() * scale));
+			item.setPosition(position);
+			if (item instanceof CDoor) {
+				((CDoor) item).setSize((int) Math.floor(((CDoor) item).getSize() * scale));
+			}
+		}
+		if (roomLabel != null) {
+			roomLabel.getPosition().setX((int) Math.floor(roomLabel.getPosition().getX() * scale));
+			roomLabel.getPosition().setY((int) Math.floor(roomLabel.getPosition().getY() * scale));
+		}
+		VConsole.log(position.toString());
 	}
 
 	public void setSelection(final boolean selected) {
@@ -142,7 +169,7 @@ public class CRoom extends VisualItem {
 	}
 
 	public void addDoor(final DoorState doorState) {
-		final CDoor door = new CDoor(20, doorState.getOpeningDirection());
+		final CDoor door = new CDoor(doorState.getSize(), doorState.getOpeningDirection());
 		door.setPosition(doorState.getPosition());
 		addRoomItem(door);
 	}

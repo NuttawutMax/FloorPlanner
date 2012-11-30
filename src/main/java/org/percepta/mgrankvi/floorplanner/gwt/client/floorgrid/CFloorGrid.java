@@ -56,8 +56,7 @@ public class CFloorGrid extends Widget implements ClickHandler, MouseDownHandler
 
 	private InfoButton hoverElement = null;
 
-	private final int gridSize = 50;
-	private double zoom = 0;
+	private int gridSize = 50;
 	private int offsetX = 0;
 	private int offsetY = 0;
 	private final Point origo = new Point(0, 0);
@@ -178,15 +177,17 @@ public class CFloorGrid extends Widget implements ClickHandler, MouseDownHandler
 			final int clientY = event.getClientY();
 			if (clientX > Window.getClientWidth() - 50 && clientX < Window.getClientWidth() - 25) {
 				if (clientY > 25 && clientY < 50) {
-					zoom += 0.1;// sx = sy = 0.1
+					// sx = sy = 2
 					// x2 = sx*x1
 					// y2 = sy*y1
+					scale(2);
 					repaint();
 					return;
 				} else if (clientY > 51 && clientY < 76) {
-					zoom -= 0.1;// sx = sy = -0.1
+					// sx = sy = 0.5
 					// x2 = sx*x1
 					// y2 = sy*y1
+					scale(0.5);
 					repaint();
 					return;
 				}
@@ -211,6 +212,17 @@ public class CFloorGrid extends Widget implements ClickHandler, MouseDownHandler
 			}
 			repaint();
 		}
+	}
+
+	private void scale(final double scale) {
+		for (final CRoom room : rooms) {
+			room.scale(scale);
+		}
+		offsetX = (int) Math.floor(offsetX * scale);
+		offsetY = (int) Math.floor(offsetY * scale);
+		gridSize = (int) Math.floor(gridSize * scale);
+		origo.setX((int) Math.floor(origo.getX() * scale));
+		origo.setY((int) Math.floor(origo.getY() * scale));
 	}
 
 	@Override
