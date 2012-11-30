@@ -10,5 +10,7 @@ import com.vaadin.shared.ComponentState;
 public class ItemState extends ComponentState {
 
 	public ItemType type;
-	public List<Point> points = new LinkedList<Point>();
+	public List<Point> itemPoints = new LinkedList<Point>();
+	public Point itemPosition;
+	public String itemName;
 }

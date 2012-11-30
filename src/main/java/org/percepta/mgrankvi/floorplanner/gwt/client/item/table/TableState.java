@@ -10,24 +10,22 @@ public class TableState extends ItemState {
 
 	private static final long serialVersionUID = 6186956716133798868L;
 
-	private Point position;
 	private List<DrawCommand> commands = new LinkedList<DrawCommand>();
-	private String name;
 
 	public Point getPosition() {
-		return position;
+		return itemPosition;
 	}
 
 	public void setPosition(final Point position) {
-		this.position = position;
+		this.itemPosition = position;
 	}
 
 	public List<Point> getPoints() {
-		return points;
+		return itemPoints;
 	}
 
 	public void setPoints(final List<Point> points) {
-		this.points = points;
+		itemPoints = points;
 	}
 
 	public List<DrawCommand> getCommands() {
@@ -39,11 +37,11 @@ public class TableState extends ItemState {
 	}
 
 	public String getName() {
-		return name;
+		return itemName;
 	}
 
 	public void setName(final String name) {
-		this.name = name;
+		this.itemName = name;
 	}
 
 	public void addCommand(final DrawCommand command) {
@@ -51,12 +49,12 @@ public class TableState extends ItemState {
 	}
 
 	public void addPoint(final Point point) {
-		points.add(point);
+		itemPoints.add(point);
 	}
 
 	public void addPoints(final Point... points) {
 		for (final Point point : points) {
-			this.points.add(point);
+			itemPoints.add(point);
 		}
 	}
 }

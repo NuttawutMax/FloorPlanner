@@ -7,10 +7,13 @@ import java.util.Map;
 
 import org.percepta.mgrankvi.floorplanner.gwt.client.CommandObject;
 import org.percepta.mgrankvi.floorplanner.gwt.client.InfoButton;
+import org.percepta.mgrankvi.floorplanner.gwt.client.VisualItem;
 import org.percepta.mgrankvi.floorplanner.gwt.client.geometry.GeometryUtil;
 import org.percepta.mgrankvi.floorplanner.gwt.client.geometry.Point;
 import org.percepta.mgrankvi.floorplanner.gwt.client.info.CInfoEditor;
+import org.percepta.mgrankvi.floorplanner.gwt.client.item.ItemState;
 import org.percepta.mgrankvi.floorplanner.gwt.client.item.door.DoorState;
+import org.percepta.mgrankvi.floorplanner.gwt.client.item.table.CTable;
 import org.percepta.mgrankvi.floorplanner.gwt.client.paint.GridUtils;
 import org.percepta.mgrankvi.floorplanner.gwt.client.room.CRoom;
 import org.percepta.mgrankvi.floorplanner.gwt.client.room.RoomState;
@@ -112,6 +115,16 @@ public class CFloorGrid extends Widget implements ClickHandler, MouseDownHandler
 			room.setName(roomState.getName());
 			for (final DoorState door : roomState.getDoor()) {
 				room.addDoor(door);
+			}
+			for (final ItemState itemState : roomState.getItems()) {
+				VisualItem item;
+				switch (itemState.type) {
+				case TABLE:
+				default:
+					item = new CTable(itemState.itemPoints, itemState.itemPosition);
+					item.setName(itemState.itemName);
+				}
+				room.addRoomItem(item);
 			}
 			rooms.add(room);
 			roomMap.put(room.getId(), room);
