@@ -4,6 +4,7 @@ import org.percepta.mgrankvi.floorplanner.gwt.client.geometry.Point;
 import org.percepta.mgrankvi.floorplanner.gwt.client.item.door.DoorState.Direction;
 import org.percepta.mgrankvi.floorplanner.visual.entity.Room;
 import org.percepta.mgrankvi.floorplanner.visual.entity.RoomType;
+import org.percepta.mgrankvi.floorplanner.visual.entity.Table;
 
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.ui.CssLayout;
@@ -61,8 +62,8 @@ public class FloorPlanner extends UI {
 		room = RoomType.customRoom("Main Hall", new Point(-450, 1350), new Point(0, 0), new Point(1680, 0), new Point(1680, 540), new Point(1440, 540),
 				new Point(1440, 840), new Point(1680, 840), new Point(1680, 1560), new Point(0, 1560), new Point(0, 840), new Point(240, 840), new Point(240,
 						540), new Point(0, 540));
-		room.addDoor(Direction.DOWN_RIGHT, new Point(1360, 2910), 80);
-		room.addDoor(Direction.DOWN_LEFT, new Point(1420, 2910), 20);
+		room.addDoor(Direction.DOWN_RIGHT, new Point(1360, 1560), 80);
+		room.addDoor(Direction.DOWN_LEFT, new Point(1480, 1560), 40);
 		grid.addRoom(room);
 
 		// 140, 130
@@ -73,7 +74,10 @@ public class FloorPlanner extends UI {
 		// MetsäNeukkari
 		room = RoomType.customRoom("Metsä neukkari", new Point(0, 2910), new Point(0, 0), new Point(480, 0), new Point(480, 390), new Point(0, 390));
 		room.addDoor(Direction.UP_LEFT, new Point(460, 0), 80);
-		// room.add
+		final Table table = new Table();
+		table.setSize(200, 200);
+		table.setPosition(new Point(100, 70));
+		room.addItem(table.getState());
 		grid.addRoom(room);
 
 		// StuffRomm

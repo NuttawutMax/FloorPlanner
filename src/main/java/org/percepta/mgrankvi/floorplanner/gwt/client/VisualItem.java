@@ -93,8 +93,8 @@ public abstract class VisualItem extends Widget {
 	}
 
 	public Point getCenter() {
-		final int x = (maxX() - minX()) / 2;
-		final int y = (maxY() - minY()) / 2;
+		final int x = (int) ((maxX() - minX()) * 0.5);
+		final int y = (int) ((maxY() - minY()) * 0.5);
 		return new Point(x, y);
 	}
 
