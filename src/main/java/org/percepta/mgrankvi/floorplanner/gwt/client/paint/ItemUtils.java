@@ -9,6 +9,23 @@ import com.google.gwt.canvas.dom.client.FillStrokeStyle;
 
 public class ItemUtils {
 
+	public static void fillPointToPoint(final Context2d context, final LinkedList<Point> points, final Point offset, final FillStrokeStyle color) {
+		final Point first = points.getFirst();
+
+		context.setFillStyle(color);
+
+		context.beginPath();
+		context.moveTo(offset.getX() + first.getX(), offset.getY() + first.getY());
+
+		for (final Point point : points) {
+			context.lineTo(offset.getX() + point.getX(), offset.getY() + point.getY());
+		}
+		context.lineTo(offset.getX() + first.getX(), offset.getY() + first.getY());
+
+		context.closePath();
+		context.fill();
+	}
+
 	public static void paintPointToPoint(final Context2d context, final LinkedList<Point> points, final Point offset, final FillStrokeStyle color) {
 		final Point first = points.getFirst();
 

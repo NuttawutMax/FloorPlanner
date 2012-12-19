@@ -54,6 +54,10 @@ public class CRoom extends VisualItem {
 		roomItems.remove(item);
 	}
 
+	public List<VisualItem> getRoomItems() {
+		return new LinkedList<VisualItem>(roomItems);
+	}
+
 	public void setId(final String id) {
 		this.id = id;
 	}

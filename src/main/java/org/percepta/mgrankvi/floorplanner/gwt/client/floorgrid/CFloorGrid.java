@@ -1,9 +1,12 @@
 package org.percepta.mgrankvi.floorplanner.gwt.client.floorgrid;
 
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.percepta.mgrankvi.floorplanner.gwt.client.CommandObject;
 import org.percepta.mgrankvi.floorplanner.gwt.client.InfoButton;
@@ -24,12 +27,16 @@ import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.dom.client.Style;
 import com.google.gwt.dom.client.Style.Position;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.ContextMenuEvent;
 import com.google.gwt.event.dom.client.ContextMenuHandler;
+import com.google.gwt.event.dom.client.KeyCodes;
+import com.google.gwt.event.dom.client.KeyUpEvent;
+import com.google.gwt.event.dom.client.KeyUpHandler;
 import com.google.gwt.event.dom.client.MouseDownEvent;
 import com.google.gwt.event.dom.client.MouseDownHandler;
 import com.google.gwt.event.dom.client.MouseMoveEvent;
@@ -41,14 +48,18 @@ import com.google.gwt.event.dom.client.MouseUpHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.FlowPanel;
+import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.MenuBar;
 import com.google.gwt.user.client.ui.MenuItem;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
+import com.vaadin.client.ui.VNotification;
 
 public class CFloorGrid extends Widget implements ClickHandler, MouseDownHandler, MouseUpHandler, MouseMoveHandler, MouseOutHandler, ContextMenuHandler,
-		ChangeHandler {
+		ChangeHandler, KeyUpHandler {
 
 	private static final String CLASSNAME = "c-floorgrid";
 	private static final int GRID_SIZE = 50;
@@ -56,6 +67,8 @@ public class CFloorGrid extends Widget implements ClickHandler, MouseDownHandler
 	private final Canvas canvas;
 	private final List<CRoom> rooms = new LinkedList<CRoom>();
 	private final Map<String, CRoom> roomMap = new HashMap<String, CRoom>();
+	private final Set<String> names = new HashSet<String>();
+	private CTable markedTable;
 
 	private final TextBox typeAndEdit = new TextBox();
 
@@ -93,6 +106,7 @@ public class CFloorGrid extends Widget implements ClickHandler, MouseDownHandler
 		addDomHandler(this, ContextMenuEvent.getType());
 		addDomHandler(this, ChangeEvent.getType());
 		addDomHandler(this, MouseOutEvent.getType());
+		addDomHandler(this, KeyUpEvent.getType());
 
 		canvas = Canvas.createIfSupported();
 		if (canvas != null) {
@@ -107,6 +121,7 @@ public class CFloorGrid extends Widget implements ClickHandler, MouseDownHandler
 
 		final Style editStyle = typeAndEdit.getElement().getStyle();
 		typeAndEdit.addChangeHandler(this);
+		typeAndEdit.addKeyUpHandler(this);
 		editStyle.setPosition(Position.RELATIVE);
 		editStyle.setLeft(0.0, Style.Unit.PX);
 		typeAndEdit.setWidth(Window.getClientWidth() + "px");
@@ -132,6 +147,9 @@ public class CFloorGrid extends Widget implements ClickHandler, MouseDownHandler
 				default:
 					item = new CTable(itemState.itemPoints, itemState.itemPosition);
 					item.setName(itemState.itemName);
+					if (itemState.itemName != null) {
+						names.add(itemState.itemName);
+					}
 				}
 				room.addRoomItem(item);
 			}
@@ -360,6 +378,19 @@ public class CFloorGrid extends Widget implements ClickHandler, MouseDownHandler
 		}
 	}
 
+	private void pan(final int amountx, final int amounty) {
+		offsetY += amountx;
+		offsetX += amounty;
+
+		offsetY = offsetY % 50;
+		offsetX = offsetX % 50;
+
+		origo.move(amountx, amounty);
+		for (final CRoom room : rooms) {
+			room.movePosition(amountx, amounty);
+		}
+	}
+
 	private void moveRoom(final CRoom room, final MouseMoveEvent event) {
 		if (targetPoint == null) {
 			if (event.isAltKeyDown()) {
@@ -371,13 +402,31 @@ public class CFloorGrid extends Widget implements ClickHandler, MouseDownHandler
 		}
 	}
 
+	boolean noChangeEvent = false;
+
+	@Override
+	public void onKeyUp(final KeyUpEvent event) {
+		if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
+			noChangeEvent = true;
+			handleTextFieldValue();
+		}
+	}
+
 	@Override
 	public void onChange(final ChangeEvent event) {
+		if (noChangeEvent) {
+			noChangeEvent = false;
+		} else {
+			handleTextFieldValue();
+		}
+	}
+
+	private void handleTextFieldValue() {
 		final String value = typeAndEdit.getValue();
 		if (value != null && !value.isEmpty()) {
+			final CommandObject cmd = new CommandObject(value);
 			for (final CRoom room : rooms) {
 				if (room.isSelected()) {
-					final CommandObject cmd = new CommandObject(value);
 					switch (cmd.getCommand()) {
 					case MOVE_TO:
 						room.setPosition(GeometryUtil.combine(origo, cmd.getPosition()));
@@ -402,7 +451,151 @@ public class CFloorGrid extends Widget implements ClickHandler, MouseDownHandler
 					break;
 				}
 			}
+			if (cmd.getCommand().equals(CommandObject.Command.FIND)) {
+				if (names.contains(cmd.getValue())) {
+					typeAndEdit.setValue("");
+
+					markTableOfSelectedPerson(cmd.getValue());
+				} else if (namesContain(cmd)) {
+					typeAndEdit.setValue("");
+					final LinkedList<String> possible = possibilities(cmd);
+					if (possible.size() == 1) {
+						markTableOfSelectedPerson(possible.getFirst());
+					} else if (possible.size() > 1) {
+						createSelect(possible);
+					}
+				} else {
+					final VNotification notification = new VNotification();
+					final Style style = notification.getElement().getStyle();
+					style.setBackgroundColor("#c8ccd0");
+					style.setPadding(15.0, Unit.PX);
+					style.setProperty("border-radius", "4px");
+					style.setProperty("-moz-border-radius", "4px");
+					style.setProperty("-webkit-border-radius", "4px");
+
+					notification.show("No user found for [" + cmd.getValue() + "]", VNotification.CENTERED, null);
+				}
+			}
 		}
+	}
+
+	private boolean namesContain(final CommandObject cmd) {
+		for (final String name : names) {
+			if (name.contains(cmd.getValue())) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private LinkedList<String> possibilities(final CommandObject cmd) {
+		final LinkedList<String> possible = new LinkedList<String>();
+
+		for (final String name : names) {
+			if (name.contains(cmd.getValue())) {
+				possible.add(name);
+			}
+		}
+
+		Collections.sort(possible);
+
+		return possible;
+	}
+
+	private void createSelect(final List<String> possibilities) {
+		final PopupPanel select = new PopupPanel();
+
+		final ListBox listselect = new ListBox();
+		for (final String name : possibilities) {
+			listselect.addItem(name);
+		}
+		listselect.setVisibleItemCount(5);
+		listselect.addClickHandler(new ClickHandler() {
+
+			@Override
+			public void onClick(final ClickEvent event) {
+				markTableOfSelectedPerson(listselect.getValue(listselect.getSelectedIndex()));
+				select.hide();
+			}
+		});
+		final FlowPanel layout = new FlowPanel();
+		layout.add(new Label("Select person:"));
+		layout.add(listselect);
+
+		final Style style = layout.getElement().getStyle();
+		style.setBackgroundColor("burlywood");
+		style.setPadding(10.0, Unit.PX);
+		style.setProperty("border-radius", "4px");
+		style.setProperty("-moz-border-radius", "4px");
+		style.setProperty("-webkit-border-radius", "4px");
+
+		select.add(layout);
+		select.setPopupPosition(Window.getClientWidth() / 2, Window.getClientHeight() / 2);
+		select.show();
+	}
+
+	private void markTableOfSelectedPerson(final String nameOfSelection) {
+		if (markedTable != null) {
+			markedTable.setTableColor("TRANSPARENT");
+		}
+		for (final CRoom room : rooms) {
+			for (final VisualItem item : room.getRoomItems()) {
+				if (item instanceof CTable) {
+					final CTable table = (CTable) item;
+					if (nameOfSelection.equals(table.getName())) {
+						markedTable = table;
+						table.setTableColor("burlywood");
+						if (tableOutsideView(room, table)) {
+							final int halfCanvasWidth = canvas.getCoordinateSpaceWidth() / 2;
+							final int halfCanvasHeight = canvas.getCoordinateSpaceHeight() / 2;
+
+							final double halfTableWidth = (table.maxX() - table.minX()) / 2;
+							final double halfTableHeight = (table.maxY() - table.minY()) / 2;
+
+							double distX = GeometryUtil.distance(new Point(origo.getX(), 0), new Point(halfCanvasWidth, 0));
+							double distY = GeometryUtil.distance(new Point(0, origo.getY()), new Point(0, halfCanvasHeight));
+							final Point wanted = new Point(distX, distY);
+
+							final double tableCornerX = table.minX() + room.getPositionX();
+							final double tableCornerY = table.minY() + room.getPositionY();
+
+							distX = GeometryUtil.distance(new Point(tableCornerX, 0), new Point(wanted.getX(), 0));
+							distY = GeometryUtil.distance(new Point(0, tableCornerY), new Point(0, wanted.getY()));
+							if (tableCornerX > wanted.getX()) {
+								distX = -distX;
+							}
+							if (tableCornerY > wanted.getY()) {
+								distY = -distY;
+							}
+							// final double x2 = table.minX() +
+							// room.getPositionX() + origo.getX();
+							// final double y2 = table.minY() +
+							// room.getPositionY() + origo.getY();
+
+							// final double diffH = (origo.getX() + halfCanvas -
+							// halfTableWidth) - x2;
+							// final double diffV = (origo.getY() +
+							// halfCanvasHeight - halfTableHeight) - y2;
+
+							pan((int) Math.floor(distX), (int) Math.floor(distY));
+						}
+						// Window.alert(nameOfSelection + "\nSits in room: " +
+						// room.getName());
+						repaint();
+						return;
+					}
+				}
+			}
+		}
+	}
+
+	private boolean tableOutsideView(final CRoom room, final CTable table) {
+		final Point offset = room.getPosition();
+		if (table.minX() + offset.getX() < 0 || table.maxX() + offset.getX() > canvas.getCoordinateSpaceWidth() || table.minY() + offset.getY() < 0
+				|| table.maxY() + offset.getY() > canvas.getCoordinateSpaceHeight()) {
+			return true;
+		}
+		return false;
 	}
 
 	@Override
@@ -519,4 +712,5 @@ public class CFloorGrid extends Widget implements ClickHandler, MouseDownHandler
 		mouseDown = false;
 		selected = null;
 	}
+
 }

@@ -14,6 +14,8 @@ import com.google.gwt.canvas.dom.client.CssColor;
 public class CTable extends VisualItem {
 
 	private Point drawPosition = new Point(0, 0);
+	private String color = "BLACK";
+	private String tableColor = "TRANSPARENT";
 
 	public CTable(final List<Point> points, final Point position) {
 		this.points.addAll(points);
@@ -25,11 +27,23 @@ public class CTable extends VisualItem {
 		paint(context, new Point(0, 0));
 	}
 
+	public void setColor(final String color) {
+		this.color = color;
+	}
+
+	public void setTableColor(final String color) {
+		tableColor = color;
+	}
+
 	@Override
 	public void paint(final Context2d context, final Point offset) {
 		drawPosition = GeometryUtil.combine(position, offset);
 
-		ItemUtils.paintPointToPoint(context, points, drawPosition, CssColor.make("BLACK"));
+		if (!tableColor.equals("TRANSPARENT")) {
+			ItemUtils.fillPointToPoint(context, points, drawPosition, CssColor.make(tableColor));
+		}
+
+		ItemUtils.paintPointToPoint(context, points, drawPosition, CssColor.make(color));
 
 		if (getName() != null) {
 			paintName(context);

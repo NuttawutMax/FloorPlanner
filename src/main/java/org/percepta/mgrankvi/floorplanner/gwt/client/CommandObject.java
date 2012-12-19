@@ -5,11 +5,12 @@ import org.percepta.mgrankvi.floorplanner.gwt.client.geometry.Point;
 public class CommandObject {
 
 	public enum Command {
-		INVALID_STRING, PARSE_FAILED, MOVE_TO, MOVE_BY, SAVE
+		INVALID_STRING, PARSE_FAILED, MOVE_TO, MOVE_BY, SAVE, FIND
 	}
 
 	Command command = Command.INVALID_STRING;
 	int x, y;
+	String value;
 
 	public CommandObject(final String command) {
 		final String[] split = command.substring(1).split(",");
@@ -22,12 +23,16 @@ public class CommandObject {
 					this.command = Command.MOVE_BY;
 				} else if (command.startsWith("m")) {
 					this.command = Command.MOVE_TO;
-				} else if (command.startsWith("s")) {
-					this.command = Command.SAVE;
 				}
 			} catch (final NumberFormatException nfe) {
 				this.command = Command.PARSE_FAILED;
 			}
+		}
+		if (command.startsWith("s")) {
+			this.command = Command.SAVE;
+		} else if (command.startsWith("/")) {
+			this.command = Command.FIND;
+			value = command.substring(1);
 		}
 	}
 
@@ -59,4 +64,7 @@ public class CommandObject {
 		return new Point(x, y);
 	}
 
+	public String getValue() {
+		return value;
+	}
 }
