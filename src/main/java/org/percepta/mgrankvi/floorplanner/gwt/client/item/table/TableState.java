@@ -17,7 +17,7 @@ public class TableState extends ItemState {
 	}
 
 	public void setPosition(final Point position) {
-		this.itemPosition = position;
+		itemPosition = position;
 	}
 
 	public List<Point> getPoints() {
@@ -41,7 +41,7 @@ public class TableState extends ItemState {
 	}
 
 	public void setName(final String name) {
-		this.itemName = name;
+		itemName = name;
 	}
 
 	public void addCommand(final DrawCommand command) {

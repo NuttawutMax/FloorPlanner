@@ -10,28 +10,45 @@ import com.google.gwt.canvas.dom.client.Context2d;
 public class CDoor extends VisualItem {
 
 	private int size = 20;
+	private int orgSize = 20;
 	private Direction opening = Direction.UP_LEFT;
 
 	public CDoor(final int size, final Direction opening) {
 		this.size = size;
+		orgSize = size;
 		this.opening = opening;
 	}
 
 	public CDoor(final int size, final Point position) {
 		this.size = size;
+		orgSize = size;
 		this.position = position;
 	}
 
+	@Override
 	public void setPosition(final Point position) {
 		this.position = position;
 	}
 
 	public void setSize(final int size) {
 		this.size = size;
+		orgSize = size;
 	}
 
 	public int getSize() {
 		return size;
+	}
+
+	@Override
+	public void scale(final double scale) {
+		super.scale(scale);
+		size = (int) Math.ceil(size * scale);
+	}
+
+	@Override
+	public void reset() {
+		size = orgSize;
+		super.reset();
 	}
 
 	@Override
@@ -115,7 +132,7 @@ public class CDoor extends VisualItem {
 	}
 
 	@Override
-	public boolean pointInObject(final int x, final int y) {
+	public boolean pointInObject(final double x, final double y) {
 		// TODO Auto-generated method stub
 		return false;
 	}

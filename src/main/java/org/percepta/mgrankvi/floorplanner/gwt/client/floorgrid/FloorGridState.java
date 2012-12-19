@@ -5,9 +5,9 @@ import java.util.List;
 
 import org.percepta.mgrankvi.floorplanner.gwt.client.room.RoomState;
 
-import com.vaadin.shared.ComponentState;
+import com.vaadin.shared.AbstractComponentState;
 
-public class FloorGridState extends ComponentState {
+public class FloorGridState extends AbstractComponentState {
 
 	private static final long serialVersionUID = -863840405464639721L;
 

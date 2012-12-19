@@ -16,12 +16,14 @@ public abstract class VisualItem extends Widget {
 
 	public abstract void paint(final Context2d context, Point offset);
 
-	public abstract boolean pointInObject(final int x, final int y);
+	public abstract boolean pointInObject(final double x, final double y);
 
 	protected String id, name;
 	protected final LinkedList<Point> points = new LinkedList<Point>();
+	protected final List<Point> notZoomed = new LinkedList<Point>();
 	protected Point position = new Point(0, 0);
-	private Integer minX, maxX, minY, maxY;
+	protected Point orgPosition = new Point(0, 0);
+	private Double minX, maxX, minY, maxY;
 
 	public String getId() {
 		return id;
@@ -35,11 +37,11 @@ public abstract class VisualItem extends Widget {
 		return name;
 	}
 
-	public int getPositionX() {
+	public double getPositionX() {
 		return position.getX();
 	}
 
-	public int getPositionY() {
+	public double getPositionY() {
 		return position.getY();
 	}
 
@@ -64,28 +66,28 @@ public abstract class VisualItem extends Widget {
 		return new LinkedList<Point>(points);
 	}
 
-	public int minX() {
+	public double minX() {
 		if (minX == null) {
 			minX = GeometryUtil.minX(points);
 		}
 		return minX;
 	}
 
-	public int minY() {
+	public double minY() {
 		if (minY == null) {
 			minY = GeometryUtil.minY(points);
 		}
 		return minY;
 	}
 
-	public int maxX() {
+	public double maxX() {
 		if (maxX == null) {
 			maxX = GeometryUtil.maxX(points);
 		}
 		return maxX;
 	}
 
-	public int maxY() {
+	public double maxY() {
 		if (maxY == null) {
 			maxY = GeometryUtil.maxY(points);
 		}
@@ -98,8 +100,32 @@ public abstract class VisualItem extends Widget {
 		return new Point(x, y);
 	}
 
+	public void scale(final double scale) {
+		if (notZoomed.isEmpty()) {
+			copyPoints(points, notZoomed);
+			orgPosition = new Point(position.getX(), position.getY());
+		}
+	}
+
+	public void reset() {
+		if (notZoomed.isEmpty()) {
+			position = orgPosition;
+			return;
+		}
+		points.clear();
+		copyPoints(notZoomed, points);
+		position = orgPosition;
+		notZoomed.clear();
+	}
+
+	public void copyPoints(final List<Point> points, final List<Point> notZoomed) {
+		for (final Point p : points) {
+			notZoomed.add(new Point(p.getX(), p.getY()));
+		}
+	}
+
 	/* Line segments intersect */
-	public boolean isOnSegment(final int xi, final int yi, final int xj, final int yj, final int xk, final int yk) {
+	public boolean isOnSegment(final double xi, final double yi, final double xj, final double yj, final double xk, final double yk) {
 		return (xi <= xk || xj <= xk) && (xk <= xi || xk <= xj) && (yi <= yk || yj <= yk) && (yk <= yi || yk <= yj);
 	}
 
@@ -110,8 +136,8 @@ public abstract class VisualItem extends Widget {
 	}
 
 	public int computeDirection(final Line line, final Point point) {
-		final int a = (point.getX() - line.start.getX()) * (line.end.getY() - line.start.getY());
-		final int b = (line.end.getX() - line.start.getX()) * (point.getY() - line.start.getY());
+		final int a = (int) ((point.getX() - line.start.getX()) * (line.end.getY() - line.start.getY()));
+		final int b = (int) ((line.end.getX() - line.start.getX()) * (point.getY() - line.start.getY()));
 		return a < b ? -1 : a > b ? 1 : 0;
 	}
 

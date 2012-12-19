@@ -111,9 +111,9 @@ public class FloorGrid extends AbstractComponent implements HasComponents {
 		return components.iterator();
 	}
 
-	@Override
-	public boolean isComponentVisible(final Component childComponent) {
-		return true;
-	}
+	// @Override
+	// public boolean isComponentVisible(final Component childComponent) {
+	// return true;
+	// }
 
 }

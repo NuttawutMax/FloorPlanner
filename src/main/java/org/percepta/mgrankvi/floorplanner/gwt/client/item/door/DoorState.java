@@ -2,9 +2,9 @@ package org.percepta.mgrankvi.floorplanner.gwt.client.item.door;
 
 import org.percepta.mgrankvi.floorplanner.gwt.client.geometry.Point;
 
-import com.vaadin.shared.ComponentState;
+import com.vaadin.shared.AbstractComponentState;
 
-public class DoorState extends ComponentState {
+public class DoorState extends AbstractComponentState {
 
 	private static final long serialVersionUID = 6186956716133798868L;
 

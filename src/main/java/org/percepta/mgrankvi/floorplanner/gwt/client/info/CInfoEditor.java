@@ -160,8 +160,8 @@ public class CInfoEditor extends PopupPanel implements ClickHandler, MouseDownHa
 		if (click && canvas.getElement().equals(event.getNativeEvent().getEventTarget())) {
 			select = getSelectPoint(event.getClientX() - getPopupLeft() - offset.getX(), event.getClientY() - offset.getY() - 50 - getPopupTop());
 			if (select != null) {
-				pointX.setValue(Integer.toString(select.getX()));
-				pointY.setValue(Integer.toString(select.getY()));
+				pointX.setValue(Double.toString(select.getX()));
+				pointY.setValue(Double.toString(select.getY()));
 			}
 		} else if (close.getElement().equals(event.getNativeEvent().getEventTarget())) {
 			hide();
@@ -169,11 +169,11 @@ public class CInfoEditor extends PopupPanel implements ClickHandler, MouseDownHa
 		click = true;
 	}
 
-	private Point getSelectPoint(final int x, final int y) {
+	private Point getSelectPoint(final double x, final double y) {
 		VConsole.log(x + "," + y);
 		for (final Point point : room.getPoints()) {
-			final int pointXMin = point.getX() - 4;
-			final int pointYMin = point.getY() - 4;
+			final double pointXMin = point.getX() - 4;
+			final double pointYMin = point.getY() - 4;
 
 			if (x > pointXMin && x < pointXMin + 8 && y > pointYMin && y < pointYMin + 8) {
 				return point;

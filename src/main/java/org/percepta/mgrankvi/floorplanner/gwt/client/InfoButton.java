@@ -40,8 +40,8 @@ public class InfoButton extends VisualItem {
 		context.beginPath();
 
 		context.strokeRect(offset.getX(), offset.getY(), rect.getWidth(), rect.getHeight());
-		final int x = offset.getX() + 3;
-		int y = offset.getY() + 3;
+		final double x = offset.getX() + 3;
+		double y = offset.getY() + 3;
 		while (y < offset.getY() + SIDE_LENGTH) {
 			context.moveTo(x, y);
 			context.lineTo(x + LINE_LENGTH, y);
@@ -52,7 +52,7 @@ public class InfoButton extends VisualItem {
 	}
 
 	@Override
-	public boolean pointInObject(final int x, final int y) {
+	public boolean pointInObject(final double x, final double y) {
 		return x > offset.getX() && x < (offset.getX() + rect.getWidth()) && y > rect.getY() && y < (offset.getY() + rect.getHeight());
 	}
 

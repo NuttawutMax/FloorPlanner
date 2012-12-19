@@ -58,7 +58,7 @@ public class CLabel extends VisualItem {
 	}
 
 	@Override
-	public boolean pointInObject(final int x, final int y) {
+	public boolean pointInObject(final double x, final double y) {
 		// TODO Auto-generated method stub
 		return false;
 	}

@@ -23,8 +23,8 @@ public class GeometryUtil {
 	}
 
 	public static double distance(final Point p1, final Point p2) {
-		final int x_diff = p2.getX() - p1.getX();
-		final int y_diff = p2.getY() - p1.getY();
+		final double x_diff = p2.getX() - p1.getX();
+		final double y_diff = p2.getY() - p1.getY();
 
 		return Math.sqrt(x_diff * x_diff + y_diff * y_diff);
 	}
@@ -33,8 +33,8 @@ public class GeometryUtil {
 		return new Point(p1.getX() + p2.getX(), p1.getY() + p2.getY());
 	}
 
-	public static int minX(final List<Point> points) {
-		int min = Integer.MAX_VALUE;
+	public static double minX(final List<Point> points) {
+		double min = Integer.MAX_VALUE;
 		for (final Point p : points) {
 			if (p.getX() < min) {
 				min = p.getX();
@@ -43,8 +43,8 @@ public class GeometryUtil {
 		return min;
 	}
 
-	public static int minY(final List<Point> points) {
-		int min = Integer.MAX_VALUE;
+	public static double minY(final List<Point> points) {
+		double min = Integer.MAX_VALUE;
 		for (final Point p : points) {
 			if (p.getY() < min) {
 				min = p.getY();
@@ -53,8 +53,8 @@ public class GeometryUtil {
 		return min;
 	}
 
-	public static int maxX(final List<Point> points) {
-		int max = Integer.MIN_VALUE;
+	public static double maxX(final List<Point> points) {
+		double max = Integer.MIN_VALUE;
 		for (final Point p : points) {
 			if (p.getX() > max) {
 				max = p.getX();
@@ -63,8 +63,8 @@ public class GeometryUtil {
 		return max;
 	}
 
-	public static int maxY(final List<Point> points) {
-		int max = Integer.MIN_VALUE;
+	public static double maxY(final List<Point> points) {
+		double max = Integer.MIN_VALUE;
 		for (final Point p : points) {
 			if (p.getY() > max) {
 				max = p.getY();

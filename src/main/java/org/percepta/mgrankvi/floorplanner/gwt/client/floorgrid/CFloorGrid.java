@@ -51,6 +51,7 @@ public class CFloorGrid extends Widget implements ClickHandler, MouseDownHandler
 		ChangeHandler {
 
 	private static final String CLASSNAME = "c-floorgrid";
+	private static final int GRID_SIZE = 50;
 
 	private final Canvas canvas;
 	private final List<CRoom> rooms = new LinkedList<CRoom>();
@@ -67,6 +68,9 @@ public class CFloorGrid extends Widget implements ClickHandler, MouseDownHandler
 	private int offsetY = 0;
 	private final Point origo = new Point(0, 0);
 
+	private int orgX, orgY;
+	private Point orgOrigo = null;
+
 	private String buttonColorPlus = "LAVENDER";
 	private String buttonColorMinus = "LAVENDER";
 
@@ -76,6 +80,7 @@ public class CFloorGrid extends Widget implements ClickHandler, MouseDownHandler
 	private int downY = 0;
 	CRoom selected = null;
 	Point targetPoint = null;
+	int zoom = 0;
 
 	public CFloorGrid() {
 		setElement(Document.get().createDivElement());
@@ -197,14 +202,24 @@ public class CFloorGrid extends Widget implements ClickHandler, MouseDownHandler
 					// sx = sy = 2
 					// x2 = sx*x1
 					// y2 = sy*y1
-					scale(2);
+					zoom++;
+					if (zoom == 0) {
+						reset();
+					} else {
+						scale(2);
+					}
 					repaint();
 					return;
 				} else if (clientY > 51 && clientY < 76) {
 					// sx = sy = 0.5
 					// x2 = sx*x1
 					// y2 = sy*y1
-					scale(0.5);
+					zoom--;
+					if (zoom == 0) {
+						reset();
+					} else {
+						scale(0.5);
+					}
 					repaint();
 					return;
 				}
@@ -232,6 +247,11 @@ public class CFloorGrid extends Widget implements ClickHandler, MouseDownHandler
 	}
 
 	private void scale(final double scale) {
+		if (orgOrigo == null) {
+			orgOrigo = new Point(origo.getX(), origo.getY());
+			orgX = offsetX;
+			orgY = offsetY;
+		}
 		for (final CRoom room : rooms) {
 			room.scale(scale);
 		}
@@ -240,6 +260,19 @@ public class CFloorGrid extends Widget implements ClickHandler, MouseDownHandler
 		gridSize = (int) Math.ceil(gridSize * scale);
 		origo.setX((int) Math.ceil(origo.getX() * scale));
 		origo.setY((int) Math.ceil(origo.getY() * scale));
+	}
+
+	private void reset() {
+		origo.setX(orgOrigo.getX());
+		origo.setY(orgOrigo.getY());
+		gridSize = GRID_SIZE;
+		offsetX = orgX;
+		offsetY = orgY;
+		orgOrigo = null;
+
+		for (final CRoom room : rooms) {
+			room.reset();
+		}
 	}
 
 	@Override

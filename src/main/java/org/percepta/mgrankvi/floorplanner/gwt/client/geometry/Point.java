@@ -6,31 +6,31 @@ public class Point implements Serializable {
 
 	private static final long serialVersionUID = -3808768487503038119L;
 
-	private int x;
-	private int y;
+	private double x;
+	private double y;
 
 	public Point() {
 
 	}
 
-	public Point(final int x, final int y) {
+	public Point(final double x, final double y) {
 		this.x = x;
 		this.y = y;
 	}
 
-	public int getX() {
+	public double getX() {
 		return x;
 	}
 
-	public void setX(final int x) {
+	public void setX(final double x) {
 		this.x = x;
 	}
 
-	public int getY() {
+	public double getY() {
 		return y;
 	}
 
-	public void setY(final int y) {
+	public void setY(final double y) {
 		this.y = y;
 	}
 
@@ -39,7 +39,7 @@ public class Point implements Serializable {
 		return "[" + x + " , " + y + "]";
 	}
 
-	public void move(final int x, final int y) {
+	public void move(final double x, final double y) {
 		setX(getX() + x);
 		setY(getY() + y);
 	}

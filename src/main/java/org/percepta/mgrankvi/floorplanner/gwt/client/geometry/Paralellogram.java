@@ -6,8 +6,7 @@ public class Paralellogram extends Rectangle {
 		super(width, height, 0, 0);
 	}
 
-	public Paralellogram(final int width, final int height, final int x,
-			final int y) {
+	public Paralellogram(final int width, final int height, final int x, final int y) {
 		super(width, height, x, y);
 	}
 
@@ -22,7 +21,7 @@ public class Paralellogram extends Rectangle {
 	public void flip() {
 		corners[1] = new Point(corners[1].getX(), corners[0].getY());
 		corners[0] = new Point(x, y);
-		final int corner2Y = corners[2].getY();
+		final double corner2Y = corners[2].getY();
 		corners[2] = new Point(corners[2].getX(), corners[3].getY());
 		corners[3] = new Point(corners[3].getX(), corner2Y);
 	}

@@ -69,7 +69,9 @@ public class CRoom extends VisualItem {
 		super.movePosition(x, y);
 	}
 
+	@Override
 	public void scale(final double scale) {
+		super.scale(scale);
 		for (final Point p : points) {
 			p.setX((int) Math.ceil(p.getX() * scale));
 			p.setY((int) Math.ceil(p.getY() * scale));
@@ -78,13 +80,11 @@ public class CRoom extends VisualItem {
 		position.setY((int) Math.ceil(position.getY() * scale));
 
 		for (final VisualItem item : roomItems) {
+			item.scale(scale);
 			final Point position = item.getPosition();
 			position.setX((int) Math.ceil(position.getX() * scale));
 			position.setY((int) Math.ceil(position.getY() * scale));
 			item.setPosition(position);
-			if (item instanceof CDoor) {
-				((CDoor) item).setSize((int) Math.ceil(((CDoor) item).getSize() * scale));
-			}
 			for (final Point p : item.getPoints()) {
 				p.setX((int) Math.ceil(p.getX() * scale));
 				p.setY((int) Math.ceil(p.getY() * scale));
@@ -92,10 +92,22 @@ public class CRoom extends VisualItem {
 			item.pointMoved();
 		}
 		if (roomLabel != null) {
+			roomLabel.scale(scale);
 			final Point position = roomLabel.getPosition();
 			position.setX((int) Math.ceil(position.getX() * scale));
 			position.setY((int) Math.ceil(position.getY() * scale));
 			roomLabel.setPosition(position);
+		}
+	}
+
+	@Override
+	public void reset() {
+		super.reset();
+		for (final VisualItem item : roomItems) {
+			item.reset();
+		}
+		if (roomLabel != null) {
+			roomLabel.reset();
 		}
 	}
 
@@ -133,7 +145,7 @@ public class CRoom extends VisualItem {
 	}
 
 	@Override
-	public boolean pointInObject(final int x, final int y) {
+	public boolean pointInObject(final double x, final double y) {
 		if (x < (position.getX() + minX()) || x > (position.getX() + maxX()) || y < (position.getY() + minY()) || y > (position.getY() + maxY())) {
 			return false;
 		}
@@ -159,10 +171,10 @@ public class CRoom extends VisualItem {
 		return intercepts % 2 == 1;
 	}
 
-	public Point selectedPoint(final int x, final int y) {
+	public Point selectedPoint(final double x, final double y) {
 		for (final Point point : points) {
-			final int pointXMin = position.getX() + point.getX() - 4;
-			final int pointYMin = position.getY() + point.getY() - 4;
+			final double pointXMin = position.getX() + point.getX() - 4;
+			final double pointYMin = position.getY() + point.getY() - 4;
 			if (x > pointXMin && x < pointXMin + 8 && y > pointYMin && y < pointYMin + 8) {
 				return point;
 			}
