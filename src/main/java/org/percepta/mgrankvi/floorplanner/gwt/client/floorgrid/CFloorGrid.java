@@ -373,26 +373,20 @@ public class CFloorGrid extends Widget implements ClickHandler, MouseDownHandler
 	}
 
 	private void pan(final MouseMoveEvent event) {
-		offsetY += event.getClientY() - downY;
-		offsetX += event.getClientX() - downX;
-
-		offsetY = offsetY % 50;
-		offsetX = offsetX % 50;
-
-		origo.move(event.getClientX() - downX, event.getClientY() - downY);
-		for (final CRoom room : rooms) {
-			room.movePosition(event.getClientX() - downX, event.getClientY() - downY);
-		}
+		pan(event.getClientX() - downX, event.getClientY() - downY);
 	}
 
 	private void pan(final int amountx, final int amounty) {
-		offsetY += amountx;
-		offsetX += amounty;
+		offsetX += amountx;
+		offsetY += amounty;
 
-		offsetY = offsetY % 50;
 		offsetX = offsetX % 50;
+		offsetY = offsetY % 50;
 
 		origo.move(amountx, amounty);
+		if (orgOrigo != null) {
+			orgOrigo.move(amountx, amounty);
+		}
 		for (final CRoom room : rooms) {
 			room.movePosition(amountx, amounty);
 		}

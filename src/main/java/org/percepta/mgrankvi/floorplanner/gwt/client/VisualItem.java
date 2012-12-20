@@ -50,8 +50,8 @@ public abstract class VisualItem extends Widget {
 	}
 
 	public void movePosition(final int x, final int y) {
-		position.setX(position.getX() + x);
-		position.setY(position.getY() + y);
+		position.move(x, y);
+		orgPosition.move(x, y);
 	}
 
 	public void setPosition(final Point position) {
