@@ -48,6 +48,7 @@ import com.google.gwt.event.dom.client.MouseUpHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
@@ -451,7 +452,13 @@ public class CFloorGrid extends Widget implements ClickHandler, MouseDownHandler
 					break;
 				}
 			}
-			if (cmd.getCommand().equals(CommandObject.Command.FIND)) {
+			switch (cmd.getCommand()) {
+			case PAN:
+				pan(cmd.getX(), cmd.getY());
+				typeAndEdit.setValue("");
+				repaint();
+				break;
+			case FIND:
 				if (names.contains(cmd.getValue())) {
 					typeAndEdit.setValue("");
 
@@ -475,6 +482,7 @@ public class CFloorGrid extends Widget implements ClickHandler, MouseDownHandler
 
 					notification.show("No user found for [" + cmd.getValue() + "]", VNotification.CENTERED, null);
 				}
+				break;
 			}
 		}
 	}
@@ -510,7 +518,14 @@ public class CFloorGrid extends Widget implements ClickHandler, MouseDownHandler
 			listselect.addItem(name);
 		}
 		listselect.setVisibleItemCount(5);
-		listselect.addClickHandler(new ClickHandler() {
+		listselect.setWidth("100%");
+
+		final FlowPanel layout = new FlowPanel();
+		layout.add(new Label("Found " + possibilities.size() + " possible matches."));
+		layout.add(new Label("Select person:"));
+		layout.add(listselect);
+
+		final Button ok = new Button("Ok", new ClickHandler() {
 
 			@Override
 			public void onClick(final ClickEvent event) {
@@ -518,9 +533,18 @@ public class CFloorGrid extends Widget implements ClickHandler, MouseDownHandler
 				select.hide();
 			}
 		});
-		final FlowPanel layout = new FlowPanel();
-		layout.add(new Label("Select person:"));
-		layout.add(listselect);
+		ok.getElement().getStyle().setProperty("float", "right");
+		final Button cancel = new Button("Cancel", new ClickHandler() {
+
+			@Override
+			public void onClick(final ClickEvent event) {
+				select.hide();
+			}
+		});
+		cancel.getElement().getStyle().setProperty("float", "right");
+
+		layout.add(ok);
+		layout.add(cancel);
 
 		final Style style = layout.getElement().getStyle();
 		style.setBackgroundColor("burlywood");
@@ -528,6 +552,7 @@ public class CFloorGrid extends Widget implements ClickHandler, MouseDownHandler
 		style.setProperty("border-radius", "4px");
 		style.setProperty("-moz-border-radius", "4px");
 		style.setProperty("-webkit-border-radius", "4px");
+		style.setPaddingBottom(25, Unit.PX);
 
 		select.add(layout);
 		select.setPopupPosition(Window.getClientWidth() / 2, Window.getClientHeight() / 2);
@@ -545,57 +570,23 @@ public class CFloorGrid extends Widget implements ClickHandler, MouseDownHandler
 					if (nameOfSelection.equals(table.getName())) {
 						markedTable = table;
 						table.setTableColor("burlywood");
-						if (tableOutsideView(room, table)) {
-							final int halfCanvasWidth = canvas.getCoordinateSpaceWidth() / 2;
-							final int halfCanvasHeight = canvas.getCoordinateSpaceHeight() / 2;
+						final double xPointInCanvas = (canvas.getCoordinateSpaceWidth() / 2) - (table.maxX() - table.minX()) / 2;
+						final double yPointInCanvas = (canvas.getCoordinateSpaceHeight() / 2) - (table.maxY() - table.minY()) / 2;
 
-							final double halfTableWidth = (table.maxX() - table.minX()) / 2;
-							final double halfTableHeight = (table.maxY() - table.minY()) / 2;
+						final double tableCornerX = table.getPositionX() + room.getPositionX();
+						final double tableCornerY = table.getPositionY() + room.getPositionY();
 
-							double distX = GeometryUtil.distance(new Point(origo.getX(), 0), new Point(halfCanvasWidth, 0));
-							double distY = GeometryUtil.distance(new Point(0, origo.getY()), new Point(0, halfCanvasHeight));
-							final Point wanted = new Point(distX, distY);
+						final double panX = xPointInCanvas - tableCornerX;
+						final double panY = yPointInCanvas - tableCornerY;
 
-							final double tableCornerX = table.minX() + room.getPositionX();
-							final double tableCornerY = table.minY() + room.getPositionY();
+						pan((int) Math.floor(panX), (int) Math.floor(panY));
 
-							distX = GeometryUtil.distance(new Point(tableCornerX, 0), new Point(wanted.getX(), 0));
-							distY = GeometryUtil.distance(new Point(0, tableCornerY), new Point(0, wanted.getY()));
-							if (tableCornerX > wanted.getX()) {
-								distX = -distX;
-							}
-							if (tableCornerY > wanted.getY()) {
-								distY = -distY;
-							}
-							// final double x2 = table.minX() +
-							// room.getPositionX() + origo.getX();
-							// final double y2 = table.minY() +
-							// room.getPositionY() + origo.getY();
-
-							// final double diffH = (origo.getX() + halfCanvas -
-							// halfTableWidth) - x2;
-							// final double diffV = (origo.getY() +
-							// halfCanvasHeight - halfTableHeight) - y2;
-
-							pan((int) Math.floor(distX), (int) Math.floor(distY));
-						}
-						// Window.alert(nameOfSelection + "\nSits in room: " +
-						// room.getName());
 						repaint();
 						return;
 					}
 				}
 			}
 		}
-	}
-
-	private boolean tableOutsideView(final CRoom room, final CTable table) {
-		final Point offset = room.getPosition();
-		if (table.minX() + offset.getX() < 0 || table.maxX() + offset.getX() > canvas.getCoordinateSpaceWidth() || table.minY() + offset.getY() < 0
-				|| table.maxY() + offset.getY() > canvas.getCoordinateSpaceHeight()) {
-			return true;
-		}
-		return false;
 	}
 
 	@Override
