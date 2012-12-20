@@ -109,12 +109,12 @@ public abstract class VisualItem extends Widget {
 
 	public void reset() {
 		if (notZoomed.isEmpty()) {
-			position = orgPosition;
+			position = new Point(orgPosition.getX(), orgPosition.getY());
 			return;
 		}
 		points.clear();
 		copyPoints(notZoomed, points);
-		position = orgPosition;
+		position = new Point(orgPosition.getX(), orgPosition.getY());
 		notZoomed.clear();
 	}
 
