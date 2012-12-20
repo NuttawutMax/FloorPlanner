@@ -41,7 +41,10 @@ public class CDoor extends VisualItem {
 
 	@Override
 	public void scale(final double scale) {
-		super.scale(scale);
+		// super.scale(scale);
+		if (size == orgSize) {
+			orgPosition = new Point(position.getX(), position.getY());
+		}
 		size = (int) Math.ceil(size * scale);
 	}
 
