@@ -101,6 +101,14 @@ public class FloorGrid extends AbstractComponent implements HasComponents {
 		getState().removeRoom(room.getState());
 	}
 
+	public void setEditable(final boolean editable) {
+		getState().editable = editable;
+	}
+
+	public boolean getEditable() {
+		return getState().editable;
+	}
+
 	@Override
 	protected FloorGridState getState() {
 		return (FloorGridState) super.getState();

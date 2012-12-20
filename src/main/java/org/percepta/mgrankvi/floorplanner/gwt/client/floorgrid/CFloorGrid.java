@@ -254,13 +254,15 @@ public class CFloorGrid extends Widget implements ClickHandler, MouseDownHandler
 				info.setPopupPosition((Window.getClientWidth() / 2) - 350, (Window.getClientHeight() / 2) - 200);
 				info.show();
 			}
-			boolean selected = false;
-			for (final CRoom room : rooms) {
-				if (room.pointInObject(clientX, clientY) && !selected) {
-					room.setSelection(true);
-					selected = true;
-				} else {
-					room.setSelection(false);
+			if (isEditable) {
+				boolean selected = false;
+				for (final CRoom room : rooms) {
+					if (room.pointInObject(clientX, clientY) && !selected) {
+						room.setSelection(true);
+						selected = true;
+					} else {
+						room.setSelection(false);
+					}
 				}
 			}
 			repaint();
@@ -706,6 +708,10 @@ public class CFloorGrid extends Widget implements ClickHandler, MouseDownHandler
 	public void onMouseOut(final MouseOutEvent event) {
 		mouseDown = false;
 		selected = null;
+	}
+
+	public void setEditable(final boolean editable) {
+		isEditable = editable;
 	}
 
 }

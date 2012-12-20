@@ -58,6 +58,9 @@ public class FloorGridConnector extends AbstractComponentContainerConnector impl
 		// getWidget().addRoom(((RoomConnector) child).getWidget());
 		// }
 		// }
+		if (stateChangeEvent.getChangedProperties().contains("editable")) {
+			getWidget().setEditable(getState().editable);
+		}
 	}
 
 	@Override

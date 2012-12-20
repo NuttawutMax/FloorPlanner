@@ -11,6 +11,7 @@ public class FloorGridState extends AbstractComponentState {
 
 	private static final long serialVersionUID = -863840405464639721L;
 
+	public boolean editable = false;
 	List<RoomState> rooms = new LinkedList<RoomState>();
 
 	public List<RoomState> getRooms() {
