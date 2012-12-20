@@ -118,9 +118,9 @@ public abstract class VisualItem extends Widget {
 		notZoomed.clear();
 	}
 
-	public void copyPoints(final List<Point> points, final List<Point> notZoomed) {
-		for (final Point p : points) {
-			notZoomed.add(new Point(p.getX(), p.getY()));
+	public void copyPoints(final List<Point> pointsFrom, final List<Point> pointsTo) {
+		for (final Point p : pointsFrom) {
+			pointsTo.add(new Point(p.getX(), p.getY()));
 		}
 	}
 

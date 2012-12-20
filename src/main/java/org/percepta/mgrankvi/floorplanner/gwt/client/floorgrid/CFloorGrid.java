@@ -96,6 +96,8 @@ public class CFloorGrid extends Widget implements ClickHandler, MouseDownHandler
 	Point targetPoint = null;
 	int zoom = 0;
 
+	boolean isEditable = false;
+
 	public CFloorGrid() {
 		setElement(Document.get().createDivElement());
 		setStyleName(CLASSNAME);
@@ -248,7 +250,7 @@ public class CFloorGrid extends Widget implements ClickHandler, MouseDownHandler
 				// fireEvent(new
 				// MenuEvent(MenuEvent.MenuEventType.OPEN_ROOM_INFO,
 				// hoverElement.getRoom().getId()));
-				final CInfoEditor info = new CInfoEditor(hoverElement.getRoom());
+				final CInfoEditor info = new CInfoEditor(this, hoverElement.getRoom());
 				info.setPopupPosition((Window.getClientWidth() / 2) - 350, (Window.getClientHeight() / 2) - 200);
 				info.show();
 			}
@@ -303,12 +305,14 @@ public class CFloorGrid extends Widget implements ClickHandler, MouseDownHandler
 			contextMenu.hide();
 			contextMenu = null;
 		}
-		for (final CRoom room : rooms) {
-			if (room.isSelected()) {
-				targetPoint = room.selectedPoint(downX, downY);
-				if (targetPoint != null || room.pointInObject(downX, downY)) {
-					selected = room;
-					break;
+		if (isEditable) {
+			for (final CRoom room : rooms) {
+				if (room.isSelected()) {
+					targetPoint = room.selectedPoint(downX, downY);
+					if (targetPoint != null || room.pointInObject(downX, downY)) {
+						selected = room;
+						break;
+					}
 				}
 			}
 		}
@@ -559,7 +563,7 @@ public class CFloorGrid extends Widget implements ClickHandler, MouseDownHandler
 		select.show();
 	}
 
-	private void markTableOfSelectedPerson(final String nameOfSelection) {
+	public void markTableOfSelectedPerson(final String nameOfSelection) {
 		if (markedTable != null) {
 			markedTable.setTableColor("TRANSPARENT");
 		}

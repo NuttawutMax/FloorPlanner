@@ -195,4 +195,14 @@ public class CRoom extends VisualItem {
 		door.setPosition(doorState.getPosition());
 		addRoomItem(door);
 	}
+
+	public CRoom cloneRoom() {
+		final List<Point> pointClone = new LinkedList<Point>();
+		copyPoints(points, pointClone);
+		final CRoom clone = new CRoom(id, pointClone, new Point(position.getX(), position.getY()));
+		// for (final VisualItem item : roomItems) {
+		// clone.addRoomItem(item);
+		// }
+		return clone;
+	}
 }

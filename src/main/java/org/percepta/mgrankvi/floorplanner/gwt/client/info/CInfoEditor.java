@@ -1,6 +1,9 @@
 package org.percepta.mgrankvi.floorplanner.gwt.client.info;
 
+import org.percepta.mgrankvi.floorplanner.gwt.client.VisualItem;
+import org.percepta.mgrankvi.floorplanner.gwt.client.floorgrid.CFloorGrid;
 import org.percepta.mgrankvi.floorplanner.gwt.client.geometry.Point;
+import org.percepta.mgrankvi.floorplanner.gwt.client.item.table.CTable;
 import org.percepta.mgrankvi.floorplanner.gwt.client.paint.GridUtils;
 import org.percepta.mgrankvi.floorplanner.gwt.client.room.CRoom;
 
@@ -18,6 +21,7 @@ import com.google.gwt.event.dom.client.MouseUpHandler;
 import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.Label;
+import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.vaadin.client.VConsole;
@@ -32,9 +36,12 @@ public class CInfoEditor extends PopupPanel implements ClickHandler, MouseDownHa
 	private final Canvas canvas;
 	private final TextBox pointX, pointY, name;
 	private final Label xLabel, yLabel, nameLabel;
-	private final Button close;
+	private final Button close, find;
+	private final ListBox list;
 
+	private final CRoom orgRoom;
 	private final CRoom room;
+	private final CFloorGrid grid;
 	private final Point offset;
 	private Point select;
 
@@ -42,9 +49,15 @@ public class CInfoEditor extends PopupPanel implements ClickHandler, MouseDownHa
 	private boolean click = true;
 	private int downX, downY;
 
-	public CInfoEditor(final CRoom room) {
-		this.room = room;
-		offset = new Point((CANVAS_WIDTH - (room.maxX() - room.minX())) / 2, (CANVAS_HEIGHT - (room.maxY() - room.minY())) / 2);
+	public CInfoEditor(final CFloorGrid grid, final CRoom room) {
+		this.grid = grid;
+		orgRoom = room;
+		this.room = room.cloneRoom();
+		while (CANVAS_WIDTH - 20 < (this.room.maxX() - this.room.minX()) && CANVAS_HEIGHT - 20 < (this.room.maxY() - this.room.minY())) {
+			this.room.scale(0.5);
+			this.room.pointMoved();
+		}
+		offset = new Point((CANVAS_WIDTH - (this.room.maxX() - this.room.minX())) / 2, (CANVAS_HEIGHT - (this.room.maxY() - this.room.minY())) / 2);
 
 		addDomHandler(this, ClickEvent.getType());
 		addDomHandler(this, MouseDownEvent.getType());
@@ -77,16 +90,19 @@ public class CInfoEditor extends PopupPanel implements ClickHandler, MouseDownHa
 
 		xLabel = new Label("X position");
 		pointX = new TextBox();
+		pointX.setWidth("125px");
 		content.add(xLabel, 400, 100);
 		content.add(pointX, 475, 97);
 
 		yLabel = new Label("Y position");
 		pointY = new TextBox();
+		pointY.setWidth("125px");
 		content.add(yLabel, 400, 125);
 		content.add(pointY, 475, 122);
 
 		nameLabel = new Label("Name");
 		name = new TextBox();
+		name.setWidth("125px");
 		name.setText(room.getName());
 		content.add(nameLabel, 400, 75);
 		content.add(name, 475, 72);
@@ -95,6 +111,23 @@ public class CInfoEditor extends PopupPanel implements ClickHandler, MouseDownHa
 		close.setWidth("25px");
 		close.setHeight("25px");
 		content.add(close, 670, 5);
+
+		list = new ListBox();
+		list.setWidth("225px");
+		for (final VisualItem item : orgRoom.getRoomItems()) {
+			if (item instanceof CTable) {
+				final String name = ((CTable) item).getName();
+				if (name != null && !name.isEmpty()) {
+					list.addItem(name);
+				}
+			}
+		}
+		list.setVisibleItemCount(5);
+		content.add(new Label("People in room:"), 400, 150);
+		content.add(list, 425, 175);
+
+		find = new Button("Show");
+		content.add(find, 555, 148);
 
 		getElement().appendChild(content.getElement());
 	}
@@ -165,6 +198,10 @@ public class CInfoEditor extends PopupPanel implements ClickHandler, MouseDownHa
 			}
 		} else if (close.getElement().equals(event.getNativeEvent().getEventTarget())) {
 			hide();
+		} else if (find.getElement().equals(event.getNativeEvent().getEventTarget())) {
+			VConsole.log("Button click");
+			grid.markTableOfSelectedPerson(list.getValue(list.getSelectedIndex()));
+			CInfoEditor.this.hide();
 		}
 		click = true;
 	}
