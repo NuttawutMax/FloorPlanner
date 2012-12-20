@@ -16,6 +16,7 @@ import org.percepta.mgrankvi.floorplanner.gwt.client.geometry.Point;
 import org.percepta.mgrankvi.floorplanner.gwt.client.info.CInfoEditor;
 import org.percepta.mgrankvi.floorplanner.gwt.client.item.ItemState;
 import org.percepta.mgrankvi.floorplanner.gwt.client.item.door.DoorState;
+import org.percepta.mgrankvi.floorplanner.gwt.client.item.table.CItem;
 import org.percepta.mgrankvi.floorplanner.gwt.client.item.table.CTable;
 import org.percepta.mgrankvi.floorplanner.gwt.client.paint.GridUtils;
 import org.percepta.mgrankvi.floorplanner.gwt.client.room.CRoom;
@@ -147,12 +148,14 @@ public class CFloorGrid extends Widget implements ClickHandler, MouseDownHandler
 				VisualItem item;
 				switch (itemState.type) {
 				case TABLE:
-				default:
 					item = new CTable(itemState.itemPoints, itemState.itemPosition);
 					item.setName(itemState.itemName);
 					if (itemState.itemName != null) {
 						names.add(itemState.itemName);
 					}
+					break;
+				default:
+					item = new CItem(itemState.itemPoints, itemState.itemPosition);
 				}
 				room.addRoomItem(item);
 			}
@@ -500,7 +503,7 @@ public class CFloorGrid extends Widget implements ClickHandler, MouseDownHandler
 		final LinkedList<String> possible = new LinkedList<String>();
 
 		for (final String name : names) {
-			if (name.contains(cmd.getValue())) {
+			if (name.toLowerCase().contains(cmd.getValue().toLowerCase())) {
 				possible.add(name);
 			}
 		}
