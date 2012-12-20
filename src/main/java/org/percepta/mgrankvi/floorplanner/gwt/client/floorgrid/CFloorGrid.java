@@ -22,6 +22,7 @@ import org.percepta.mgrankvi.floorplanner.gwt.client.paint.GridUtils;
 import org.percepta.mgrankvi.floorplanner.gwt.client.room.CRoom;
 import org.percepta.mgrankvi.floorplanner.gwt.client.room.RoomState;
 
+import com.google.gwt.animation.client.Animation;
 import com.google.gwt.canvas.client.Canvas;
 import com.google.gwt.canvas.dom.client.Context2d;
 import com.google.gwt.dom.client.Document;
@@ -492,7 +493,7 @@ public class CFloorGrid extends Widget implements ClickHandler, MouseDownHandler
 
 	private boolean namesContain(final CommandObject cmd) {
 		for (final String name : names) {
-			if (name.contains(cmd.getValue())) {
+			if (name.toLowerCase().contains(cmd.getValue().toLowerCase())) {
 				return true;
 			}
 		}
@@ -582,9 +583,24 @@ public class CFloorGrid extends Widget implements ClickHandler, MouseDownHandler
 						final double panX = xPointInCanvas - tableCornerX;
 						final double panY = yPointInCanvas - tableCornerY;
 
-						pan((int) Math.floor(panX), (int) Math.floor(panY));
+						final Animation animate = new Animation() {
+							double movedX = 0;
+							double movedY = 0;
 
-						repaint();
+							@Override
+							protected void onUpdate(final double progress) {
+								final double moveX = panX * progress - movedX;
+								final double moveY = panY * progress - movedY;
+								movedX += moveX;
+								movedY += moveY;
+								pan((int) Math.floor(moveX), (int) Math.floor(moveY));
+								repaint();
+							}
+						};
+						animate.run(2500);
+						// pan((int) Math.floor(panX), (int) Math.floor(panY));
+
+						// repaint();
 						return;
 					}
 				}
