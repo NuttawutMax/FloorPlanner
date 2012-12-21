@@ -59,6 +59,7 @@ import com.google.gwt.user.client.ui.MenuItem;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
+import com.vaadin.client.VConsole;
 import com.vaadin.client.ui.VNotification;
 
 public class CFloorGrid extends Widget implements ClickHandler, MouseDownHandler, MouseUpHandler, MouseMoveHandler, MouseOutHandler, ContextMenuHandler,
@@ -597,7 +598,8 @@ public class CFloorGrid extends Widget implements ClickHandler, MouseDownHandler
 								repaint();
 							}
 						};
-						animate.run(2500);
+						VConsole.log(" -- X: " + panX + " Y: " + panY);
+						animate.run(Math.abs(panX) > Math.abs(panY) ? (int) (Math.abs(panX)) : (int) (Math.abs(panY)));
 						// pan((int) Math.floor(panX), (int) Math.floor(panY));
 
 						// repaint();
