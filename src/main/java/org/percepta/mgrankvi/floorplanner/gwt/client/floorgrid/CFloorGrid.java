@@ -91,6 +91,7 @@ public class CFloorGrid extends Widget implements ClickHandler, MouseDownHandler
 	private String buttonColorPlus = "LAVENDER";
 	private String buttonColorMinus = "LAVENDER";
 
+	private boolean animating = false;
 	private boolean mouseDown = false;
 	private boolean mouseMoved = true;
 	private int downX = 0;
@@ -191,6 +192,8 @@ public class CFloorGrid extends Widget implements ClickHandler, MouseDownHandler
 		}
 	}
 
+	SearchBar searchBar = new SearchBar(this);
+
 	private void paint() {
 		final Context2d context = canvas.getContext2d();
 
@@ -198,6 +201,8 @@ public class CFloorGrid extends Widget implements ClickHandler, MouseDownHandler
 		GridUtils.paintZoomInButton(context, new Point(Window.getClientWidth() - 50, 25), 25, buttonColorPlus);
 		GridUtils.paintZoomOutButton(context, new Point(Window.getClientWidth() - 50, 51), 25, buttonColorMinus);
 		paintRooms();
+
+		searchBar.paint(context);
 
 		if (hoverElement != null) {
 			hoverElement.paint(context);
@@ -212,6 +217,9 @@ public class CFloorGrid extends Widget implements ClickHandler, MouseDownHandler
 
 	@Override
 	public void onClick(final ClickEvent event) {
+		if (animating) {
+			return;
+		}
 		if (typeAndEdit.getElement().equals(event.getNativeEvent().getEventTarget())) {
 			return;
 		}
@@ -305,6 +313,9 @@ public class CFloorGrid extends Widget implements ClickHandler, MouseDownHandler
 
 	@Override
 	public void onMouseDown(final MouseDownEvent event) {
+		if (animating) {
+			return;
+		}
 		downX = event.getClientX();
 		downY = event.getClientY();
 		mouseDown = true;
@@ -333,6 +344,9 @@ public class CFloorGrid extends Widget implements ClickHandler, MouseDownHandler
 
 	@Override
 	public void onMouseMove(final MouseMoveEvent event) {
+		if (animating) {
+			return;
+		}
 		final int clientX = event.getClientX();
 		final int clientY = event.getClientY();
 		if (mouseDown) {
@@ -374,6 +388,15 @@ public class CFloorGrid extends Widget implements ClickHandler, MouseDownHandler
 			buttonColorPlus = "LAVENDER";
 			buttonColorMinus = "LAVENDER";
 		}
+		if (searchBar.mouseOver(clientX, clientY)) {
+			if (!searchBar.isVisible()) {
+				searchBar.setAnimate(true);
+				searchBar.setVisible(true);
+			}
+		} else if (searchBar.isVisible()) {
+			searchBar.setAnimate(true);
+			searchBar.setVisible(false);
+		}
 		repaint();
 	}
 
@@ -414,7 +437,7 @@ public class CFloorGrid extends Widget implements ClickHandler, MouseDownHandler
 	public void onKeyUp(final KeyUpEvent event) {
 		if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
 			noChangeEvent = true;
-			handleTextFieldValue();
+			handleTextFieldValue(null);
 		}
 	}
 
@@ -423,12 +446,19 @@ public class CFloorGrid extends Widget implements ClickHandler, MouseDownHandler
 		if (noChangeEvent) {
 			noChangeEvent = false;
 		} else {
-			handleTextFieldValue();
+			handleTextFieldValue(null);
 		}
 	}
 
-	private void handleTextFieldValue() {
-		final String value = typeAndEdit.getValue();
+	protected void setAnimating(final boolean animating) {
+		this.animating = animating;
+	}
+
+	protected void handleTextFieldValue(String value) {
+		if (value == null) {
+			value = typeAndEdit.getValue();
+		}
+
 		if (value != null && !value.isEmpty()) {
 			final CommandObject cmd = new CommandObject(value);
 			for (final CRoom room : rooms) {
@@ -597,7 +627,14 @@ public class CFloorGrid extends Widget implements ClickHandler, MouseDownHandler
 								pan((int) Math.floor(moveX), (int) Math.floor(moveY));
 								repaint();
 							}
+
+							@Override
+							protected void onComplete() {
+								super.onComplete();
+								animating = false;
+							}
 						};
+						animating = true;
 						VConsole.log(" -- X: " + panX + " Y: " + panY);
 						animate.run(Math.abs(panX) > Math.abs(panY) ? (int) (Math.abs(panX)) : (int) (Math.abs(panY)));
 						// pan((int) Math.floor(panX), (int) Math.floor(panY));
