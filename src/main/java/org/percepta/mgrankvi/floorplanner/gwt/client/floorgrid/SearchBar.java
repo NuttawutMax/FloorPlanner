@@ -19,6 +19,7 @@ public class SearchBar implements KeyUpHandler {
 
 	private final TextBox typeAndEdit = new TextBox();
 	private int x = 0;
+	private int canvasPosition = 0;
 
 	CFloorGrid grid;
 
@@ -45,6 +46,9 @@ public class SearchBar implements KeyUpHandler {
 	}
 
 	public void paint(final Context2d context) {
+		canvasPosition = context.getCanvas().getWidth() - 350;
+		x = context.getCanvas().getWidth() - 350;
+
 		context.getCanvas().getParentElement().appendChild(typeAndEdit.getElement());
 		final Style editStyle = typeAndEdit.getElement().getStyle();
 		editStyle.setPosition(Position.ABSOLUTE);
@@ -55,7 +59,6 @@ public class SearchBar implements KeyUpHandler {
 			if (animate) {
 				grid.setAnimating(true);
 				animate = false;
-				x = context.getCanvas().getWidth() - 350;
 
 				final Animation animator = new Animation() {
 
@@ -100,7 +103,6 @@ public class SearchBar implements KeyUpHandler {
 				context.setFillStyle("LAVENDER");
 				context.beginPath();
 
-				x = context.getCanvas().getWidth() - 350;
 				context.arc(x + 10, 37, 10, Math.PI * 0.5, Math.PI, false);
 				context.arc(x + 240, 37, 10, 0, Math.PI * 0.5, false);
 
@@ -125,7 +127,6 @@ public class SearchBar implements KeyUpHandler {
 		} else if (animate) {
 			grid.setAnimating(true);
 			animate = false;
-			x = context.getCanvas().getWidth() - 350;
 			typeAndEdit.setFocus(false);
 
 			final Animation animator = new Animation() {
@@ -172,7 +173,6 @@ public class SearchBar implements KeyUpHandler {
 			context.setFillStyle("LAVENDER");
 			context.beginPath();
 
-			x = context.getCanvas().getWidth() - 350;
 			context.arc(x + 10, 10, 10, Math.PI * 0.5, Math.PI, false);
 			context.arc(x + 240, 10, 10, 0, Math.PI * 0.5, false);
 
@@ -195,23 +195,13 @@ public class SearchBar implements KeyUpHandler {
 	}
 
 	public boolean mouseOver(final int clientX, final int clientY) {
-		if (visible && clientX > x && clientX < x + 250 && clientY < 37 && clientY > 0) {
+		if (visible && clientX > canvasPosition && clientX < canvasPosition + 250 && clientY < 47 && clientY > 0) {
 			return true;
-		} else if (clientX > x && clientX < x + 250 && clientY < 20 && clientY > 0) {
+		} else if (clientX > canvasPosition && clientX < canvasPosition + 250 && clientY < 20 && clientY > 0) {
 			return true;
 		}
 		return false;
 	}
-
-	// @Override
-	// public void onChange(final ChangeEvent event) {
-	// if (noChangeEvent) {
-	// noChangeEvent = false;
-	// } else {
-	// grid.handleTextFieldValue("/" + typeAndEdit.getValue());
-	// typeAndEdit.setValue("");
-	// }
-	// }
 
 	@Override
 	public void onKeyUp(final KeyUpEvent event) {
