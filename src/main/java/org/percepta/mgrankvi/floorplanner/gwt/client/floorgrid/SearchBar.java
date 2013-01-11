@@ -20,6 +20,7 @@ public class SearchBar implements KeyUpHandler {
 	private final TextBox typeAndEdit = new TextBox();
 	private int x = 0;
 	private int canvasPosition = 0;
+	private final int closedWidth = 90;
 
 	CFloorGrid grid;
 
@@ -59,27 +60,31 @@ public class SearchBar implements KeyUpHandler {
 			if (animate) {
 				grid.setAnimating(true);
 				animate = false;
+				final int boxLeft = context.getCanvas().getWidth() - 200;
 
 				final Animation animator = new Animation() {
 
 					@Override
 					protected void onUpdate(final double progress) {
 						final double offset = progress * 27;
+						final double elongate = progress * 140;
 						context.save();
 						context.setFillStyle("LAVENDER");
 						context.beginPath();
 
-						context.arc(x + 10, offset + 10, 10, Math.PI * 0.5, Math.PI, false);
+						context.arc(x + 150 - elongate, offset + 10, 10, Math.PI * 0.5, Math.PI, false);
 						context.arc(x + 240, offset + 10, 10, 0, Math.PI * 0.5, false);
 
 						context.closePath();
 						context.fill();
 
 						typeAndEdit.getElement().getStyle().setTop(offset - 25, Style.Unit.PX);
+						typeAndEdit.getElement().getStyle().setLeft(boxLeft - elongate, Style.Unit.PX);
+						typeAndEdit.setWidth((80 + elongate) + "px");
 
 						context.beginPath();
 
-						context.fillRect(x, 0, 250, offset + 10);
+						context.fillRect(x + 140 - elongate, 0, 110 + elongate, offset + 10);
 
 						context.setFillStyle("Black");
 						context.setFont("bold 12px Courier New");
@@ -128,6 +133,7 @@ public class SearchBar implements KeyUpHandler {
 			grid.setAnimating(true);
 			animate = false;
 			typeAndEdit.setFocus(false);
+			final int boxLeft = context.getCanvas().getWidth() - 340;
 
 			final Animation animator = new Animation() {
 
@@ -135,21 +141,24 @@ public class SearchBar implements KeyUpHandler {
 				protected void onUpdate(final double progress) {
 					context.clearRect(x, 0, 250, 47);
 					final double offset = progress * 22;
+					final double elongate = progress * 140;
 					context.save();
 					context.setFillStyle("LAVENDER");
 					context.beginPath();
 
-					context.arc(x + 10, 15 + 22 - offset, 10, Math.PI * 0.5, Math.PI, false);
+					context.arc(x + 10 + elongate, 15 + 22 - offset, 10, Math.PI * 0.5, Math.PI, false);
 					context.arc(x + 240, 15 + 22 - offset, 10, 0, Math.PI * 0.5, false);
 
 					context.closePath();
 					context.fill();
 
 					typeAndEdit.getElement().getStyle().setTop(0 - offset, Style.Unit.PX);
+					typeAndEdit.getElement().getStyle().setLeft(boxLeft + elongate, Style.Unit.PX);
+					typeAndEdit.setWidth((220 - elongate) + "px");
 
 					context.beginPath();
 
-					context.fillRect(x, 0, 250, 37 - offset);
+					context.fillRect(x + elongate, 0, 250 - elongate, 37 - offset);
 
 					context.setFillStyle("Black");
 					context.setFont("bold 12px Courier New");
@@ -169,11 +178,13 @@ public class SearchBar implements KeyUpHandler {
 			};
 			animator.run(300);
 		} else {
+			canvasPosition += 150;
+
 			context.save();
 			context.setFillStyle("LAVENDER");
 			context.beginPath();
 
-			context.arc(x + 10, 10, 10, Math.PI * 0.5, Math.PI, false);
+			context.arc(x + 150, 10, 10, Math.PI * 0.5, Math.PI, false);
 			context.arc(x + 240, 10, 10, 0, Math.PI * 0.5, false);
 
 			context.closePath();
@@ -181,7 +192,7 @@ public class SearchBar implements KeyUpHandler {
 
 			context.beginPath();
 
-			context.fillRect(x, 0, 250, 10);
+			context.fillRect(x + 140, 0, 110, 10);
 
 			context.setFillStyle("Black");
 			context.setFont("bold 12px Courier New");
@@ -197,7 +208,7 @@ public class SearchBar implements KeyUpHandler {
 	public boolean mouseOver(final int clientX, final int clientY) {
 		if (visible && clientX > canvasPosition && clientX < canvasPosition + 250 && clientY < 47 && clientY > 0) {
 			return true;
-		} else if (clientX > canvasPosition && clientX < canvasPosition + 250 && clientY < 20 && clientY > 0) {
+		} else if (clientX > canvasPosition && clientX < canvasPosition + closedWidth && clientY < 20 && clientY > 0) {
 			return true;
 		}
 		return false;
