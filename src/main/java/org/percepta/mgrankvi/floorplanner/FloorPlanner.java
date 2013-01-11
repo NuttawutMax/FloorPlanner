@@ -105,16 +105,110 @@ public class FloorPlanner extends UI {
 	}
 
 	private void addMainHallTables(final Room room) {
-		Table table = new Table("Joonas Lehtinen", new Point(1140, 200));
-		table.setSize(50, 150);
+		// Right-top-cornet
+		Table table = new Table("", new Point(1475, 3));
+		table.setSize(200, 50);
 		room.addItem(table.getState());
 
-		table = new Table("Jurka Rahikkala", new Point(1140, 400));
-		table.setSize(50, 150);
+		table = new Table("Tomi Virkki", new Point(1475, 295));
+		table.setSize(200, 50);
 		room.addItem(table.getState());
 
-		table = new Table("Kim Leppänen", new Point(155, 3));
-		table.setSize(50, 150);
+		table = new Table("", new Point(1475, 360));
+		table.setSize(200, 50);
+		room.addItem(table.getState());
+
+		// Center-aisle-left
+		table = new Table("Johan Ånäs", new Point(490, 200));
+		table.setSize(50, 200);
+		room.addItem(table.getState());
+
+		table = new Table("Johannes Tuikkala", new Point(490, 450));
+		table.setSize(50, 200);
+		room.addItem(table.getState());
+
+		table = new Table("", new Point(490, 665));
+		table.setSize(50, 200);
+		room.addItem(table.getState());
+
+		table = new Table("", new Point(490, 915));
+		table.setSize(50, 200);
+		room.addItem(table.getState());
+
+		table = new Table("Henrik Paul", new Point(490, 1130));
+		table.setSize(50, 200);
+		room.addItem(table.getState());
+
+		// Center-aisle-middle-left
+		table = new Table("", new Point(640, 200));
+		table.setSize(200, 50);
+		room.addItem(table.getState());
+
+		table = new Table("Jonas Granvik", new Point(640, 735));
+		table.setSize(200, 50);
+		room.addItem(table.getState());
+
+		table = new Table("Matti Vesa", new Point(640, 790));
+		table.setSize(200, 50);
+		room.addItem(table.getState());
+
+		table = new Table("Anna Koskinen", new Point(640, 1280));
+		table.setSize(200, 50);
+		room.addItem(table.getState());
+
+		// Center-aisle-middle-right
+		table = new Table("", new Point(845, 200));
+		table.setSize(200, 50);
+		room.addItem(table.getState());
+
+		table = new Table("", new Point(845, 735));
+		table.setSize(200, 50);
+		room.addItem(table.getState());
+
+		table = new Table("", new Point(845, 790));
+		table.setSize(200, 50);
+		room.addItem(table.getState());
+
+		table = new Table("", new Point(845, 1280));
+		table.setSize(200, 50);
+		room.addItem(table.getState());
+
+		// Center-aisle-Right
+		table = new Table("Joonas Lehtinen", new Point(1140, 200));
+		table.setSize(50, 200);
+		room.addItem(table.getState());
+
+		table = new Table("Jurka Rahikkala", new Point(1140, 450));
+		table.setSize(50, 200);
+		room.addItem(table.getState());
+
+		table = new Table("", new Point(1140, 665));
+		table.setSize(50, 200);
+
+		room.addItem(table.getState());
+		table = new Table("Haijan Wang", new Point(1140, 915));
+		table.setSize(50, 200);
+		room.addItem(table.getState());
+
+		table = new Table("Risto Yrjänä", new Point(1140, 1130));
+		table.setSize(50, 200);
+		room.addItem(table.getState());
+
+		// Left-top-corner
+		table = new Table("Kim Leppänen", new Point(125, 3));
+		table.setSize(50, 200);
+		room.addItem(table.getState());
+
+		table = new Table("", new Point(125, 320));
+		table.setSize(50, 200);
+		room.addItem(table.getState());
+
+		table = new Table("", new Point(180, 3));
+		table.setSize(50, 200);
+		room.addItem(table.getState());
+
+		table = new Table("", new Point(180, 340));
+		table.setSize(200, 50);
 		room.addItem(table.getState());
 	}
 }
