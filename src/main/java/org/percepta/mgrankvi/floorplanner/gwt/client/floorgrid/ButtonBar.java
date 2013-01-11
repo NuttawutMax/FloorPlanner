@@ -1,30 +1,32 @@
 package org.percepta.mgrankvi.floorplanner.gwt.client.floorgrid;
 
+import java.util.LinkedList;
+import java.util.List;
+
+import org.percepta.mgrankvi.floorplanner.gwt.client.floorgrid.buttons.AbstractButton;
+import org.percepta.mgrankvi.floorplanner.gwt.client.floorgrid.buttons.NamesButton;
+
 import com.google.gwt.animation.client.Animation;
 import com.google.gwt.canvas.dom.client.Context2d;
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
-import com.vaadin.client.VConsole;
 
-public class ButtonBar implements ClickHandler {
+public class ButtonBar {
 
 	private final int START_BUBBLE_SIZE = 20;
 	private final int BAR_HEIGHT = 300;
 	private final int BAR_WIDTH = 15;
 
-	boolean visible = false;
-	boolean animate = false;
+	private boolean visible = false;
+	private boolean animate = false;
 
-	int x = 0;
-	int y = 0;
-	int cornerX;
-	int cornerY;
-	CFloorGrid grid;
+	private final List<AbstractButton> buttons = new LinkedList<AbstractButton>();
+	private int x = 0;
+	private int y = 0;
+	private int cornerX;
+	private int cornerY;
+	private final CFloorGrid grid;
 
 	public ButtonBar(final CFloorGrid grid) {
 		this.grid = grid;
-
-		grid.addDomHandler(this, ClickEvent.getType());
 	}
 
 	public void setVisible(final boolean visible) {
@@ -39,11 +41,15 @@ public class ButtonBar implements ClickHandler {
 		this.animate = animate;
 	}
 
+	NamesButton names = new NamesButton(this, 25, BAR_HEIGHT + 10);
+
 	public void paint(final Context2d context) {
 		x = context.getCanvas().getWidth();
 		y = context.getCanvas().getHeight();
 		cornerX = context.getCanvas().getWidth();
 		cornerY = context.getCanvas().getHeight();
+		names.setX(x);
+		names.setY(y);
 		if (visible) {
 			if (animate) {
 				grid.setAnimating(true);
@@ -83,7 +89,23 @@ public class ButtonBar implements ClickHandler {
 					@Override
 					protected void onComplete() {
 						super.onComplete();
-						grid.setAnimating(false);
+						// grid.setAnimating(false);
+
+						final Animation buttons = new Animation() {
+
+							@Override
+							protected void onUpdate(final double progress) {
+								names.paint(context, progress);
+							}
+
+							@Override
+							protected void onComplete() {
+								super.onComplete();
+								grid.setAnimating(false);
+								names.paint(context);
+							}
+						};
+						buttons.run(300);
 					}
 				};
 				elongate.run(500);
@@ -110,10 +132,13 @@ public class ButtonBar implements ClickHandler {
 				context.fill();
 
 				context.restore();
+
+				names.paint(context);
 			}
 		} else if (animate) {
 			grid.setAnimating(true);
 			animate = false;
+			names.setFillstyle("GREEN");
 
 			final Animation animator = new Animation() {
 
@@ -157,7 +182,7 @@ public class ButtonBar implements ClickHandler {
 					grid.setAnimating(false);
 				}
 			};
-			animator.run(2000);
+			animator.run(400);
 		} else {
 			context.save();
 			context.setFillStyle("LAVENDER");
@@ -182,9 +207,8 @@ public class ButtonBar implements ClickHandler {
 	}
 
 	public boolean mouseOver(final int clientX, final int clientY) {
-		VConsole.log("Visible: " + visible + "clientx: " + clientX + " clienty: " + clientY + " min x: " + (cornerX - START_BUBBLE_SIZE - BAR_WIDTH)
-				+ " min y: " + (cornerY - BAR_HEIGHT - START_BUBBLE_SIZE));
 		if (visible && clientX > (cornerX - START_BUBBLE_SIZE - BAR_WIDTH) && clientY > (cornerY - BAR_HEIGHT - START_BUBBLE_SIZE)) {
+			names.hover(clientX, clientY);
 			return true;
 		} else if (clientX > (cornerX - START_BUBBLE_SIZE) && clientY > (cornerY - START_BUBBLE_SIZE)) {
 			return true;
@@ -192,9 +216,11 @@ public class ButtonBar implements ClickHandler {
 		return false;
 	}
 
-	@Override
-	public void onClick(final ClickEvent event) {
-		// TODO Auto-generated method stub
+	public void click(final int x, final int y) {
+		names.clicked();
+	}
 
+	public void showNames() {
+		grid.showNames();
 	}
 }
