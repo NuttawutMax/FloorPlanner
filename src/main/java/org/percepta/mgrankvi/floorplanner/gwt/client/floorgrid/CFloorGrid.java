@@ -279,7 +279,12 @@ public class CFloorGrid extends Widget implements ClickHandler, MouseDownHandler
 						room.setSelection(false);
 					}
 				}
+			} else {
+				for (final CRoom room : rooms) {
+					room.clicked(downX, downY);
+				}
 			}
+			buttonBar.click(clientX, clientY);
 			repaint();
 		}
 	}
@@ -334,10 +339,6 @@ public class CFloorGrid extends Widget implements ClickHandler, MouseDownHandler
 						break;
 					}
 				}
-				room.clicked(downX, downY);
-			}
-		} else {
-			for (final CRoom room : rooms) {
 				room.clicked(downX, downY);
 			}
 		}
@@ -784,6 +785,19 @@ public class CFloorGrid extends Widget implements ClickHandler, MouseDownHandler
 
 	public void setEditable(final boolean editable) {
 		isEditable = editable;
+	}
+
+	boolean showNames = false;
+
+	public void showNames() {
+		showNames = !showNames;
+		for (final CRoom room : rooms) {
+			for (final VisualItem item : room.getRoomItems()) {
+				if (item instanceof CTable) {
+					((CTable) item).setSelected(showNames);
+				}
+			}
+		}
 	}
 
 }
