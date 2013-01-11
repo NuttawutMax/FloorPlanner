@@ -172,7 +172,24 @@ public class CRoom extends VisualItem {
 			intercepts++;
 		}
 
+		for (final VisualItem item : roomItems) {
+			if (item.pointInObject(x, y)) {
+				item.setHovering(true);
+			} else {
+				item.setHovering(false);
+			}
+		}
 		return intercepts % 2 == 1;
+	}
+
+	@Override
+	public void clicked(final double x, final double y) {
+		if (pointInObject(x, y)) {
+			for (final VisualItem item : roomItems) {
+				item.clicked(x, y);
+			}
+		}
+
 	}
 
 	public Point selectedPoint(final double x, final double y) {

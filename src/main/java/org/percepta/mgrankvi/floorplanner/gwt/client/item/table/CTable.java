@@ -13,9 +13,12 @@ import com.google.gwt.canvas.dom.client.CssColor;
 
 public class CTable extends VisualItem {
 
+	private static double TWO_PI = Math.PI * 2.0;
+
 	private Point drawPosition = new Point(0, 0);
 	private String color = "BLACK";
 	private String tableColor = "TRANSPARENT";
+	private boolean showName = false;
 
 	public CTable(final List<Point> points, final Point position) {
 		this.points.addAll(points);
@@ -35,6 +38,10 @@ public class CTable extends VisualItem {
 		tableColor = color;
 	}
 
+	public void setSelected(final boolean selected) {
+		showName = selected;
+	}
+
 	@Override
 	public void paint(final Context2d context, final Point offset) {
 		drawPosition = GeometryUtil.combine(position, offset);
@@ -45,25 +52,29 @@ public class CTable extends VisualItem {
 
 		ItemUtils.paintPointToPoint(context, points, drawPosition, CssColor.make(color));
 
-		if (getName() != null) {
+		if (getName() != null && !getName().isEmpty() && (showName || isHovering())) {
 			paintName(context);
 		}
 	}
 
 	public void paintName(final Context2d context) {
-		final Point drawPosition = GeometryUtil.combine(this.drawPosition,
-				new Point((int) Math.floor((maxX() - minX()) * 0.25), (int) Math.floor((maxY() - minY()) * 0.4)));
-
+		context.save();
 		context.setFont("bold 10px Courier New");
 
 		final int width = (int) Math.ceil(context.measureText(getName()).getWidth());
+		final double tableWidth = maxX() - minX();
+
+		final double namePosition = (tableWidth - width) / 2;
+
+		final Point drawPosition = GeometryUtil.combine(this.drawPosition,
+				new Point((int) Math.floor(namePosition), (int) Math.floor((maxY() - minY()) * 0.5 - 10)));
 
 		context.setFillStyle("GREEN");
 		context.beginPath();
 
-		context.arc(drawPosition.getX(), drawPosition.getY() + 10, 10, 0, Math.PI * 2.0, true);
+		context.arc(drawPosition.getX(), drawPosition.getY() + 10, 10, 0, TWO_PI, true);
 		context.fillRect(drawPosition.getX(), drawPosition.getY(), width, 20);
-		context.arc(drawPosition.getX() + width, drawPosition.getY() + 10, 10, 0, Math.PI * 2.0, true);
+		context.arc(drawPosition.getX() + width, drawPosition.getY() + 10, 10, 0, TWO_PI, true);
 
 		context.closePath();
 		context.fill();
@@ -74,6 +85,7 @@ public class CTable extends VisualItem {
 		context.fillText(getName(), drawPosition.getX(), drawPosition.getY() + 12);
 
 		context.closePath();
+		context.restore();
 	}
 
 	@Override
@@ -106,6 +118,16 @@ public class CTable extends VisualItem {
 		}
 
 		return intercepts % 2 == 1;
+	}
+
+	@Override
+	public void clicked(final double x, final double y) {
+		if (pointInObject(x, y)) {
+			setSelected(!showName);
+			if (!tableColor.equals("TRANSPARENT")) {
+				tableColor = "TRANSPARENT";
+			}
+		}
 	}
 
 }

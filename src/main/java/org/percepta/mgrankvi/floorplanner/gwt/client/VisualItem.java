@@ -18,12 +18,15 @@ public abstract class VisualItem extends Widget {
 
 	public abstract boolean pointInObject(final double x, final double y);
 
+	public abstract void clicked(double x, double y);
+
 	protected String id, name;
 	protected final LinkedList<Point> points = new LinkedList<Point>();
 	protected final List<Point> notZoomed = new LinkedList<Point>();
 	protected Point position = new Point(0, 0);
 	protected Point orgPosition = new Point(0, 0);
 	private Double minX, maxX, minY, maxY;
+	private boolean hovering = false;
 
 	public String getId() {
 		return id;
@@ -35,6 +38,14 @@ public abstract class VisualItem extends Widget {
 
 	public String getName() {
 		return name;
+	}
+
+	public void setHovering(final boolean hovering) {
+		this.hovering = hovering;
+	}
+
+	public boolean isHovering() {
+		return hovering;
 	}
 
 	public double getPositionX() {

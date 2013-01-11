@@ -63,4 +63,10 @@ public class CLabel extends VisualItem {
 		return false;
 	}
 
+	@Override
+	public void clicked(final double x, final double y) {
+		// TODO Auto-generated method stub
+
+	}
+
 }

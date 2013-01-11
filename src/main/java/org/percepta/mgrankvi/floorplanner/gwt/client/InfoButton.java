@@ -61,4 +61,10 @@ public class InfoButton extends VisualItem {
 		paint(context);
 	}
 
+	@Override
+	public void clicked(final double x, final double y) {
+		// TODO Auto-generated method stub
+
+	}
+
 }
