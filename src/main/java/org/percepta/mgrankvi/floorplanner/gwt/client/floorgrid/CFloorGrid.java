@@ -193,6 +193,7 @@ public class CFloorGrid extends Widget implements ClickHandler, MouseDownHandler
 	}
 
 	SearchBar searchBar = new SearchBar(this);
+	ButtonBar buttonBar = new ButtonBar(this);
 
 	private void paint() {
 		final Context2d context = canvas.getContext2d();
@@ -203,6 +204,7 @@ public class CFloorGrid extends Widget implements ClickHandler, MouseDownHandler
 		paintRooms();
 
 		searchBar.paint(context);
+		buttonBar.paint(context);
 
 		if (hoverElement != null) {
 			hoverElement.paint(context);
@@ -332,6 +334,11 @@ public class CFloorGrid extends Widget implements ClickHandler, MouseDownHandler
 						break;
 					}
 				}
+				room.clicked(downX, downY);
+			}
+		} else {
+			for (final CRoom room : rooms) {
+				room.clicked(downX, downY);
 			}
 		}
 	}
@@ -396,6 +403,15 @@ public class CFloorGrid extends Widget implements ClickHandler, MouseDownHandler
 		} else if (searchBar.isVisible()) {
 			searchBar.setAnimate(true);
 			searchBar.setVisible(false);
+		}
+		if (buttonBar.mouseOver(clientX, clientY)) {
+			if (!buttonBar.isVisible()) {
+				buttonBar.setAnimate(true);
+				buttonBar.setVisible(true);
+			}
+		} else if (buttonBar.isVisible()) {
+			buttonBar.setAnimate(true);
+			buttonBar.setVisible(false);
 		}
 		repaint();
 	}
@@ -597,6 +613,7 @@ public class CFloorGrid extends Widget implements ClickHandler, MouseDownHandler
 	public void markTableOfSelectedPerson(final String nameOfSelection) {
 		if (markedTable != null) {
 			markedTable.setTableColor("TRANSPARENT");
+			markedTable.setSelected(false);
 		}
 		for (final CRoom room : rooms) {
 			for (final VisualItem item : room.getRoomItems()) {
@@ -605,46 +622,49 @@ public class CFloorGrid extends Widget implements ClickHandler, MouseDownHandler
 					if (nameOfSelection.equals(table.getName())) {
 						markedTable = table;
 						table.setTableColor("burlywood");
-						final double xPointInCanvas = (canvas.getCoordinateSpaceWidth() / 2) - (table.maxX() - table.minX()) / 2;
-						final double yPointInCanvas = (canvas.getCoordinateSpaceHeight() / 2) - (table.maxY() - table.minY()) / 2;
+						table.setSelected(true);
+						moveTableToView(room, table);
 
-						final double tableCornerX = table.getPositionX() + room.getPositionX();
-						final double tableCornerY = table.getPositionY() + room.getPositionY();
-
-						final double panX = xPointInCanvas - tableCornerX;
-						final double panY = yPointInCanvas - tableCornerY;
-
-						final Animation animate = new Animation() {
-							double movedX = 0;
-							double movedY = 0;
-
-							@Override
-							protected void onUpdate(final double progress) {
-								final double moveX = panX * progress - movedX;
-								final double moveY = panY * progress - movedY;
-								movedX += moveX;
-								movedY += moveY;
-								pan((int) Math.floor(moveX), (int) Math.floor(moveY));
-								repaint();
-							}
-
-							@Override
-							protected void onComplete() {
-								super.onComplete();
-								animating = false;
-							}
-						};
-						animating = true;
-						VConsole.log(" -- X: " + panX + " Y: " + panY);
-						animate.run(Math.abs(panX) > Math.abs(panY) ? (int) (Math.abs(panX)) : (int) (Math.abs(panY)));
-						// pan((int) Math.floor(panX), (int) Math.floor(panY));
-
-						// repaint();
 						return;
 					}
 				}
 			}
 		}
+	}
+
+	private void moveTableToView(final CRoom room, final CTable table) {
+		final double xPointInCanvas = (canvas.getCoordinateSpaceWidth() / 2) - (table.maxX() - table.minX()) / 2;
+		final double yPointInCanvas = (canvas.getCoordinateSpaceHeight() / 2) - (table.maxY() - table.minY()) / 2;
+
+		final double tableCornerX = table.getPositionX() + room.getPositionX();
+		final double tableCornerY = table.getPositionY() + room.getPositionY();
+
+		final double panX = xPointInCanvas - tableCornerX;
+		final double panY = yPointInCanvas - tableCornerY;
+
+		final Animation animate = new Animation() {
+			double movedX = 0;
+			double movedY = 0;
+
+			@Override
+			protected void onUpdate(final double progress) {
+				final double moveX = panX * progress - movedX;
+				final double moveY = panY * progress - movedY;
+				movedX += moveX;
+				movedY += moveY;
+				pan((int) Math.floor(moveX), (int) Math.floor(moveY));
+				repaint();
+			}
+
+			@Override
+			protected void onComplete() {
+				super.onComplete();
+				animating = false;
+			}
+		};
+		animating = true;
+		VConsole.log(" -- X: " + panX + " Y: " + panY);
+		animate.run(Math.abs(panX) > Math.abs(panY) ? (int) (Math.abs(panX)) : (int) (Math.abs(panY)));
 	}
 
 	@Override
