@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.percepta.mgrankvi.floorplanner.gwt.client.floorgrid.buttons.AbstractButton;
 import org.percepta.mgrankvi.floorplanner.gwt.client.floorgrid.buttons.NamesButton;
+import org.percepta.mgrankvi.floorplanner.gwt.client.floorgrid.buttons.PathButton;
 
 import com.google.gwt.animation.client.Animation;
 import com.google.gwt.canvas.dom.client.Context2d;
@@ -25,8 +26,13 @@ public class ButtonBar {
 	private int cornerY;
 	private final CFloorGrid grid;
 
+	NamesButton names = new NamesButton(this, 25, BAR_HEIGHT + 10);
+	PathButton path = new PathButton(this, 25, BAR_HEIGHT - 20);
+
 	public ButtonBar(final CFloorGrid grid) {
 		this.grid = grid;
+		buttons.add(names);
+		buttons.add(path);
 	}
 
 	public void setVisible(final boolean visible) {
@@ -41,15 +47,15 @@ public class ButtonBar {
 		this.animate = animate;
 	}
 
-	NamesButton names = new NamesButton(this, 25, BAR_HEIGHT + 10);
-
 	public void paint(final Context2d context) {
 		x = context.getCanvas().getWidth();
 		y = context.getCanvas().getHeight();
 		cornerX = context.getCanvas().getWidth();
 		cornerY = context.getCanvas().getHeight();
-		names.setX(x);
-		names.setY(y);
+		for (final AbstractButton b : buttons) {
+			b.setX(x);
+			b.setY(y);
+		}
 		if (visible) {
 			if (animate) {
 				grid.setAnimating(true);
@@ -91,21 +97,25 @@ public class ButtonBar {
 						super.onComplete();
 						// grid.setAnimating(false);
 
-						final Animation buttons = new Animation() {
+						final Animation buttonAnimation = new Animation() {
 
 							@Override
 							protected void onUpdate(final double progress) {
-								names.paint(context, progress);
+								for (final AbstractButton b : buttons) {
+									b.paint(context, progress);
+								}
 							}
 
 							@Override
 							protected void onComplete() {
 								super.onComplete();
 								grid.setAnimating(false);
-								names.paint(context);
+								for (final AbstractButton b : buttons) {
+									b.paint(context);
+								}
 							}
 						};
-						buttons.run(300);
+						buttonAnimation.run(300);
 					}
 				};
 				elongate.run(500);
@@ -133,7 +143,9 @@ public class ButtonBar {
 
 				context.restore();
 
-				names.paint(context);
+				for (final AbstractButton b : buttons) {
+					b.paint(context);
+				}
 			}
 		} else if (animate) {
 			grid.setAnimating(true);
@@ -208,7 +220,9 @@ public class ButtonBar {
 
 	public boolean mouseOver(final int clientX, final int clientY) {
 		if (visible && clientX > (cornerX - START_BUBBLE_SIZE - BAR_WIDTH) && clientY > (cornerY - BAR_HEIGHT - START_BUBBLE_SIZE)) {
-			names.hover(clientX, clientY);
+			for (final AbstractButton b : buttons) {
+				b.hover(clientX, clientY);
+			}
 			return true;
 		} else if (clientX > (cornerX - START_BUBBLE_SIZE) && clientY > (cornerY - START_BUBBLE_SIZE)) {
 			return true;
@@ -217,7 +231,9 @@ public class ButtonBar {
 	}
 
 	public void click(final int x, final int y) {
-		names.clicked();
+		for (final AbstractButton b : buttons) {
+			b.clicked();
+		}
 	}
 
 	public void showNames() {

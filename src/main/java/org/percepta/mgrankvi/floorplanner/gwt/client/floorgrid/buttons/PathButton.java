@@ -4,11 +4,11 @@ import org.percepta.mgrankvi.floorplanner.gwt.client.floorgrid.ButtonBar;
 
 import com.google.gwt.canvas.dom.client.Context2d;
 
-public class NamesButton extends AbstractButton {
+public class PathButton extends AbstractButton {
 
 	private final ButtonBar bar;
 
-	public NamesButton(final ButtonBar bar, final double offsetX, final double offsetY) {
+	public PathButton(final ButtonBar bar, final double offsetX, final double offsetY) {
 		this.bar = bar;
 		this.offsetX = offsetX;
 		this.offsetY = offsetY;
@@ -24,11 +24,28 @@ public class NamesButton extends AbstractButton {
 
 		context.beginPath();
 
-		context.arc(x - offsetX + 10, y - offsetY + 10, 7, 0, Math.PI * 2, true);
-		context.fillText("N", x - offsetX + 6, y - offsetY + 13);
+		// context.arc(x - offsetX + 10, y - offsetY + 10, 7, 0, Math.PI * 2,
+		// true);
+		context.moveTo(x - offsetX + 8, y - offsetY + 5);
+		context.bezierCurveTo(x - offsetX - 5, y - offsetY + 20, x - offsetX + 25, y - offsetY, x - offsetX + 15, y - offsetY + 15);
+		context.moveTo(x - offsetX + 8, y - offsetY + 5);
 
 		context.closePath();
 		context.stroke();
+
+		context.beginPath();
+
+		context.arc(x - offsetX + 8, y - offsetY + 5, 1.5, 0, Math.PI * 2, true);
+
+		context.closePath();
+		context.fill();
+
+		context.beginPath();
+
+		context.arc(x - offsetX + 15, y - offsetY + 15, 1.5, 0, Math.PI * 2, true);
+
+		context.closePath();
+		context.fill();
 
 		context.restore();
 	}
@@ -44,8 +61,8 @@ public class NamesButton extends AbstractButton {
 
 	@Override
 	public void clicked() {
-		if (fillStyle.equals("ORANGE")) {
-			bar.showNames();
-		}
+		// TODO Auto-generated method stub
+
 	}
+
 }
