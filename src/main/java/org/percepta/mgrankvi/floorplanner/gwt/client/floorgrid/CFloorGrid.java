@@ -25,7 +25,6 @@ import org.percepta.mgrankvi.floorplanner.gwt.client.room.RoomState;
 import com.google.gwt.animation.client.Animation;
 import com.google.gwt.canvas.client.Canvas;
 import com.google.gwt.canvas.dom.client.Context2d;
-import com.google.gwt.dom.client.Document;
 import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.dom.client.Style;
 import com.google.gwt.dom.client.Style.Position;
@@ -50,19 +49,16 @@ import com.google.gwt.event.dom.client.MouseUpHandler;
 import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.Command;
 import com.google.gwt.user.client.Window;
-import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.MenuBar;
 import com.google.gwt.user.client.ui.MenuItem;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.TextBox;
-import com.google.gwt.user.client.ui.Widget;
 import com.vaadin.client.VConsole;
 import com.vaadin.client.ui.VNotification;
 
-public class CFloorGrid extends Widget implements ClickHandler, MouseDownHandler, MouseUpHandler, MouseMoveHandler, MouseOutHandler, ContextMenuHandler,
+public class CFloorGrid extends Composite implements ClickHandler, MouseDownHandler, MouseUpHandler, MouseMoveHandler, MouseOutHandler, ContextMenuHandler,
 		ChangeHandler, KeyUpHandler {
 
 	private static final String CLASSNAME = "c-floorgrid";
@@ -101,9 +97,15 @@ public class CFloorGrid extends Widget implements ClickHandler, MouseDownHandler
 	int zoom = 0;
 
 	boolean isEditable = false;
+	private final FlowPanel content;
 
 	public CFloorGrid() {
-		setElement(Document.get().createDivElement());
+		content = new FlowPanel();
+		content.setSize("100%", "100%");
+
+		initWidget(content);
+
+		// setElement(Document.get().createDivElement());
 		setStyleName(CLASSNAME);
 
 		addDomHandler(this, MouseDownEvent.getType());
@@ -117,14 +119,16 @@ public class CFloorGrid extends Widget implements ClickHandler, MouseDownHandler
 
 		canvas = Canvas.createIfSupported();
 		if (canvas != null) {
-			getElement().appendChild(canvas.getElement());
+			// getElement().appendChild(canvas.getElement());
+			content.add(canvas);
 			clearCanvas();
 			paint();
 		} else {
 			getElement().setInnerHTML("Canvas not supported");
 		}
 
-		getElement().appendChild(typeAndEdit.getElement());
+		// getElement().appendChild(typeAndEdit.getElement());
+		content.add(typeAndEdit);
 
 		final Style editStyle = typeAndEdit.getElement().getStyle();
 		typeAndEdit.addChangeHandler(this);
@@ -208,7 +212,7 @@ public class CFloorGrid extends Widget implements ClickHandler, MouseDownHandler
 
 		if (hoverElement != null) {
 			hoverElement.paint(context);
-			hoverElement.getRoom().paintLabel(context);
+			// hoverElement.getRoom().paintLabel(context);
 		}
 	}
 
@@ -521,7 +525,7 @@ public class CFloorGrid extends Widget implements ClickHandler, MouseDownHandler
 					if (possible.size() == 1) {
 						markTableOfSelectedPerson(possible.getFirst());
 					} else if (possible.size() > 1) {
-						createSelect(possible);
+						new NameSelectPopup(possible, this);
 					}
 				} else {
 					final VNotification notification = new VNotification();
@@ -560,55 +564,6 @@ public class CFloorGrid extends Widget implements ClickHandler, MouseDownHandler
 		Collections.sort(possible);
 
 		return possible;
-	}
-
-	private void createSelect(final List<String> possibilities) {
-		final PopupPanel select = new PopupPanel();
-
-		final ListBox listselect = new ListBox();
-		for (final String name : possibilities) {
-			listselect.addItem(name);
-		}
-		listselect.setVisibleItemCount(5);
-		listselect.setWidth("100%");
-
-		final FlowPanel layout = new FlowPanel();
-		layout.add(new Label("Found " + possibilities.size() + " possible matches."));
-		layout.add(new Label("Select person:"));
-		layout.add(listselect);
-
-		final Button ok = new Button("Ok", new ClickHandler() {
-
-			@Override
-			public void onClick(final ClickEvent event) {
-				markTableOfSelectedPerson(listselect.getValue(listselect.getSelectedIndex()));
-				select.hide();
-			}
-		});
-		ok.getElement().getStyle().setProperty("float", "right");
-		final Button cancel = new Button("Cancel", new ClickHandler() {
-
-			@Override
-			public void onClick(final ClickEvent event) {
-				select.hide();
-			}
-		});
-		cancel.getElement().getStyle().setProperty("float", "right");
-
-		layout.add(ok);
-		layout.add(cancel);
-
-		final Style style = layout.getElement().getStyle();
-		style.setBackgroundColor("burlywood");
-		style.setPadding(10.0, Unit.PX);
-		style.setProperty("border-radius", "4px");
-		style.setProperty("-moz-border-radius", "4px");
-		style.setProperty("-webkit-border-radius", "4px");
-		style.setPaddingBottom(25, Unit.PX);
-
-		select.add(layout);
-		select.setPopupPosition(Window.getClientWidth() / 2, Window.getClientHeight() / 2);
-		select.show();
 	}
 
 	public void markTableOfSelectedPerson(final String nameOfSelection) {
@@ -670,6 +625,9 @@ public class CFloorGrid extends Widget implements ClickHandler, MouseDownHandler
 
 	@Override
 	public void onContextMenu(final ContextMenuEvent event) {
+		if (!isEditable) {
+			return;
+		}
 		event.preventDefault();
 		mouseDown = false;
 		selected = null;
