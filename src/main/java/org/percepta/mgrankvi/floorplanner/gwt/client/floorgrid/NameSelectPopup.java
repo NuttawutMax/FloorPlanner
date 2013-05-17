@@ -8,17 +8,15 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
-import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.PopupPanel;
 
-public class NameSelectPopup extends Composite {
+public class NameSelectPopup {
 
 	public NameSelectPopup(final List<String> possibilities, final CFloorGrid grid) {
 		final PopupPanel select = new PopupPanel();
-		initWidget(select);
 
 		final ListBox listselect = new ListBox();
 		for (final String name : possibilities) {
