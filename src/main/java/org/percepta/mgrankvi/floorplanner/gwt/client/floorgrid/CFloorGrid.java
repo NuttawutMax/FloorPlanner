@@ -135,6 +135,7 @@ public class CFloorGrid extends Composite implements ClickHandler, MouseDownHand
 		typeAndEdit.addKeyUpHandler(this);
 		editStyle.setPosition(Position.RELATIVE);
 		editStyle.setLeft(0.0, Style.Unit.PX);
+		editStyle.setProperty("margin", "0");
 		typeAndEdit.setWidth(Window.getClientWidth() + "px");
 
 	}
