@@ -8,7 +8,7 @@ import org.percepta.mgrankvi.floorplanner.gwt.client.floorgrid.FloorGridServerRp
 import org.percepta.mgrankvi.floorplanner.gwt.client.floorgrid.FloorGridState;
 import org.percepta.mgrankvi.floorplanner.gwt.client.geometry.Point;
 import org.percepta.mgrankvi.floorplanner.visual.entity.Room;
-import org.percepta.mgrankvi.floorplanner.visual.entity.RoomType;
+import org.percepta.mgrankvi.floorplanner.visual.entity.RoomCreator;
 
 import com.vaadin.ui.AbstractComponent;
 import com.vaadin.ui.Component;
@@ -28,16 +28,16 @@ public class FloorGrid extends AbstractComponent implements HasComponents {
 		public void addNewRoom(final int value, final int x, final int y) {
 			switch (value) {
 			case 3:
-				addRoom(RoomType.triangle(new Point(x, y)));
+				addRoom(RoomCreator.triangle(new Point(x, y)));
 				break;
 			case 4:
-				addRoom(RoomType.square(new Point(x, y)));
+				addRoom(RoomCreator.square(new Point(x, y)));
 				break;
 			case 5:
-				addRoom(RoomType.fivePoints(new Point(x, y)));
+				addRoom(RoomCreator.fivePoints(new Point(x, y)));
 				break;
 			case 6:
-				addRoom(RoomType.LShape(new Point(x, y)));
+				addRoom(RoomCreator.LShape(new Point(x, y)));
 				break;
 			}
 		}

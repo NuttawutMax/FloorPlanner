@@ -3,7 +3,7 @@ package org.percepta.mgrankvi.floorplanner.visual.entity;
 import org.percepta.mgrankvi.floorplanner.gwt.client.geometry.Point;
 import org.percepta.mgrankvi.floorplanner.gwt.client.geometry.Rectangle;
 
-public class RoomType {
+public class RoomCreator {
 
 	public static Room triangle() {
 		return new Room(new Point(0, 0), new Point(100, 0), new Point(0, 100));
