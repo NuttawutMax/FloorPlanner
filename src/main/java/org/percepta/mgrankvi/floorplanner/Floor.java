@@ -3,6 +3,7 @@ package org.percepta.mgrankvi.floorplanner;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.UUID;
 
 import org.percepta.mgrankvi.floorplanner.gwt.client.floorgrid.FloorServerRpc;
 import org.percepta.mgrankvi.floorplanner.gwt.client.floorgrid.FloorState;
@@ -85,6 +86,8 @@ public class Floor extends AbstractComponentContainer implements HasComponents {
 		registerRpc(rpc);
 		setWidth("100%");
 		setHeight("100%");
+
+		getState().id = UUID.randomUUID().toString();
 	}
 
 	public void addRoom(final Room room) {

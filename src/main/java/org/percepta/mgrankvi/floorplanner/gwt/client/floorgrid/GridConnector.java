@@ -64,7 +64,19 @@ public class GridConnector extends AbstractHasComponentsConnector implements Sim
 
 	@Override
 	public void layout() {
-		getWidget().repaint();
+		final CGrid widget = getWidget();
+		if (!widget.floors.isEmpty()) {
+			if (widget.selectedFloor == null) {
+				widget.setFloor(widget.floors.iterator().next());
+			} else if (widget.selectedFloor != null) {
+				for (final CFloor floor : widget.floors) {
+					if (floor.id.equals(widget.selectedFloor.id)) {
+						widget.setFloor(floor);
+						break;
+					}
+				}
+			}
+		}
+		widget.repaint();
 	}
-
 }

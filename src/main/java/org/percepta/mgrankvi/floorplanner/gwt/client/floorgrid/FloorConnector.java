@@ -11,7 +11,6 @@ import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.ui.Widget;
 import com.vaadin.client.ComponentConnector;
 import com.vaadin.client.ConnectorHierarchyChangeEvent;
-import com.vaadin.client.VConsole;
 import com.vaadin.client.communication.RpcProxy;
 import com.vaadin.client.communication.StateChangeEvent;
 import com.vaadin.client.ui.AbstractHasComponentsConnector;
@@ -51,7 +50,7 @@ public class FloorConnector extends AbstractHasComponentsConnector implements Me
 	@Override
 	public void onStateChanged(final StateChangeEvent stateChangeEvent) {
 		super.onStateChanged(stateChangeEvent);
-		VConsole.log(" -+- Floor state changed");
+		getWidget().id = getState().id;
 	}
 
 	@Override
@@ -89,6 +88,7 @@ public class FloorConnector extends AbstractHasComponentsConnector implements Me
 	public void onConnectorHierarchyChange(final ConnectorHierarchyChangeEvent connectorHierarchyChangeEvent) {
 		final List<ComponentConnector> children = getChildComponents();
 		final CFloor widget = getWidget();
+		widget.clear();
 		for (final ComponentConnector connector : children) {
 			widget.add(connector.getWidget());
 		}

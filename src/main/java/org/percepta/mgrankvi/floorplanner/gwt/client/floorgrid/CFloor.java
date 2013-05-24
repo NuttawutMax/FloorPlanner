@@ -39,6 +39,8 @@ public class CFloor extends Widget {
 
 	private InfoButton hoverElement = null;
 
+	String id;
+
 	CRoom selected = null;
 	Point targetPoint = null;
 	CGrid grid;
@@ -67,6 +69,10 @@ public class CFloor extends Widget {
 
 	public CRoom getRoom(final String id) {
 		return roomMap.get(id);
+	}
+
+	public void setId(final String id) {
+		this.id = id;
 	}
 
 	public void paint() {
@@ -331,6 +337,10 @@ public class CFloor extends Widget {
 
 	public ScheduledCommand addCommand(final int i, final int x, final int y) {
 		return new AddCommand(i, x, y);
+	}
+
+	public void clear() {
+		rooms.clear();
 	}
 
 	public void add(final Widget widget) {

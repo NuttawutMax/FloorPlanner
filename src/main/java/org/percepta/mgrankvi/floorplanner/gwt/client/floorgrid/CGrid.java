@@ -499,12 +499,12 @@ public class CGrid extends Composite implements ClickHandler, MouseDownHandler, 
 	}
 
 	public void clear() {
-		// TODO Auto-generated method stub
+		floors.clear();
+		items.clear();
 	}
 
 	public void add(final Widget widget) {
 		if (widget instanceof CFloor) {
-			setFloor((CFloor) widget);
 			floors.add((CFloor) widget);
 		} else if (widget instanceof VisualItem) {
 			items.add((VisualItem) widget);
