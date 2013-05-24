@@ -10,6 +10,7 @@ import org.percepta.mgrankvi.floorplanner.gwt.client.paint.ItemUtils;
 
 import com.google.gwt.canvas.dom.client.Context2d;
 import com.google.gwt.canvas.dom.client.CssColor;
+import com.google.gwt.dom.client.Document;
 
 public class CTable extends VisualItem {
 
@@ -19,6 +20,11 @@ public class CTable extends VisualItem {
 	private String color = "BLACK";
 	private String tableColor = "TRANSPARENT";
 	private boolean showName = false;
+
+	public CTable() {
+		// dummy element
+		setElement(Document.get().createDivElement());
+	}
 
 	public CTable(final List<Point> points, final Point position) {
 		this.points.addAll(points);
