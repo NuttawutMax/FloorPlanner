@@ -15,7 +15,7 @@ import com.google.gwt.user.client.ui.PopupPanel;
 
 public class NameSelectPopup {
 
-	public NameSelectPopup(final List<String> possibilities, final CFloorGrid grid) {
+	public NameSelectPopup(final List<String> possibilities, final CFloor floor) {
 		final PopupPanel select = new PopupPanel();
 
 		final ListBox listselect = new ListBox();
@@ -34,7 +34,7 @@ public class NameSelectPopup {
 
 			@Override
 			public void onClick(final ClickEvent event) {
-				grid.markTableOfSelectedPerson(listselect.getValue(listselect.getSelectedIndex()));
+				floor.markTableOfSelectedPerson(listselect.getValue(listselect.getSelectedIndex()));
 				select.hide();
 			}
 		});

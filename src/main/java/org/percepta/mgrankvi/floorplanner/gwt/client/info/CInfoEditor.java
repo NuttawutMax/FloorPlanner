@@ -1,7 +1,7 @@
 package org.percepta.mgrankvi.floorplanner.gwt.client.info;
 
 import org.percepta.mgrankvi.floorplanner.gwt.client.VisualItem;
-import org.percepta.mgrankvi.floorplanner.gwt.client.floorgrid.CFloorGrid;
+import org.percepta.mgrankvi.floorplanner.gwt.client.floorgrid.CFloor;
 import org.percepta.mgrankvi.floorplanner.gwt.client.geometry.Point;
 import org.percepta.mgrankvi.floorplanner.gwt.client.item.table.CTable;
 import org.percepta.mgrankvi.floorplanner.gwt.client.paint.GridUtils;
@@ -41,7 +41,7 @@ public class CInfoEditor extends PopupPanel implements ClickHandler, MouseDownHa
 
 	private final CRoom orgRoom;
 	private final CRoom room;
-	private final CFloorGrid grid;
+	private final CFloor floor;
 	private final Point offset;
 	private Point select;
 
@@ -49,8 +49,8 @@ public class CInfoEditor extends PopupPanel implements ClickHandler, MouseDownHa
 	private boolean click = true;
 	private int downX, downY;
 
-	public CInfoEditor(final CFloorGrid grid, final CRoom room) {
-		this.grid = grid;
+	public CInfoEditor(final CFloor floor, final CRoom room) {
+		this.floor = floor;
 		orgRoom = room;
 		this.room = room.cloneRoom();
 		while (CANVAS_WIDTH - 20 < (this.room.maxX() - this.room.minX()) && CANVAS_HEIGHT - 20 < (this.room.maxY() - this.room.minY())) {
@@ -200,7 +200,7 @@ public class CInfoEditor extends PopupPanel implements ClickHandler, MouseDownHa
 			hide();
 		} else if (find.getElement().equals(event.getNativeEvent().getEventTarget())) {
 			VConsole.log("Button click");
-			grid.markTableOfSelectedPerson(list.getValue(list.getSelectedIndex()));
+			floor.markTableOfSelectedPerson(list.getValue(list.getSelectedIndex()));
 			CInfoEditor.this.hide();
 		}
 		click = true;
