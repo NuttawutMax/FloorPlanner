@@ -41,7 +41,7 @@ public class CFloor extends Widget {
 
 	CRoom selected = null;
 	Point targetPoint = null;
-	CFloorGrid grid;
+	CGrid grid;
 
 	public CFloor() {
 		// Dummy

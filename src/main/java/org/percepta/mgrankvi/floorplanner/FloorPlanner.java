@@ -22,7 +22,7 @@ public class FloorPlanner extends UI {
 		final CssLayout layout = new CssLayout();
 		setContent(layout);
 
-		final FloorGrid grid = new FloorGrid();
+		final Grid grid = new Grid();
 		// grid.addRoom(RoomType.square(new Point()));
 
 		grid.addComponent(populateGroundFloorGrid());

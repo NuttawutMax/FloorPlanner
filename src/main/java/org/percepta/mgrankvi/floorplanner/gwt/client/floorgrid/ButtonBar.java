@@ -24,12 +24,12 @@ public class ButtonBar {
 	private int y = 0;
 	private int cornerX;
 	private int cornerY;
-	private final CFloorGrid grid;
+	private final CGrid grid;
 
 	NamesButton names = new NamesButton(this, 25, BAR_HEIGHT + 10);
 	PathButton path = new PathButton(this, 25, BAR_HEIGHT - 20);
 
-	public ButtonBar(final CFloorGrid grid) {
+	public ButtonBar(final CGrid grid) {
 		this.grid = grid;
 		buttons.add(names);
 		buttons.add(path);

@@ -4,19 +4,19 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.percepta.mgrankvi.floorplanner.gwt.client.floorgrid.FloorGridState;
+import org.percepta.mgrankvi.floorplanner.gwt.client.floorgrid.GridState;
 
 import com.vaadin.ui.AbstractComponentContainer;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.HasComponents;
 
-public class FloorGrid extends AbstractComponentContainer implements HasComponents {
+public class Grid extends AbstractComponentContainer implements HasComponents {
 
 	private static final long serialVersionUID = 6976301197921043544L;
 
 	List<Component> children = new LinkedList<Component>();
 
-	public FloorGrid() {
+	public Grid() {
 		setWidth("100%");
 		setHeight("100%");
 	}
@@ -30,8 +30,8 @@ public class FloorGrid extends AbstractComponentContainer implements HasComponen
 	}
 
 	@Override
-	protected FloorGridState getState() {
-		return (FloorGridState) super.getState();
+	protected GridState getState() {
+		return (GridState) super.getState();
 	}
 
 	@Override

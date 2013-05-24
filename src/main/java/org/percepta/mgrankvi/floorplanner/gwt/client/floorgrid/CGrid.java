@@ -42,7 +42,7 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Widget;
 import com.vaadin.client.ui.VNotification;
 
-public class CFloorGrid extends Composite implements ClickHandler, MouseDownHandler, MouseUpHandler, MouseMoveHandler, MouseOutHandler, ContextMenuHandler,
+public class CGrid extends Composite implements ClickHandler, MouseDownHandler, MouseUpHandler, MouseMoveHandler, MouseOutHandler, ContextMenuHandler,
 		ChangeHandler, KeyUpHandler {
 
 	private static final String CLASSNAME = "c-floorgrid";
@@ -77,7 +77,7 @@ public class CFloorGrid extends Composite implements ClickHandler, MouseDownHand
 
 	CFloor floor;
 
-	public CFloorGrid() {
+	public CGrid() {
 		content = new FlowPanel();
 		content.setSize("100%", "100%");
 

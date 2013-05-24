@@ -11,8 +11,8 @@ import com.vaadin.client.ui.AbstractHasComponentsConnector;
 import com.vaadin.client.ui.SimpleManagedLayout;
 import com.vaadin.shared.ui.Connect;
 
-@Connect(org.percepta.mgrankvi.floorplanner.FloorGrid.class)
-public class FloorGridConnector extends AbstractHasComponentsConnector implements SimpleManagedLayout {
+@Connect(org.percepta.mgrankvi.floorplanner.Grid.class)
+public class GridConnector extends AbstractHasComponentsConnector implements SimpleManagedLayout {
 
 	private static final long serialVersionUID = 7482779025242695758L;
 
@@ -23,17 +23,17 @@ public class FloorGridConnector extends AbstractHasComponentsConnector implement
 
 	@Override
 	protected Widget createWidget() {
-		return GWT.create(CFloorGrid.class);
+		return GWT.create(CGrid.class);
 	}
 
 	@Override
-	public CFloorGrid getWidget() {
-		return (CFloorGrid) super.getWidget();
+	public CGrid getWidget() {
+		return (CGrid) super.getWidget();
 	};
 
 	@Override
-	public FloorGridState getState() {
-		return (FloorGridState) super.getState();
+	public GridState getState() {
+		return (GridState) super.getState();
 	}
 
 	@Override
@@ -52,7 +52,7 @@ public class FloorGridConnector extends AbstractHasComponentsConnector implement
 	@Override
 	public void onConnectorHierarchyChange(final ConnectorHierarchyChangeEvent connectorHierarchyChangeEvent) {
 		final List<ComponentConnector> children = getChildComponents();
-		final CFloorGrid widget = getWidget();
+		final CGrid widget = getWidget();
 		widget.clear();
 		for (final ComponentConnector connector : children) {
 			widget.add(connector.getWidget());

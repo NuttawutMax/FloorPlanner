@@ -22,9 +22,9 @@ public class SearchBar implements KeyUpHandler {
 	private int canvasPosition = 0;
 	private final int closedWidth = 90;
 
-	CFloorGrid grid;
+	CGrid grid;
 
-	public SearchBar(final CFloorGrid grid) {
+	public SearchBar(final CGrid grid) {
 		this.grid = grid;
 
 		// grid.addDomHandler(this, ChangeEvent.getType());
