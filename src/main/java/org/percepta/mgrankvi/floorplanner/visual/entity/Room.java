@@ -6,8 +6,6 @@ import java.util.List;
 import java.util.UUID;
 
 import org.percepta.mgrankvi.floorplanner.gwt.client.geometry.Point;
-import org.percepta.mgrankvi.floorplanner.gwt.client.item.door.DoorState;
-import org.percepta.mgrankvi.floorplanner.gwt.client.item.door.DoorState.Direction;
 import org.percepta.mgrankvi.floorplanner.gwt.client.room.RoomState;
 
 import com.vaadin.ui.AbstractComponentContainer;
@@ -52,18 +50,6 @@ public class Room extends AbstractComponentContainer implements HasComponents {
 	public String getName() {
 		return getState().name;
 	}
-
-	public void addDoor(final Direction openingDirection, final Point position, final int size) {
-		final DoorState door = new DoorState();
-		door.setOpeningDirection(openingDirection);
-		door.setPosition(position);
-		door.setSize(size);
-		getState().addDoor(door);
-	}
-
-	// public void addItem(final ItemState item) {
-	// getState().addItem(item);
-	// }
 
 	@Override
 	public void addComponent(final Component c) {

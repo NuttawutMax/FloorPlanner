@@ -2,13 +2,10 @@ package org.percepta.mgrankvi.floorplanner.gwt.client.room;
 
 import java.util.List;
 
-import org.percepta.mgrankvi.floorplanner.gwt.client.item.door.DoorState;
-
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.ui.Widget;
 import com.vaadin.client.ComponentConnector;
 import com.vaadin.client.ConnectorHierarchyChangeEvent;
-import com.vaadin.client.VConsole;
 import com.vaadin.client.communication.StateChangeEvent;
 import com.vaadin.client.ui.AbstractComponentContainerConnector;
 import com.vaadin.shared.ui.Connect;
@@ -41,32 +38,13 @@ public class RoomConnector extends AbstractComponentContainerConnector {
 	@Override
 	public void onStateChanged(final StateChangeEvent stateChangeEvent) {
 		super.onStateChanged(stateChangeEvent);
-		VConsole.log(" +++ Room state changed");
+
 		getWidget().setId(getState().id);
 		getWidget().setPoints(getState().points);
 
 		getWidget().setPosition(getState().position);
 
 		getWidget().setName(getState().name);
-
-		for (final DoorState door : getState().door) {
-			getWidget().addDoor(door);
-		}
-		// for (final ItemState itemState : getState().items) {
-		// VisualItem item;
-		// switch (itemState.type) {
-		// // case TABLE:
-		// // item = new CTable(itemState.itemPoints, itemState.itemPosition);
-		// // item.setName(itemState.itemName);
-		// // if (itemState.itemName != null) {
-		// // // names.add(itemState.itemName);
-		// // }
-		// // break;
-		// default:
-		// item = new CItem(itemState.itemPoints, itemState.itemPosition);
-		// }
-		// getWidget().addRoomItem(item);
-		// }
 	}
 
 	@Override

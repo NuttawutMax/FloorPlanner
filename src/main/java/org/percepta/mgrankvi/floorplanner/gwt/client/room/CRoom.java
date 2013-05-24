@@ -8,8 +8,6 @@ import org.percepta.mgrankvi.floorplanner.gwt.client.geometry.GeometryUtil;
 import org.percepta.mgrankvi.floorplanner.gwt.client.geometry.Line;
 import org.percepta.mgrankvi.floorplanner.gwt.client.geometry.Point;
 import org.percepta.mgrankvi.floorplanner.gwt.client.item.CLabel;
-import org.percepta.mgrankvi.floorplanner.gwt.client.item.door.CDoor;
-import org.percepta.mgrankvi.floorplanner.gwt.client.item.door.DoorState;
 import org.percepta.mgrankvi.floorplanner.gwt.client.paint.ItemUtils;
 
 import com.google.gwt.canvas.dom.client.Context2d;
@@ -46,10 +44,6 @@ public class CRoom extends VisualItem {
 	@Override
 	public void setPoints(final List<Point> points) {
 		this.points.addAll(points);
-	}
-
-	public void addRoomItem(final VisualItem item) {
-		roomItems.add(item);
 	}
 
 	public void removeRoomItem(final VisualItem item) {
@@ -207,12 +201,6 @@ public class CRoom extends VisualItem {
 
 	private Point combine(final Point p1, final Point p2) {
 		return GeometryUtil.combine(p1, p2);
-	}
-
-	public void addDoor(final DoorState doorState) {
-		final CDoor door = new CDoor(doorState.getSize(), doorState.getOpeningDirection());
-		door.setPosition(doorState.getPosition());
-		addRoomItem(door);
 	}
 
 	public CRoom cloneRoom() {
