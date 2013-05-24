@@ -1,5 +1,7 @@
 package org.percepta.mgrankvi.floorplanner.gwt.client.floorgrid;
 
+import org.percepta.mgrankvi.floorplanner.gwt.client.room.CRoom;
+
 import com.google.gwt.event.shared.GwtEvent;
 
 public class MenuEvent extends GwtEvent<MenuEventHandler> {
@@ -12,7 +14,7 @@ public class MenuEvent extends GwtEvent<MenuEventHandler> {
 
 	private final MenuEventType eventType;
 	private int value, x, y;
-	private String roomId;
+	private CRoom room;
 
 	public MenuEvent(final MenuEventType eventType) {
 		this.eventType = eventType;
@@ -23,9 +25,9 @@ public class MenuEvent extends GwtEvent<MenuEventHandler> {
 		this.value = value;
 	}
 
-	public MenuEvent(final MenuEventType eventType, final String roomId) {
+	public MenuEvent(final MenuEventType eventType, final CRoom room) {
 		this.eventType = eventType;
-		this.roomId = roomId;
+		this.room = room;
 	}
 
 	public MenuEvent(final MenuEventType eventType, final int value, final int x, final int y) {
@@ -68,8 +70,8 @@ public class MenuEvent extends GwtEvent<MenuEventHandler> {
 		return y;
 	}
 
-	public String getRoomId() {
-		return roomId;
+	public CRoom getRoom() {
+		return room;
 	}
 
 }

@@ -51,6 +51,7 @@ public class FloorConnector extends AbstractHasComponentsConnector implements Me
 	public void onStateChanged(final StateChangeEvent stateChangeEvent) {
 		super.onStateChanged(stateChangeEvent);
 		getWidget().id = getState().id;
+		getWidget().level = getState().level;
 	}
 
 	@Override
@@ -60,20 +61,20 @@ public class FloorConnector extends AbstractHasComponentsConnector implements Me
 			rpc.addNewRoom(event.getValue(), event.getX(), event.getY());
 			break;
 		case REMOVE_ROOM:
-			rpc.removeRoom(event.getRoomId());
+			rpc.removeRoom(event.getRoom().getId());
 			break;
 		case UPDATE_ROOMS:
 			for (final ComponentConnector child : getChildComponents()) {
 				if (child instanceof RoomConnector) {
-					final CRoom clientRoom = getWidget().getRoom(((RoomConnector) child).getWidget().getId());
+					final CRoom clientRoom = event.getRoom();
 					rpc.updateVisualItem(clientRoom.getId(), clientRoom.getPosition(), clientRoom.getPoints());
 				}
 			}
 			break;
 		case OPEN_ROOM_INFO:
-			final CRoom clientRoom = getWidget().getRoom(event.getRoomId());
+			final CRoom clientRoom = event.getRoom();
 			rpc.updateVisualItem(clientRoom.getId(), clientRoom.getPosition(), clientRoom.getPoints());
-			rpc.openRoomInformationWindow(event.getRoomId());
+			rpc.openRoomInformationWindow(event.getRoom().getId());
 			break;
 		}
 	}

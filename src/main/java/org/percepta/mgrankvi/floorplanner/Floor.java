@@ -90,6 +90,10 @@ public class Floor extends AbstractComponentContainer implements HasComponents {
 		getState().id = UUID.randomUUID().toString();
 	}
 
+	public void setLevel(final int level) {
+		getState().level = level;
+	}
+
 	public void addRoom(final Room room) {
 		addComponent(room);
 	}

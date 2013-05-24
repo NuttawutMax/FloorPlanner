@@ -1,11 +1,9 @@
 package org.percepta.mgrankvi.floorplanner.gwt.client.floorgrid;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import org.percepta.mgrankvi.floorplanner.gwt.client.CommandObject;
@@ -31,7 +29,6 @@ import com.vaadin.client.VConsole;
 public class CFloor extends Widget {
 
 	private final List<CRoom> rooms = new LinkedList<CRoom>();
-	private final Map<String, CRoom> roomMap = new HashMap<String, CRoom>();
 
 	private CTable markedTable;
 
@@ -40,6 +37,7 @@ public class CFloor extends Widget {
 	private InfoButton hoverElement = null;
 
 	String id;
+	int level;
 
 	CRoom selected = null;
 	Point targetPoint = null;
@@ -65,10 +63,6 @@ public class CFloor extends Widget {
 
 	public List<CRoom> getRooms() {
 		return new LinkedList<CRoom>(rooms);
-	}
-
-	public CRoom getRoom(final String id) {
-		return roomMap.get(id);
 	}
 
 	public void setId(final String id) {
@@ -328,7 +322,7 @@ public class CFloor extends Widget {
 		@Override
 		public void execute() {
 			remove(selectedRoom);
-			fireEvent(new MenuEvent(MenuEvent.MenuEventType.REMOVE_ROOM, selectedRoom.getId()));
+			fireEvent(new MenuEvent(MenuEvent.MenuEventType.REMOVE_ROOM, selectedRoom));
 			grid.contextMenu.hide();
 			grid.contextMenu = null;
 			grid.repaint();
