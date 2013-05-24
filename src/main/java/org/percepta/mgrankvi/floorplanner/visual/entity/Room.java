@@ -33,19 +33,19 @@ public class Room extends AbstractComponent {
 	}
 
 	public void setPosition(final Point position) {
-		getState().setPosition(position);
+		getState().position = position;
 	}
 
 	public void setPoints(final List<Point> points) {
-		getState().setPoints(points);
+		getState().points = points;
 	}
 
 	public void setName(final String name) {
-		getState().setName(name);
+		getState().name = name;
 	}
 
 	public String getName() {
-		return getState().getName();
+		return getState().name;
 	}
 
 	public void addDoor(final Direction openingDirection, final Point position, final int size) {
