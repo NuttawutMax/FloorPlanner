@@ -6,12 +6,18 @@ import org.percepta.mgrankvi.floorplanner.gwt.client.geometry.Point;
 import org.percepta.mgrankvi.floorplanner.gwt.client.item.door.DoorState.Direction;
 
 import com.google.gwt.canvas.dom.client.Context2d;
+import com.google.gwt.dom.client.Document;
 
 public class CDoor extends VisualItem {
 
 	private int size = 20;
 	private int orgSize = 20;
 	private Direction opening = Direction.UP_LEFT;
+
+	public CDoor() {
+		// dummy element
+		setElement(Document.get().createDivElement());
+	}
 
 	public CDoor(final int size, final Direction opening) {
 		this.size = size;
@@ -37,6 +43,10 @@ public class CDoor extends VisualItem {
 
 	public int getSize() {
 		return size;
+	}
+
+	public void setOpeningDirection(final Direction direction) {
+		opening = direction;
 	}
 
 	@Override

@@ -1,6 +1,7 @@
 package org.percepta.mgrankvi.floorplanner.gwt.client.item.door;
 
 import org.percepta.mgrankvi.floorplanner.gwt.client.geometry.Point;
+import org.percepta.mgrankvi.floorplanner.gwt.client.item.ItemType;
 
 import com.vaadin.shared.AbstractComponentState;
 
@@ -12,32 +13,10 @@ public class DoorState extends AbstractComponentState {
 		DOWN_LEFT, UP_LEFT, DOWN_RIGHT, UP_RIGHT
 	}
 
-	private Direction openingDirection;
-	private Point position;
-	private int size = 20;
+	public Direction openingDirection;
+	public Point position;
+	public int size = 20;
 
-	public Direction getOpeningDirection() {
-		return openingDirection;
-	}
-
-	public void setOpeningDirection(final Direction openingDirection) {
-		this.openingDirection = openingDirection;
-	}
-
-	public Point getPosition() {
-		return position;
-	}
-
-	public void setPosition(final Point position) {
-		this.position = position;
-	}
-
-	public int getSize() {
-		return size;
-	}
-
-	public void setSize(final int size) {
-		this.size = size;
-	}
+	public ItemType type;
 
 }
