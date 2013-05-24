@@ -88,22 +88,11 @@ public class Floor extends AbstractComponentContainer implements HasComponents {
 	}
 
 	public void addRoom(final Room room) {
-		// if (room.getParent() != this) {
-		// room.setParent(this);
-		// }
-		// getState().addRoom(room.getState());
-		// addComponent(room);
-		children.add(room);
-		super.addComponent(room);
-		markAsDirty();
+		addComponent(room);
 	}
 
 	public void removeRoom(final Room room) {
-		// room.setParent(null);
-		// removeComponent(room);
-		children.remove(room);
-		super.removeComponent(room);
-		markAsDirty();
+		removeComponent(room);
 	}
 
 	@Override

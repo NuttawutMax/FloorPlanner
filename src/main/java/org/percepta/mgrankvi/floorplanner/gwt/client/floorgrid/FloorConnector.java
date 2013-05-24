@@ -88,11 +88,8 @@ public class FloorConnector extends AbstractHasComponentsConnector implements Me
 	@Override
 	public void onConnectorHierarchyChange(final ConnectorHierarchyChangeEvent connectorHierarchyChangeEvent) {
 		final List<ComponentConnector> children = getChildComponents();
-		// VConsole.log(" --- -- Children: " + children.size());
 		final CFloor widget = getWidget();
-		// widget.clear();
 		for (final ComponentConnector connector : children) {
-			// VConsole.log(" --- --- AddingChildren");
 			widget.add(connector.getWidget());
 		}
 	}
