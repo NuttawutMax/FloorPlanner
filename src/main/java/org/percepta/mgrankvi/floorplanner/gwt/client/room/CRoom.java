@@ -15,6 +15,7 @@ import org.percepta.mgrankvi.floorplanner.gwt.client.paint.ItemUtils;
 import com.google.gwt.canvas.dom.client.Context2d;
 import com.google.gwt.canvas.dom.client.CssColor;
 import com.google.gwt.dom.client.Document;
+import com.google.gwt.user.client.ui.Widget;
 import com.vaadin.client.VConsole;
 
 public class CRoom extends VisualItem {
@@ -42,6 +43,7 @@ public class CRoom extends VisualItem {
 		}
 	}
 
+	@Override
 	public void setPoints(final List<Point> points) {
 		this.points.addAll(points);
 	}
@@ -221,5 +223,11 @@ public class CRoom extends VisualItem {
 		// clone.addRoomItem(item);
 		// }
 		return clone;
+	}
+
+	public void add(final Widget widget) {
+		if (widget instanceof VisualItem) {
+			roomItems.add((VisualItem) widget);
+		}
 	}
 }
