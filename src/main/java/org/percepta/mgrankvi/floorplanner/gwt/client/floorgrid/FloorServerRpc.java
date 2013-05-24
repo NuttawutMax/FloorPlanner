@@ -6,7 +6,7 @@ import org.percepta.mgrankvi.floorplanner.gwt.client.geometry.Point;
 
 import com.vaadin.shared.communication.ServerRpc;
 
-public interface FloorGridServerRpc extends ServerRpc {
+public interface FloorServerRpc extends ServerRpc {
 
 	public void addNewRoom(int value, int x, int y);
 
