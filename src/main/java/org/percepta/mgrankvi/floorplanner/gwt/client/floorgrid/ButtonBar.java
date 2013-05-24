@@ -237,6 +237,6 @@ public class ButtonBar {
 	}
 
 	public void showNames() {
-		grid.floor.showNames();
+		grid.showNames();
 	}
 }
