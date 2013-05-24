@@ -17,7 +17,6 @@ import org.percepta.mgrankvi.floorplanner.gwt.client.item.table.CTable;
 import org.percepta.mgrankvi.floorplanner.gwt.client.room.CRoom;
 
 import com.google.gwt.animation.client.Animation;
-import com.google.gwt.canvas.dom.client.Context2d;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.event.dom.client.MouseMoveEvent;
@@ -33,7 +32,6 @@ public class CFloor extends Widget {
 
 	private final List<CRoom> rooms = new LinkedList<CRoom>();
 	private final Map<String, CRoom> roomMap = new HashMap<String, CRoom>();
-	private final Set<String> names = new HashSet<String>();
 
 	private CTable markedTable;
 
@@ -52,6 +50,14 @@ public class CFloor extends Widget {
 	}
 
 	protected Set<String> getNames() {
+		final Set<String> names = new HashSet<String>();
+		for (final CRoom room : rooms) {
+			for (final VisualItem item : room.getRoomItems()) {
+				if (item instanceof CTable) {
+					names.add(item.getName());
+				}
+			}
+		}
 		return new HashSet<String>(names);
 	}
 
@@ -70,11 +76,6 @@ public class CFloor extends Widget {
 		if (hoverElement != null) {
 			hoverElement.paint(grid.canvas.getContext2d());
 		}
-		final Context2d context = grid.canvas.getContext2d();
-		context.beginPath();
-		context.lineTo(grid.canvas.getCoordinateSpaceWidth(), grid.canvas.getCoordinateSpaceHeight());
-		context.closePath();
-		context.stroke();
 	}
 
 	// Mouse event handlers
@@ -173,9 +174,13 @@ public class CFloor extends Widget {
 
 	// stuff
 	protected boolean namesContain(final CommandObject cmd) {
-		for (final String name : names) {
-			if (name.toLowerCase().contains(cmd.getValue().toLowerCase())) {
-				return true;
+		for (final CRoom room : rooms) {
+			for (final VisualItem item : room.getRoomItems()) {
+				if (item instanceof CTable) {
+					if (item.getName() != null && item.getName().toLowerCase().contains(cmd.getValue().toLowerCase())) {
+						return true;
+					}
+				}
 			}
 		}
 		return false;
@@ -184,9 +189,13 @@ public class CFloor extends Widget {
 	protected LinkedList<String> possibilities(final CommandObject cmd) {
 		final LinkedList<String> possible = new LinkedList<String>();
 
-		for (final String name : names) {
-			if (name.toLowerCase().contains(cmd.getValue().toLowerCase())) {
-				possible.add(name);
+		for (final CRoom room : rooms) {
+			for (final VisualItem item : room.getRoomItems()) {
+				if (item instanceof CTable) {
+					if (item.getName() != null && item.getName().toLowerCase().contains(cmd.getValue().toLowerCase())) {
+						possible.add(item.getName());
+					}
+				}
 			}
 		}
 
