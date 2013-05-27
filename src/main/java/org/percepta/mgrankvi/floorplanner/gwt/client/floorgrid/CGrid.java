@@ -1,5 +1,7 @@
 package org.percepta.mgrankvi.floorplanner.gwt.client.floorgrid;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -7,6 +9,7 @@ import org.percepta.mgrankvi.floorplanner.gwt.client.CommandObject;
 import org.percepta.mgrankvi.floorplanner.gwt.client.VisualItem;
 import org.percepta.mgrankvi.floorplanner.gwt.client.geometry.GeometryUtil;
 import org.percepta.mgrankvi.floorplanner.gwt.client.geometry.Point;
+import org.percepta.mgrankvi.floorplanner.gwt.client.paint.GridButton;
 import org.percepta.mgrankvi.floorplanner.gwt.client.paint.GridUtils;
 import org.percepta.mgrankvi.floorplanner.gwt.client.room.CRoom;
 
@@ -64,12 +67,23 @@ public class CGrid extends Composite implements ClickHandler, MouseDownHandler, 
 	private int orgX, orgY;
 	private Point orgOrigo = null;
 
-	private String buttonColorPlus = "LAVENDER";
-	private String buttonColorMinus = "LAVENDER";
+	final int BUTTON_SIZE = 25;
+	final String DEFAULT_COLOR = "LAVENDER";
+	final String DEFAULT_SELECTED_COLOR = "SILVER";
+
+	final GridButton up;
+	final GridButton down;
+	final GridButton plus;
+	final GridButton minus;
+
+	private final List<GridButton> buttons;
 
 	protected boolean animating = false;
 	private boolean mouseDown = false;
 	private boolean mouseMoved = true;
+	private boolean hasFloorAbove = false;
+	private boolean hasFloorBelow = false;
+
 	private int downX = 0;
 	private int downY = 0;
 	int zoom = 0;
@@ -78,7 +92,7 @@ public class CGrid extends Composite implements ClickHandler, MouseDownHandler, 
 	private final FlowPanel content;
 
 	CFloor selectedFloor;
-	List<CFloor> floors = new LinkedList<CFloor>();
+	LinkedList<CFloor> floors = new LinkedList<CFloor>();
 	List<VisualItem> items = new LinkedList<VisualItem>();
 
 	public CGrid() {
@@ -116,6 +130,12 @@ public class CGrid extends Composite implements ClickHandler, MouseDownHandler, 
 		editStyle.setLeft(0.0, Style.Unit.PX);
 		editStyle.setProperty("margin", "0");
 		typeAndEdit.setWidth(Window.getClientWidth() + "px");
+
+		plus = new GridButton(new Point(Window.getClientWidth() - 50, 25), BUTTON_SIZE, DEFAULT_COLOR);
+		minus = new GridButton(new Point(Window.getClientWidth() - 50, 51), BUTTON_SIZE, DEFAULT_COLOR);
+		up = new GridButton(new Point(Window.getClientWidth() - 50, 78), BUTTON_SIZE, DEFAULT_COLOR);
+		down = new GridButton(new Point(Window.getClientWidth() - 50, 105), BUTTON_SIZE, DEFAULT_COLOR);
+		buttons = Arrays.asList(up, down, plus, minus);
 	}
 
 	private void clearCanvas() {
@@ -129,14 +149,25 @@ public class CGrid extends Composite implements ClickHandler, MouseDownHandler, 
 	public void setFloor(final CFloor floor) {
 		selectedFloor = floor;
 		floor.grid = this;
+		hasFloorAbove = hasFloorAbove();
+		hasFloorBelow = hasFloorBelow();
 	}
 
 	private void paint() {
 		final Context2d context = canvas.getContext2d();
 
 		GridUtils.paintGrid(context, new Point(offsetX, offsetY), gridSize, origo);
-		GridUtils.paintZoomInButton(context, new Point(Window.getClientWidth() - 50, 25), 25, buttonColorPlus);
-		GridUtils.paintZoomOutButton(context, new Point(Window.getClientWidth() - 50, 51), 25, buttonColorMinus);
+		GridUtils.paintZoomInButton(context, plus.getPosition(), plus.getSize(), plus.getColor());
+		GridUtils.paintZoomOutButton(context, minus.getPosition(), minus.getSize(), minus.getColor());
+
+		if (floors.size() > 1) {
+			if (hasFloorAbove) {
+				GridUtils.paintFloorUpButton(context, up.getPosition(), up.getSize(), up.getColor());
+			}
+			if (hasFloorBelow) {
+				GridUtils.paintFloorDownButton(context, down.getPosition(), down.getSize(), down.getColor());
+			}
+		}
 
 		if (selectedFloor != null) {
 			selectedFloor.paint();
@@ -148,6 +179,15 @@ public class CGrid extends Composite implements ClickHandler, MouseDownHandler, 
 
 		searchBar.paint(context);
 		buttonBar.paint(context);
+	}
+
+	private boolean hasFloorAbove() {
+		final int selectedFloorIndex = floors.indexOf(selectedFloor);
+		return selectedFloorIndex < floors.size() + 1;
+	}
+
+	private boolean hasFloorBelow() {
+		return selectedFloor.equals(floors.getFirst());
 	}
 
 	protected void repaint() {
@@ -172,7 +212,7 @@ public class CGrid extends Composite implements ClickHandler, MouseDownHandler, 
 			final int clientX = event.getClientX();
 			final int clientY = event.getClientY();
 			if (clientX > Window.getClientWidth() - 50 && clientX < Window.getClientWidth() - 25) {
-				if (clientY > 25 && clientY < 50) {
+				if (clientY > plus.getPosition().getY() && clientY < plus.getPosition().getY() + BUTTON_SIZE) {
 					// sx = sy = 2
 					// x2 = sx*x1
 					// y2 = sy*y1
@@ -184,7 +224,7 @@ public class CGrid extends Composite implements ClickHandler, MouseDownHandler, 
 					}
 					repaint();
 					return;
-				} else if (clientY > 51 && clientY < 76) {
+				} else if (clientY > minus.getPosition().getY() && clientY < minus.getPosition().getY() + BUTTON_SIZE) {
 					// sx = sy = 0.5
 					// x2 = sx*x1
 					// y2 = sy*y1
@@ -199,11 +239,13 @@ public class CGrid extends Composite implements ClickHandler, MouseDownHandler, 
 				}
 			}
 
-			selectedFloor.click(clientX, clientY);
-			if (isEditable) {
-				selectedFloor.clickEditable(clientX, clientY);
-			} else {
-				selectedFloor.clickForRoomSelect(downX, downY);
+			if (selectedFloor != null) {
+				selectedFloor.click(clientX, clientY);
+				if (isEditable) {
+					selectedFloor.clickEditable(clientX, clientY);
+				} else {
+					selectedFloor.clickForRoomSelect(downX, downY);
+				}
 			}
 			buttonBar.click(clientX, clientY);
 			repaint();
@@ -216,7 +258,9 @@ public class CGrid extends Composite implements ClickHandler, MouseDownHandler, 
 			orgX = offsetX;
 			orgY = offsetY;
 		}
-		selectedFloor.scale(scale);
+		if (selectedFloor != null) {
+			selectedFloor.scale(scale);
+		}
 		offsetX = (int) Math.ceil(offsetX * scale);
 		offsetY = (int) Math.ceil(offsetY * scale);
 		gridSize = (int) Math.ceil(gridSize * scale);
@@ -232,7 +276,9 @@ public class CGrid extends Composite implements ClickHandler, MouseDownHandler, 
 		offsetY = orgY;
 		orgOrigo = null;
 
-		selectedFloor.reset();
+		if (selectedFloor != null) {
+			selectedFloor.reset();
+		}
 	}
 
 	@Override
@@ -247,7 +293,7 @@ public class CGrid extends Composite implements ClickHandler, MouseDownHandler, 
 			contextMenu.hide();
 			contextMenu = null;
 		}
-		if (isEditable) {
+		if (isEditable && selectedFloor != null) {
 			selectedFloor.mouseDownEditable(downX, downY);
 		}
 	}
@@ -255,7 +301,9 @@ public class CGrid extends Composite implements ClickHandler, MouseDownHandler, 
 	@Override
 	public void onMouseUp(final MouseUpEvent event) {
 		mouseDown = false;
-		selectedFloor.mouseUp();
+		if (selectedFloor != null) {
+			selectedFloor.mouseUp();
+		}
 	}
 
 	@Override
@@ -268,32 +316,41 @@ public class CGrid extends Composite implements ClickHandler, MouseDownHandler, 
 		if (mouseDown) {
 			mouseMoved = true;
 
-			if (selectedFloor.selected == null) {
-				pan(event);
-			} else {
-				selectedFloor.moveRoom(selectedFloor.selected, event, clientX, clientY);
+			if (selectedFloor != null) {
+				if (selectedFloor.selected == null) {
+					pan(event);
+				} else {
+					selectedFloor.moveRoom(selectedFloor.selected, event, clientX, clientY);
+				}
 			}
 
 			downX = clientX;
 			downY = clientY;
 
 			repaint();
-		} else {
+		} else if (selectedFloor != null) {
 			selectedFloor.checkHover(clientX, clientY);
 		}
 
 		// Change coloring of + and - buttons if hovered over.
 		if (clientX > Window.getClientWidth() - 50 && clientX < Window.getClientWidth() - 25) {
-			if (clientY > 25 && clientY < 50) {
-				buttonColorPlus = "SILVER";
-				buttonColorMinus = "LAVENDER";
-			} else if (clientY > 51 && clientY < 76) {
-				buttonColorMinus = "SILVER";
-				buttonColorPlus = "LAVENDER";
+			if (clientY > plus.getPosition().getY() && clientY < plus.getPosition().getY() + BUTTON_SIZE) {
+				plus.setColor(DEFAULT_SELECTED_COLOR);
+				clearColors(plus);
+			} else if (clientY > minus.getPosition().getY() && clientY < minus.getPosition().getY() + BUTTON_SIZE) {
+				minus.setColor(DEFAULT_SELECTED_COLOR);
+				clearColors(minus);
+			} else if (hasFloorAbove && clientY > up.getPosition().getY() && clientY < up.getPosition().getY() + BUTTON_SIZE) {
+				up.setColor(DEFAULT_SELECTED_COLOR);
+				clearColors(up);
+			} else if (hasFloorBelow && clientY > down.getPosition().getY() && clientY < down.getPosition().getY() + BUTTON_SIZE) {
+				down.setColor(DEFAULT_SELECTED_COLOR);
+				clearColors(down);
+			} else {
+				clearColors();
 			}
 		} else {
-			buttonColorPlus = "LAVENDER";
-			buttonColorMinus = "LAVENDER";
+			clearColors();
 		}
 		if (searchBar.mouseOver(clientX, clientY)) {
 			if (!searchBar.isVisible()) {
@@ -316,6 +373,15 @@ public class CGrid extends Composite implements ClickHandler, MouseDownHandler, 
 		repaint();
 	}
 
+	protected void clearColors(final GridButton... not) {
+		final List<GridButton> notList = Arrays.asList(not);
+		for (final GridButton button : buttons) {
+			if (!notList.contains(button)) {
+				button.setColor(DEFAULT_COLOR);
+			}
+		}
+	}
+
 	protected void pan(final MouseMoveEvent event) {
 		pan(event.getClientX() - downX, event.getClientY() - downY);
 	}
@@ -331,7 +397,9 @@ public class CGrid extends Composite implements ClickHandler, MouseDownHandler, 
 		if (orgOrigo != null) {
 			orgOrigo.move(amountx, amounty);
 		}
-		selectedFloor.panRooms(amountx, amounty);
+		if (selectedFloor != null) {
+			selectedFloor.panRooms(amountx, amounty);
+		}
 
 		for (final VisualItem item : items) {
 			item.movePosition(amountx, amounty);
@@ -368,30 +436,32 @@ public class CGrid extends Composite implements ClickHandler, MouseDownHandler, 
 
 		if (value != null && !value.isEmpty()) {
 			final CommandObject cmd = new CommandObject(value);
-			for (final CRoom room : selectedFloor.getRooms()) {
-				if (room.isSelected()) {
-					switch (cmd.getCommand()) {
-					case MOVE_TO:
-						room.setPosition(GeometryUtil.combine(origo, cmd.getPosition()));
-						typeAndEdit.setValue("");
-						break;
-					case MOVE_BY:
-						room.movePosition(cmd.getX(), cmd.getY());
-						typeAndEdit.setValue("");
-						break;
-					case SAVE:
-						fireEvent(new MenuEvent(MenuEvent.MenuEventType.UPDATE_ROOMS));
-						typeAndEdit.setValue("");
-						break;
-					case INVALID_STRING:
-						Window.alert("Command String was invalid");
-						break;
-					case PARSE_FAILED:
-						Window.alert("Parsing coordinates failed");
+			if (selectedFloor != null) {
+				for (final CRoom room : selectedFloor.getRooms()) {
+					if (room.isSelected()) {
+						switch (cmd.getCommand()) {
+						case MOVE_TO:
+							room.setPosition(GeometryUtil.combine(origo, cmd.getPosition()));
+							typeAndEdit.setValue("");
+							break;
+						case MOVE_BY:
+							room.movePosition(cmd.getX(), cmd.getY());
+							typeAndEdit.setValue("");
+							break;
+						case SAVE:
+							fireEvent(new MenuEvent(MenuEvent.MenuEventType.UPDATE_ROOMS));
+							typeAndEdit.setValue("");
+							break;
+						case INVALID_STRING:
+							Window.alert("Command String was invalid");
+							break;
+						case PARSE_FAILED:
+							Window.alert("Parsing coordinates failed");
+							break;
+						}
+						repaint();
 						break;
 					}
-					repaint();
-					break;
 				}
 			}
 			switch (cmd.getCommand()) {
@@ -401,28 +471,30 @@ public class CGrid extends Composite implements ClickHandler, MouseDownHandler, 
 				repaint();
 				break;
 			case FIND:
-				if (selectedFloor.getNames().contains(cmd.getValue())) {
-					typeAndEdit.setValue("");
+				if (selectedFloor != null) {
+					if (selectedFloor.getNames().contains(cmd.getValue())) {
+						typeAndEdit.setValue("");
 
-					selectedFloor.markTableOfSelectedPerson(cmd.getValue());
-				} else if (selectedFloor.namesContain(cmd)) {
-					typeAndEdit.setValue("");
-					final LinkedList<String> possible = selectedFloor.possibilities(cmd);
-					if (possible.size() == 1) {
-						selectedFloor.markTableOfSelectedPerson(possible.getFirst());
-					} else if (possible.size() > 1) {
-						new NameSelectPopup(possible, selectedFloor);
+						selectedFloor.markTableOfSelectedPerson(cmd.getValue());
+					} else if (selectedFloor.namesContain(cmd)) {
+						typeAndEdit.setValue("");
+						final LinkedList<String> possible = selectedFloor.possibilities(cmd);
+						if (possible.size() == 1) {
+							selectedFloor.markTableOfSelectedPerson(possible.getFirst());
+						} else if (possible.size() > 1) {
+							new NameSelectPopup(possible, selectedFloor);
+						}
+					} else {
+						final VNotification notification = new VNotification();
+						final Style style = notification.getElement().getStyle();
+						style.setBackgroundColor("#c8ccd0");
+						style.setPadding(15.0, Unit.PX);
+						style.setProperty("border-radius", "4px");
+						style.setProperty("-moz-border-radius", "4px");
+						style.setProperty("-webkit-border-radius", "4px");
+
+						notification.show("No user found for [" + cmd.getValue() + "]", VNotification.CENTERED, null);
 					}
-				} else {
-					final VNotification notification = new VNotification();
-					final Style style = notification.getElement().getStyle();
-					style.setBackgroundColor("#c8ccd0");
-					style.setPadding(15.0, Unit.PX);
-					style.setProperty("border-radius", "4px");
-					style.setProperty("-moz-border-radius", "4px");
-					style.setProperty("-webkit-border-radius", "4px");
-
-					notification.show("No user found for [" + cmd.getValue() + "]", VNotification.CENTERED, null);
 				}
 				break;
 			}
@@ -431,7 +503,7 @@ public class CGrid extends Composite implements ClickHandler, MouseDownHandler, 
 
 	@Override
 	public void onContextMenu(final ContextMenuEvent event) {
-		if (!isEditable) {
+		if (!isEditable || selectedFloor == null) {
 			return;
 		}
 		event.preventDefault();
@@ -491,7 +563,9 @@ public class CGrid extends Composite implements ClickHandler, MouseDownHandler, 
 	@Override
 	public void onMouseOut(final MouseOutEvent event) {
 		mouseDown = false;
-		selectedFloor.selected = null;
+		if (selectedFloor != null) {
+			selectedFloor.selected = null;
+		}
 	}
 
 	public void setEditable(final boolean editable) {
@@ -506,13 +580,16 @@ public class CGrid extends Composite implements ClickHandler, MouseDownHandler, 
 	public void add(final Widget widget) {
 		if (widget instanceof CFloor) {
 			floors.add((CFloor) widget);
+			Collections.sort(floors);
 		} else if (widget instanceof VisualItem) {
 			items.add((VisualItem) widget);
 		}
 	}
 
 	public void showNames() {
-		selectedFloor.showNames();
+		if (selectedFloor != null) {
+			selectedFloor.showNames();
+		}
 	}
 
 }

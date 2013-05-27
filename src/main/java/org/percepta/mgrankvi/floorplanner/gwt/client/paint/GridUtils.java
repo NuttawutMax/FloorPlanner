@@ -72,4 +72,58 @@ public class GridUtils {
 		context.closePath();
 		context.fill();
 	}
+
+	public static void paintFloorUpButton(final Context2d context, final Point position, final int size, final String color) {
+		final double half = size / 2.0;
+		context.setFillStyle(color);
+		context.setStrokeStyle(color);
+		context.beginPath();
+
+		context.strokeRect(position.getX(), position.getY(), size, size);
+
+		context.closePath();
+		context.stroke();
+
+		context.beginPath();
+
+		final double third = size / 2.5;
+		context.moveTo(position.getX() + 3, position.getY() + third);
+		context.lineTo(position.getX() + half, position.getY() + 3);
+		context.lineTo(position.getX() + (size - 3), position.getY() + third);
+		context.lineTo(position.getX() + (size - 9), position.getY() + third);
+		context.lineTo(position.getX() + (size - 9), position.getY() + (size - 3));
+		context.lineTo(position.getX() + 9, position.getY() + (size - 3));
+		context.lineTo(position.getX() + 9, position.getY() + third);
+		context.lineTo(position.getX() + 3, position.getY() + third);
+
+		context.closePath();
+		context.fill();
+	}
+
+	public static void paintFloorDownButton(final Context2d context, final Point position, final int size, final String color) {
+		final double half = size / 2.0;
+		context.setFillStyle(color);
+		context.setStrokeStyle(color);
+		context.beginPath();
+
+		context.strokeRect(position.getX(), position.getY(), size, size);
+
+		context.closePath();
+		context.stroke();
+
+		context.beginPath();
+
+		final double third = size / 2.5;
+		context.moveTo(position.getX() + 3, position.getY() + (size - third));
+		context.lineTo(position.getX() + half, position.getY() + (size - 3));
+		context.lineTo(position.getX() + (size - 3), position.getY() + (size - third));
+		context.lineTo(position.getX() + (size - 9), position.getY() + (size - third));
+		context.lineTo(position.getX() + (size - 9), position.getY() + 3);
+		context.lineTo(position.getX() + 9, position.getY() + 3);
+		context.lineTo(position.getX() + 9, position.getY() + (size - third));
+		context.lineTo(position.getX() + 3, position.getY() + (size - third));
+		context.closePath();
+		context.fill();
+	}
+
 }

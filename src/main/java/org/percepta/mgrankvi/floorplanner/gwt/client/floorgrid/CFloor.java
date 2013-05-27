@@ -26,7 +26,7 @@ import com.google.gwt.user.client.ui.MenuItem;
 import com.google.gwt.user.client.ui.Widget;
 import com.vaadin.client.VConsole;
 
-public class CFloor extends Widget {
+public class CFloor extends Widget implements Comparable<CFloor> {
 
 	private final List<CRoom> rooms = new LinkedList<CRoom>();
 
@@ -342,5 +342,10 @@ public class CFloor extends Widget {
 			final CRoom room = (CRoom) widget;
 			rooms.add(room);
 		}
+	}
+
+	@Override
+	public int compareTo(final CFloor arg0) {
+		return level == arg0.level ? 0 : level < arg0.level ? -1 : 1;
 	}
 }
