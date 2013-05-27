@@ -183,7 +183,7 @@ public class CGrid extends Composite implements ClickHandler, MouseDownHandler, 
 
 	private boolean hasFloorAbove() {
 		final int selectedFloorIndex = floors.indexOf(selectedFloor);
-		return selectedFloorIndex <= floors.size() + 1;
+		return selectedFloorIndex < floors.size() - 1;
 	}
 
 	private boolean hasFloorBelow() {
@@ -268,8 +268,11 @@ public class CGrid extends Composite implements ClickHandler, MouseDownHandler, 
 			orgX = offsetX;
 			orgY = offsetY;
 		}
-		if (selectedFloor != null) {
-			selectedFloor.scale(scale);
+		// if (selectedFloor != null) {
+		// selectedFloor.scale(scale);
+		// }
+		for (final CFloor floor : floors) {
+			floor.scale(scale);
 		}
 		offsetX = (int) Math.ceil(offsetX * scale);
 		offsetY = (int) Math.ceil(offsetY * scale);
@@ -286,8 +289,11 @@ public class CGrid extends Composite implements ClickHandler, MouseDownHandler, 
 		offsetY = orgY;
 		orgOrigo = null;
 
-		if (selectedFloor != null) {
-			selectedFloor.reset();
+		// if (selectedFloor != null) {
+		// selectedFloor.reset();
+		// }
+		for (final CFloor floor : floors) {
+			floor.reset();
 		}
 	}
 
@@ -407,8 +413,11 @@ public class CGrid extends Composite implements ClickHandler, MouseDownHandler, 
 		if (orgOrigo != null) {
 			orgOrigo.move(amountx, amounty);
 		}
-		if (selectedFloor != null) {
-			selectedFloor.panRooms(amountx, amounty);
+		// if (selectedFloor != null) {
+		// selectedFloor.panRooms(amountx, amounty);
+		// }
+		for (final CFloor floor : floors) {
+			floor.panRooms(amountx, amounty);
 		}
 
 		for (final VisualItem item : items) {
