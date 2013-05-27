@@ -134,6 +134,19 @@ public class FloorPlanner extends UI {
 		room.addComponent(new Door(Direction.DOWN_LEFT, new Point(200, 5), 80));
 		secondFloor.addRoom(room);
 
+		room = RoomCreator.customRoom("Merketing", new Point(0, 1050), new Point(0, 15), new Point(105, 15), new Point(105, 0), new Point(405, 0), new Point(
+				405, 300), new Point(0, 300));
+		room.addComponent(new Door(Direction.UP_LEFT, new Point(400, 0), 80));
+		secondFloor.addRoom(room);
+
+		room = RoomCreator.customRoom("Sales", new Point(-450, 1890), new Point(0, 0), new Point(450, 0), new Point(450, 300), new Point(0, 300));
+		room.addComponent(new Door(Direction.UP_LEFT, new Point(245, 300), 80));
+		secondFloor.addRoom(room);
+
+		room = RoomCreator.customRoom("Design", new Point(0, 1890), new Point(0, 0), new Point(405, 0), new Point(405, 560), new Point(0, 560));
+		room.addComponent(new Door(Direction.UP_LEFT, new Point(0, 390), 80));
+		secondFloor.addRoom(room);
+
 		return secondFloor;
 	}
 
