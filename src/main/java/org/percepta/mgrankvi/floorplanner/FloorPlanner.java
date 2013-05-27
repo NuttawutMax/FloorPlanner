@@ -8,6 +8,7 @@ import org.percepta.mgrankvi.floorplanner.visual.entity.RoomCreator;
 import org.percepta.mgrankvi.floorplanner.visual.entity.Table;
 
 import com.vaadin.server.VaadinRequest;
+import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.UI;
 
@@ -25,12 +26,13 @@ public class FloorPlanner extends UI {
 		final Grid grid = new Grid();
 		// grid.addRoom(RoomType.square(new Point()));
 
-		grid.addComponent(populateGroundFloorGrid());
+		grid.addComponent(populateGroundFloor());
+		grid.addComponent(populateSecondFloor());
 
 		layout.addComponent(grid);
 	}
 
-	private Floor populateGroundFloorGrid() {
+	private Floor populateGroundFloor() {
 		final Floor groundFloor = new Floor();
 
 		// Tiina
@@ -110,6 +112,29 @@ public class FloorPlanner extends UI {
 		room.addComponent(new Door(Direction.UP_RIGHT, new Point(30, 0), 80));
 		groundFloor.addRoom(room);
 		return groundFloor;
+	}
+
+	private Component populateSecondFloor() {
+		final Floor secondFloor = new Floor();
+		secondFloor.setLevel(1);
+
+		Room room = RoomCreator.customRoom("Vihreä Neukkari", new Point(0, 0), new Point(0, 0), new Point(412, 0), new Point(412, 450), new Point(0, 450));
+		room.addComponent(new Door(Direction.UP_LEFT, new Point(407, 450), 80));
+		secondFloor.addRoom(room);
+
+		room = RoomCreator.customRoom("Violetti Neukkari", new Point(412, 0), new Point(0, 0), new Point(413, 0), new Point(413, 450), new Point(0, 450));
+		room.addComponent(new Door(Direction.UP_RIGHT, new Point(5, 450), 80));
+		secondFloor.addRoom(room);
+
+		room = RoomCreator.customRoom("", new Point(105, 450), new Point(0, 0), new Point(200, 0), new Point(200, 300), new Point(0, 300));
+		room.addComponent(new Door(Direction.UP_LEFT, new Point(200, 295), 80));
+		secondFloor.addRoom(room);
+
+		room = RoomCreator.customRoom("", new Point(105, 750), new Point(0, 0), new Point(200, 0), new Point(200, 300), new Point(0, 300));
+		room.addComponent(new Door(Direction.DOWN_LEFT, new Point(200, 5), 80));
+		secondFloor.addRoom(room);
+
+		return secondFloor;
 	}
 
 	private void addMainHallTables(final Room room) {
