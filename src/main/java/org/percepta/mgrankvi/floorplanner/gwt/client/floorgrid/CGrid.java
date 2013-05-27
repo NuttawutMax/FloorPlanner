@@ -183,11 +183,11 @@ public class CGrid extends Composite implements ClickHandler, MouseDownHandler, 
 
 	private boolean hasFloorAbove() {
 		final int selectedFloorIndex = floors.indexOf(selectedFloor);
-		return selectedFloorIndex < floors.size() + 1;
+		return selectedFloorIndex <= floors.size() + 1;
 	}
 
 	private boolean hasFloorBelow() {
-		return selectedFloor.equals(floors.getFirst());
+		return !selectedFloor.equals(floors.getFirst());
 	}
 
 	protected void repaint() {
@@ -234,6 +234,16 @@ public class CGrid extends Composite implements ClickHandler, MouseDownHandler, 
 					} else {
 						scale(0.5);
 					}
+					repaint();
+					return;
+				} else if (hasFloorAbove && clientY > up.getPosition().getY() && clientY < up.getPosition().getY() + BUTTON_SIZE) {
+					final int selectedFloorIndex = floors.indexOf(selectedFloor);
+					setFloor(floors.get(selectedFloorIndex + 1));
+					repaint();
+					return;
+				} else if (hasFloorBelow && clientY > down.getPosition().getY() && clientY < down.getPosition().getY() + BUTTON_SIZE) {
+					final int selectedFloorIndex = floors.indexOf(selectedFloor);
+					setFloor(floors.get(selectedFloorIndex - 1));
 					repaint();
 					return;
 				}
