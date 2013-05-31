@@ -17,6 +17,8 @@ public class CItem extends VisualItem {
 	private Point drawPosition = new Point(0, 0);
 	private String color = "BLACK";
 
+	// private List<Circle> circles = new LinkedList<Circle>();
+
 	public CItem() {
 		// dummy element
 		setElement(Document.get().createDivElement());
@@ -79,6 +81,17 @@ public class CItem extends VisualItem {
 	public void clicked(final double x, final double y) {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public void scale(final double scale) {
+		super.scale(scale);
+		for (final Point p : points) {
+			p.setX((int) Math.ceil(p.getX() * scale));
+			p.setY((int) Math.ceil(p.getY() * scale));
+		}
+		position.setX((int) Math.ceil(position.getX() * scale));
+		position.setY((int) Math.ceil(position.getY() * scale));
 	}
 
 }
