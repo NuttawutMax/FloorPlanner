@@ -120,11 +120,19 @@ public class CFloor extends Widget implements Comparable<CFloor> {
 		for (final CRoom room : rooms) {
 			room.scale(scale);
 		}
+
+		for (final VisualItem item : items) {
+			item.scale(scale);
+		}
 	}
 
 	public void reset() {
 		for (final CRoom room : rooms) {
 			room.reset();
+		}
+
+		for (final VisualItem item : items) {
+			item.reset();
 		}
 	}
 
