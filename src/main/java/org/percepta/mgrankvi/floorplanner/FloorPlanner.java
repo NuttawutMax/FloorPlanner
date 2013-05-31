@@ -3,6 +3,7 @@ package org.percepta.mgrankvi.floorplanner;
 import org.percepta.mgrankvi.floorplanner.gwt.client.geometry.Point;
 import org.percepta.mgrankvi.floorplanner.gwt.client.item.door.DoorState.Direction;
 import org.percepta.mgrankvi.floorplanner.visual.entity.Door;
+import org.percepta.mgrankvi.floorplanner.visual.entity.PointToPointItem;
 import org.percepta.mgrankvi.floorplanner.visual.entity.Room;
 import org.percepta.mgrankvi.floorplanner.visual.entity.RoomCreator;
 import org.percepta.mgrankvi.floorplanner.visual.entity.Table;
@@ -146,6 +147,10 @@ public class FloorPlanner extends UI {
 		room = RoomCreator.customRoom("Design", new Point(0, 1890), new Point(0, 0), new Point(405, 0), new Point(405, 560), new Point(0, 560));
 		room.addComponent(new Door(Direction.UP_LEFT, new Point(0, 390), 80));
 		secondFloor.addRoom(room);
+
+		final PointToPointItem level = new PointToPointItem(new Point(305, 450), new Point(0, 0), new Point(520, 0), new Point(520, 150), new Point(145, 150),
+				new Point(145, 600), new Point(0, 600));
+		secondFloor.addComponent(level);
 
 		return secondFloor;
 	}
