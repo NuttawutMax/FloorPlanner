@@ -417,7 +417,7 @@ public class CGrid extends Composite implements ClickHandler, MouseDownHandler, 
 		// selectedFloor.panRooms(amountx, amounty);
 		// }
 		for (final CFloor floor : floors) {
-			floor.panRooms(amountx, amounty);
+			floor.pan(amountx, amounty);
 		}
 
 		for (final VisualItem item : items) {

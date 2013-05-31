@@ -1,4 +1,4 @@
-package org.percepta.mgrankvi.floorplanner.gwt.client.item.table;
+package org.percepta.mgrankvi.floorplanner.gwt.client.item;
 
 import java.util.List;
 
@@ -10,11 +10,17 @@ import org.percepta.mgrankvi.floorplanner.gwt.client.paint.ItemUtils;
 
 import com.google.gwt.canvas.dom.client.Context2d;
 import com.google.gwt.canvas.dom.client.CssColor;
+import com.google.gwt.dom.client.Document;
 
 public class CItem extends VisualItem {
 
 	private Point drawPosition = new Point(0, 0);
 	private String color = "BLACK";
+
+	public CItem() {
+		// dummy element
+		setElement(Document.get().createDivElement());
+	}
 
 	public CItem(final List<Point> points, final Point position) {
 		this.points.addAll(points);

@@ -15,6 +15,7 @@ import org.percepta.mgrankvi.floorplanner.gwt.client.item.table.CTable;
 import org.percepta.mgrankvi.floorplanner.gwt.client.room.CRoom;
 
 import com.google.gwt.animation.client.Animation;
+import com.google.gwt.canvas.dom.client.Context2d;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.dom.client.Document;
 import com.google.gwt.event.dom.client.MouseMoveEvent;
@@ -29,6 +30,7 @@ import com.vaadin.client.VConsole;
 public class CFloor extends Widget implements Comparable<CFloor> {
 
 	private final List<CRoom> rooms = new LinkedList<CRoom>();
+	private final List<VisualItem> items = new LinkedList<VisualItem>();
 
 	private CTable markedTable;
 
@@ -70,11 +72,16 @@ public class CFloor extends Widget implements Comparable<CFloor> {
 	}
 
 	public void paint() {
+		final Context2d context = grid.canvas.getContext2d();
 		for (final CRoom room : rooms) {
-			room.paint(grid.canvas.getContext2d());
+			room.paint(context);
+		}
+
+		for (final VisualItem item : items) {
+			item.paint(context);
 		}
 		if (hoverElement != null) {
-			hoverElement.paint(grid.canvas.getContext2d());
+			hoverElement.paint(context);
 		}
 	}
 
@@ -166,9 +173,13 @@ public class CFloor extends Widget implements Comparable<CFloor> {
 		}
 	}
 
-	public void panRooms(final int amountx, final int amounty) {
+	public void pan(final int amountx, final int amounty) {
 		for (final CRoom room : rooms) {
 			room.movePosition(amountx, amounty);
+		}
+
+		for (final VisualItem item : items) {
+			item.movePosition(amountx, amounty);
 		}
 	}
 
@@ -341,6 +352,8 @@ public class CFloor extends Widget implements Comparable<CFloor> {
 		if (widget instanceof CRoom) {
 			final CRoom room = (CRoom) widget;
 			rooms.add(room);
+		} else if (widget instanceof VisualItem) {
+			items.add((VisualItem) widget);
 		}
 	}
 
