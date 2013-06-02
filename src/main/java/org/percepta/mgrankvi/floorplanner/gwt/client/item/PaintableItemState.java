@@ -1,13 +1,18 @@
-package org.percepta.mgrankvi.floorplanner.gwt.client.item.pointtopoint;
+package org.percepta.mgrankvi.floorplanner.gwt.client.item;
 
+import java.util.LinkedList;
 import java.util.List;
 
+import org.percepta.mgrankvi.floorplanner.gwt.client.geometry.Line;
 import org.percepta.mgrankvi.floorplanner.gwt.client.geometry.Point;
-import org.percepta.mgrankvi.floorplanner.gwt.client.item.ItemState;
+import org.percepta.mgrankvi.floorplanner.gwt.client.paint.Circle;
 
-public class PointToPointItemState extends ItemState {
+public class PaintableItemState extends ItemState {
 
 	private static final long serialVersionUID = 6186956716133798868L;
+
+	List<Circle> circles = new LinkedList<Circle>();
+	List<Line> lines = new LinkedList<Line>();
 
 	public Point getPosition() {
 		return itemPosition;
@@ -34,4 +39,5 @@ public class PointToPointItemState extends ItemState {
 			itemPoints.add(point);
 		}
 	}
+
 }

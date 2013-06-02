@@ -1,11 +1,13 @@
 package org.percepta.mgrankvi.floorplanner.gwt.client.item;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import org.percepta.mgrankvi.floorplanner.gwt.client.VisualItem;
 import org.percepta.mgrankvi.floorplanner.gwt.client.geometry.GeometryUtil;
 import org.percepta.mgrankvi.floorplanner.gwt.client.geometry.Line;
 import org.percepta.mgrankvi.floorplanner.gwt.client.geometry.Point;
+import org.percepta.mgrankvi.floorplanner.gwt.client.paint.Circle;
 import org.percepta.mgrankvi.floorplanner.gwt.client.paint.ItemUtils;
 
 import com.google.gwt.canvas.dom.client.Context2d;
@@ -17,7 +19,8 @@ public class CItem extends VisualItem {
 	private Point drawPosition = new Point(0, 0);
 	private String color = "BLACK";
 
-	// private List<Circle> circles = new LinkedList<Circle>();
+	private final List<Circle> circles = new LinkedList<Circle>();
+	private final List<Line> lines = new LinkedList<Line>();
 
 	public CItem() {
 		// dummy element
@@ -42,7 +45,17 @@ public class CItem extends VisualItem {
 	public void paint(final Context2d context, final Point offset) {
 		drawPosition = GeometryUtil.combine(position, offset);
 
-		ItemUtils.paintPointToPoint(context, points, drawPosition, CssColor.make(color));
+		if (!points.isEmpty()) {
+			ItemUtils.paintPointToPoint(context, points, drawPosition, CssColor.make(color));
+		}
+
+		for (final Circle circle : circles) {
+			ItemUtils.paintCircle(context, circle, offset, CssColor.make(color));
+		}
+
+		for (final Line line : lines) {
+			ItemUtils.paintLine(context, line, offset, CssColor.make(color));
+		}
 	}
 
 	@Override

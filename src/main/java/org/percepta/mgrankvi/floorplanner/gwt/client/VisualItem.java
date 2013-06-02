@@ -21,10 +21,14 @@ public abstract class VisualItem extends Widget {
 	public abstract void clicked(double x, double y);
 
 	protected String id, name;
+
 	protected final LinkedList<Point> points = new LinkedList<Point>();
+
 	protected final List<Point> notZoomed = new LinkedList<Point>();
+
 	protected Point position = new Point(0, 0);
 	protected Point orgPosition = new Point(0, 0);
+
 	private Double minX, maxX, minY, maxY;
 	private boolean hovering = false;
 

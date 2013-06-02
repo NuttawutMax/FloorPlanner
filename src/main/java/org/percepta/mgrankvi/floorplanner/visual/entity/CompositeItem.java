@@ -7,11 +7,11 @@ import org.percepta.mgrankvi.floorplanner.gwt.client.geometry.Rectangle;
 import org.percepta.mgrankvi.floorplanner.gwt.client.item.ItemType;
 import org.percepta.mgrankvi.floorplanner.gwt.client.item.PaintableItemState;
 
-public class PointToPointItem extends AbstractItem {
+public class CompositeItem extends AbstractItem {
 
 	private static final long serialVersionUID = -8375292297427422389L;
 
-	public PointToPointItem(final Point position, final Point... points) {
+	public CompositeItem(final Point position, final Point... points) {
 		for (final Point point : points) {
 			getState().addPoint(point);
 		}

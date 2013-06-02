@@ -1,4 +1,4 @@
-package org.percepta.mgrankvi.floorplanner.gwt.client.item.pointtopoint;
+package org.percepta.mgrankvi.floorplanner.gwt.client.item.composite;
 
 import org.percepta.mgrankvi.floorplanner.gwt.client.item.CItem;
 import org.percepta.mgrankvi.floorplanner.gwt.client.item.PaintableItemState;
@@ -10,7 +10,7 @@ import com.vaadin.client.ui.AbstractComponentConnector;
 import com.vaadin.shared.ui.Connect;
 
 @Connect(org.percepta.mgrankvi.floorplanner.visual.entity.PointToPointItem.class)
-public class PointToPointItemConnector extends AbstractComponentConnector {
+public class CompositeConnector extends AbstractComponentConnector {
 
 	private static final long serialVersionUID = -4019614673560751414L;
 
