@@ -518,16 +518,25 @@ public class CGrid extends Composite implements ClickHandler, MouseDownHandler, 
                 if (pathing && path == null) {
                     path = new PathPopup();
                     path.show();
+                    if (selectedFloor != null && selectedFloor.waypoints != null) {
+                        items.add(selectedFloor.waypoints);
+                    }
                     pathGrid = new PathGridItem(path);
                     items.add(pathGrid);
+                    repaint();
                 } else {
                     path.hide();
                     path = null;
                     items.remove(pathGrid);
                     pathGrid = null;
+                    if (selectedFloor != null && selectedFloor.waypoints != null) {
+                        items.remove(selectedFloor.waypoints);
+                    }
+                    repaint();
                 }
                 break;
             case FIND:
+                // TODO: Handle all floors.
                 Logger.getLogger("TextHandle").log(Level.FINE, "handling search: " + cmd.getValue());
                 if (selectedFloor != null) {
                     if (selectedFloor.getNames().contains(cmd.getValue())) {

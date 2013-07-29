@@ -13,6 +13,7 @@ import org.percepta.mgrankvi.floorplanner.gwt.client.InfoButton;
 import org.percepta.mgrankvi.floorplanner.gwt.client.VisualItem;
 import org.percepta.mgrankvi.floorplanner.gwt.client.geometry.Point;
 import org.percepta.mgrankvi.floorplanner.gwt.client.info.CInfoEditor;
+import org.percepta.mgrankvi.floorplanner.gwt.client.item.PathGridItem;
 import org.percepta.mgrankvi.floorplanner.gwt.client.item.table.CTable;
 import org.percepta.mgrankvi.floorplanner.gwt.client.room.CRoom;
 
@@ -45,6 +46,7 @@ public class CFloor extends Widget implements Comparable<CFloor> {
     CRoom selected = null;
     Point targetPoint = null;
     CGrid grid;
+    PathGridItem waypoints;
 
     public CFloor() {
         // Dummy
@@ -361,6 +363,8 @@ public class CFloor extends Widget implements Comparable<CFloor> {
         if (widget instanceof CRoom) {
             final CRoom room = (CRoom) widget;
             rooms.add(room);
+        } else if (widget instanceof PathGridItem) {
+            waypoints = (PathGridItem) widget;
         } else if (widget instanceof VisualItem) {
             items.add((VisualItem) widget);
         }

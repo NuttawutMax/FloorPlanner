@@ -42,14 +42,14 @@ public class PathPopup extends PopupPanel {
     }
 
     public void addLink(final Node node1, final Node node2, final int weight) {
-        final Label linkLabel = new Label("node" + node1.id + ".addConnectedNode(node" + node2.id + ", " + weight + ");");
+        final Label linkLabel = new Label("node" + node1.getId() + ".addConnectedNode(node" + node2.getId() + ", " + weight + ");");
         flow.add(linkLabel);
-        linkLabels.put(node1.id + ":" + node2.id, linkLabel);
+        linkLabels.put(node1.getId() + ":" + node2.getId(), linkLabel);
     }
 
     public void removeLink(final Node node1, final Node node2) {
-        final Label link = linkLabels.get(node1.id + ":" + node2.id);
-        linkLabels.remove(node1.id + ":" + node2.id);
+        final Label link = linkLabels.get(node1.getId() + ":" + node2.getId());
+        linkLabels.remove(node1.getId() + ":" + node2.getId());
         flow.remove(link);
     }
 }

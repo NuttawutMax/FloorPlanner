@@ -1,13 +1,19 @@
 package org.percepta.mgrankvi.floorplanner.gwt.client.geometry;
 
+import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Node {
+public class Node implements Serializable {
 
-    public final int id;
-    public final List<Link> links = new LinkedList<Link>();
-    public final Point position;
+    private static final long serialVersionUID = -1710389845925508445L;
+
+    protected int id;
+    protected List<Link> links = new LinkedList<Link>();
+    protected Point position;
+
+    public Node() {
+    }
 
     public Node(final int id, final Point position) {
         this.id = id;
@@ -41,6 +47,18 @@ public class Node {
             }
         }
         return null;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public List<Link> getLinks() {
+        return links;
+    }
+
+    public Point getPosition() {
+        return position;
     }
 
 }

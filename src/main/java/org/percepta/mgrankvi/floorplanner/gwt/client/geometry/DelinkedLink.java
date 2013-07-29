@@ -2,23 +2,23 @@ package org.percepta.mgrankvi.floorplanner.gwt.client.geometry;
 
 import java.io.Serializable;
 
-public class Link implements Serializable {
+public class DelinkedLink implements Serializable {
 
     private static final long serialVersionUID = -1563363612591205240L;
 
-    protected Node target;
-    protected int weight;
+    public int target;
+    public int weight;
 
-    public Link() {
+    public DelinkedLink() {
 
     }
 
-    public Link(final Node target, final int weight) {
+    public DelinkedLink(final int target, final int weight) {
         this.target = target;
         this.weight = weight;
     }
 
-    public Node getTarget() {
+    public int getTarget() {
         return target;
     }
 

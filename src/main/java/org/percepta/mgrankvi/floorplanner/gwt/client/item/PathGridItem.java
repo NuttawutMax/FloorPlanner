@@ -4,8 +4,11 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.percepta.mgrankvi.floorplanner.gwt.client.floorgrid.PathPopup;
+import org.percepta.mgrankvi.floorplanner.gwt.client.geometry.DelinkedLink;
 import org.percepta.mgrankvi.floorplanner.gwt.client.geometry.GeometryUtil;
 import org.percepta.mgrankvi.floorplanner.gwt.client.geometry.Line;
 import org.percepta.mgrankvi.floorplanner.gwt.client.geometry.Link;
@@ -20,6 +23,7 @@ import com.google.gwt.canvas.dom.client.CssColor;
 public class PathGridItem extends CItem {
 
     private final List<Node> nodes = new LinkedList<Node>();
+    private final Map<Integer, Node> idNodes = new HashMap<Integer, Node>();
     private final Map<Circle, Node> nodeMap = new HashMap<Circle, Node>();
 
     private Circle selected;
@@ -29,20 +33,52 @@ public class PathGridItem extends CItem {
     private PathPopup pathPopup;
 
     public PathGridItem() {
+
     }
 
     public PathGridItem(final PathPopup pathPopup) {
         this.pathPopup = pathPopup;
     }
 
+    public int size() {
+        return nodes.size();
+    }
+
+    public void clearNodes() {
+        nodes.clear();
+        circles.clear();
+        lines.clear();
+    }
+
     public void addNode(final Node node) {
         nodes.add(node);
         // points.add(node.position);
-        final Circle circle = new Circle(node.position, 0, 2 * Math.PI, 10);
+        final Circle circle = new Circle(node.getPosition(), 0, 2 * Math.PI, 10);
         circles.add(circle);
         nodeMap.put(circle, node);
         if (pathPopup != null) {
-            pathPopup.addPoint(node.id, node.position);
+            pathPopup.addPoint(node.getId(), node.getPosition());
+        }
+        idNodes.put(node.getId(), node);
+    }
+
+    public void addLink(final int nodeId, final DelinkedLink dlLink) {
+        final Node from = idNodes.get(nodeId);
+        final Node to = idNodes.get(dlLink.target);
+        final Link link = new Link(to, dlLink.weight);
+        from.getLinks().add(link);
+    }
+
+    public void buildLinks() {
+        Logger.getLogger("PathGridItem").log(Level.FINE, "Building links for waypoints");
+        final List<Node> added = new LinkedList<Node>();
+        for (final Node node : nodes) {
+            for (final Link link : node.getLinks()) {
+                if (!added.contains(link.getTarget())) {
+                    lines.add(new Line(node.getPosition(), link.getTarget().getPosition()));
+                }
+            }
+            added.add(node);
         }
     }
 
@@ -74,18 +110,19 @@ public class PathGridItem extends CItem {
             if (selectedNode.hasLinkTo(node)) {
                 pathPopup.removeLink(selectedNode, node);
                 final Link link = selectedNode.getLinkTo(node);
-                pathPopup.addLink(selectedNode, node, link.weight + 1);
-                selectedNode.links.remove(link);
-                selectedNode.links.add(new Link(link.target, link.weight + 1));
+                pathPopup.addLink(selectedNode, node, link.getWeight() + 1);
+                selectedNode.getLinks().remove(link);
+                selectedNode.getLinks().add(new Link(link.getTarget(), link.getWeight() + 1));
+                selected = null;
                 return;
             }
             selectedNode.addConnectedNode(node, 1);
-            lines.add(new Line(selectedNode.position, node.position));
+            lines.add(new Line(selectedNode.getPosition(), node.getPosition()));
             if (pathPopup != null) {
                 pathPopup.addLink(selectedNode, node, 1);
             }
+            selected = null;
         }
-        selected = null;
     }
 
     @Override
