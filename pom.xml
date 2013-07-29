@@ -11,7 +11,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 <!-- 		<vaadin.version>7.0.0.beta10</vaadin.version> -->
-		<vaadin.version>7.0-SNAPSHOT</vaadin.version>
+		<vaadin.version>7.1.0</vaadin.version>
 		<vaadin.plugin.version>${vaadin.version}</vaadin.plugin.version>
 	</properties>
 	<repositories>
@@ -117,7 +117,8 @@
 					<!-- Remove draftCompile when project is ready -->
 					<draftCompile>false</draftCompile>
 					<compileReport>true</compileReport>
-					<style>OBF</style>
+<!-- 					<style>OBF</style> -->
+					<style>PRETTY</style>
 <!-- 					<logLevel>TRACE</logLevel> -->
 					<strict>true</strict>
 					<runTarget>http://localhost:8080/</runTarget>
