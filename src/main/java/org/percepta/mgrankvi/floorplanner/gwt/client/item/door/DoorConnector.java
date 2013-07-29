@@ -9,34 +9,34 @@ import com.vaadin.shared.ui.Connect;
 @Connect(org.percepta.mgrankvi.floorplanner.visual.entity.Door.class)
 public class DoorConnector extends AbstractComponentConnector {
 
-	private static final long serialVersionUID = -4019614673560751414L;
+    private static final long serialVersionUID = -4019614673560751414L;
 
-	@Override
-	protected void init() {
-		super.init();
-	}
+    @Override
+    protected void init() {
+        super.init();
+    }
 
-	@Override
-	protected Widget createWidget() {
-		return GWT.create(CDoor.class);
-	}
+    @Override
+    protected Widget createWidget() {
+        return GWT.create(CDoor.class);
+    }
 
-	@Override
-	public CDoor getWidget() {
-		return (CDoor) super.getWidget();
-	};
+    @Override
+    public CDoor getWidget() {
+        return (CDoor) super.getWidget();
+    };
 
-	@Override
-	public DoorState getState() {
-		return (DoorState) super.getState();
-	}
+    @Override
+    public DoorState getState() {
+        return (DoorState) super.getState();
+    }
 
-	@Override
-	public void onStateChanged(final StateChangeEvent stateChangeEvent) {
-		super.onStateChanged(stateChangeEvent);
+    @Override
+    public void onStateChanged(final StateChangeEvent stateChangeEvent) {
+        super.onStateChanged(stateChangeEvent);
 
-		getWidget().setPosition(getState().position);
-		getWidget().setOpeningDirection(getState().openingDirection);
-		getWidget().setSize(getState().size);
-	}
+        getWidget().setPosition(getState().position);
+        getWidget().setOpeningDirection(getState().openingDirection);
+        getWidget().setSize(getState().size);
+    }
 }

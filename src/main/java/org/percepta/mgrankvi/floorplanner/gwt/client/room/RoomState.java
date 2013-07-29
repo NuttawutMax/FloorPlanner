@@ -11,28 +11,28 @@ import com.vaadin.shared.AbstractComponentState;
 
 public class RoomState extends AbstractComponentState {
 
-	private static final long serialVersionUID = -5924905171449139160L;
+    private static final long serialVersionUID = -5924905171449139160L;
 
-	public List<Point> points = new LinkedList<Point>();
-	public Point position = new Point(0, 0);
-	public List<ItemState> items = new LinkedList<ItemState>();
-	public String name = "";
-	public List<DoorState> door = new LinkedList<DoorState>();
+    public List<Point> points = new LinkedList<Point>();
+    public Point position = new Point(0, 0);
+    public List<ItemState> items = new LinkedList<ItemState>();
+    public String name = "";
+    public List<DoorState> door = new LinkedList<DoorState>();
 
-	public void addPoint(final Point point) {
-		points.add(point);
-	}
+    public void addPoint(final Point point) {
+        points.add(point);
+    }
 
-	public void addItem(final ItemState item) {
-		items.add(item);
-	}
+    public void addItem(final ItemState item) {
+        items.add(item);
+    }
 
-	public void removeItem(final ItemState item) {
-		items.remove(item);
-	}
+    public void removeItem(final ItemState item) {
+        items.remove(item);
+    }
 
-	public void addDoor(final DoorState door) {
-		this.door.add(door);
-	}
+    public void addDoor(final DoorState door) {
+        this.door.add(door);
+    }
 
 }

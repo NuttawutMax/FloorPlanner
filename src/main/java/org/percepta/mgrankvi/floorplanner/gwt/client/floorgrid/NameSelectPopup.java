@@ -15,53 +15,53 @@ import com.google.gwt.user.client.ui.PopupPanel;
 
 public class NameSelectPopup {
 
-	public NameSelectPopup(final List<String> possibilities, final CFloor floor) {
-		final PopupPanel select = new PopupPanel();
+    public NameSelectPopup(final List<String> possibilities, final CFloor floor) {
+        final PopupPanel select = new PopupPanel();
 
-		final ListBox listselect = new ListBox();
-		for (final String name : possibilities) {
-			listselect.addItem(name);
-		}
-		listselect.setVisibleItemCount(5);
-		listselect.setWidth("100%");
+        final ListBox listselect = new ListBox();
+        for (final String name : possibilities) {
+            listselect.addItem(name);
+        }
+        listselect.setVisibleItemCount(5);
+        listselect.setWidth("100%");
 
-		final FlowPanel layout = new FlowPanel();
-		layout.add(new Label("Found " + possibilities.size() + " possible matches."));
-		layout.add(new Label("Select person:"));
-		layout.add(listselect);
+        final FlowPanel layout = new FlowPanel();
+        layout.add(new Label("Found " + possibilities.size() + " possible matches."));
+        layout.add(new Label("Select person:"));
+        layout.add(listselect);
 
-		final Button ok = new Button("Ok", new ClickHandler() {
+        final Button ok = new Button("Ok", new ClickHandler() {
 
-			@Override
-			public void onClick(final ClickEvent event) {
-				floor.markTableOfSelectedPerson(listselect.getValue(listselect.getSelectedIndex()));
-				select.hide();
-			}
-		});
-		ok.getElement().getStyle().setProperty("float", "right");
-		final Button cancel = new Button("Cancel", new ClickHandler() {
+            @Override
+            public void onClick(final ClickEvent event) {
+                floor.markTableOfSelectedPerson(listselect.getValue(listselect.getSelectedIndex()));
+                select.hide();
+            }
+        });
+        ok.getElement().getStyle().setProperty("float", "right");
+        final Button cancel = new Button("Cancel", new ClickHandler() {
 
-			@Override
-			public void onClick(final ClickEvent event) {
-				select.hide();
-			}
-		});
-		cancel.getElement().getStyle().setProperty("float", "right");
+            @Override
+            public void onClick(final ClickEvent event) {
+                select.hide();
+            }
+        });
+        cancel.getElement().getStyle().setProperty("float", "right");
 
-		layout.add(ok);
-		layout.add(cancel);
+        layout.add(ok);
+        layout.add(cancel);
 
-		final Style style = layout.getElement().getStyle();
-		style.setBackgroundColor("burlywood");
-		style.setPadding(10.0, Unit.PX);
-		style.setProperty("border-radius", "4px");
-		style.setProperty("-moz-border-radius", "4px");
-		style.setProperty("-webkit-border-radius", "4px");
-		style.setPaddingBottom(25, Unit.PX);
+        final Style style = layout.getElement().getStyle();
+        style.setBackgroundColor("burlywood");
+        style.setPadding(10.0, Unit.PX);
+        style.setProperty("border-radius", "4px");
+        style.setProperty("-moz-border-radius", "4px");
+        style.setProperty("-webkit-border-radius", "4px");
+        style.setPaddingBottom(25, Unit.PX);
 
-		select.add(layout);
-		select.setPopupPosition(Window.getClientWidth() / 2, Window.getClientHeight() / 2);
-		select.show();
-	}
+        select.add(layout);
+        select.setPopupPosition(Window.getClientWidth() / 2, Window.getClientHeight() / 2);
+        select.show();
+    }
 
 }

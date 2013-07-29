@@ -9,8 +9,8 @@ import com.vaadin.shared.AbstractComponentState;
 
 public class ItemState extends AbstractComponentState {
 
-	public ItemType type;
-	public List<Point> itemPoints = new LinkedList<Point>();
-	public Point itemPosition;
-	public String itemName;
+    public ItemType type;
+    public List<Point> itemPoints = new LinkedList<Point>();
+    public Point itemPosition;
+    public String itemName;
 }

@@ -9,35 +9,35 @@ import org.percepta.mgrankvi.floorplanner.gwt.client.item.PaintableItemState;
 
 public class PointToPointItem extends AbstractItem {
 
-	private static final long serialVersionUID = -8375292297427422389L;
+    private static final long serialVersionUID = -8375292297427422389L;
 
-	public PointToPointItem(final Point position, final Point... points) {
-		for (final Point point : points) {
-			getState().addPoint(point);
-		}
-		getState().type = ItemType.POINT_TO_POINT_ITEM;
-		getState().id = UUID.randomUUID().toString();
-		setPosition(position);
-	}
+    public PointToPointItem(final Point position, final Point... points) {
+        for (final Point point : points) {
+            getState().addPoint(point);
+        }
+        getState().type = ItemType.POINT_TO_POINT_ITEM;
+        getState().id = UUID.randomUUID().toString();
+        setPosition(position);
+    }
 
-	public void setSize(final int width, final int height) {
-		getState().addPoints(new Rectangle(width, height).getCorners());
-	}
+    public void setSize(final int width, final int height) {
+        getState().addPoints(new Rectangle(width, height).getCorners());
+    }
 
-	public void setPosition(final Point position) {
-		getState().setPosition(position);
-	}
+    public void setPosition(final Point position) {
+        getState().setPosition(position);
+    }
 
-	@Override
-	public PaintableItemState getState() {
-		return (PaintableItemState) super.getState();
-	}
+    @Override
+    public PaintableItemState getState() {
+        return (PaintableItemState) super.getState();
+    }
 
-	public void setName(final String name) {
-		getState().itemName = name;
-	}
+    public void setName(final String name) {
+        getState().itemName = name;
+    }
 
-	public String getName() {
-		return getState().itemName;
-	}
+    public String getName() {
+        return getState().itemName;
+    }
 }

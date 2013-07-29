@@ -12,34 +12,34 @@ import com.vaadin.shared.ui.Connect;
 @Connect(org.percepta.mgrankvi.floorplanner.visual.entity.PointToPointItem.class)
 public class PointToPointItemConnector extends AbstractComponentConnector {
 
-	private static final long serialVersionUID = -4019614673560751414L;
+    private static final long serialVersionUID = -4019614673560751414L;
 
-	@Override
-	protected void init() {
-		super.init();
-	}
+    @Override
+    protected void init() {
+        super.init();
+    }
 
-	@Override
-	protected Widget createWidget() {
-		return GWT.create(CItem.class);
-	}
+    @Override
+    protected Widget createWidget() {
+        return GWT.create(CItem.class);
+    }
 
-	@Override
-	public CItem getWidget() {
-		return (CItem) super.getWidget();
-	};
+    @Override
+    public CItem getWidget() {
+        return (CItem) super.getWidget();
+    };
 
-	@Override
-	public PaintableItemState getState() {
-		return (PaintableItemState) super.getState();
-	}
+    @Override
+    public PaintableItemState getState() {
+        return (PaintableItemState) super.getState();
+    }
 
-	@Override
-	public void onStateChanged(final StateChangeEvent stateChangeEvent) {
-		super.onStateChanged(stateChangeEvent);
+    @Override
+    public void onStateChanged(final StateChangeEvent stateChangeEvent) {
+        super.onStateChanged(stateChangeEvent);
 
-		getWidget().setPosition(getState().itemPosition);
-		getWidget().setPoints(getState().itemPoints);
-		getWidget().setName(getState().itemName);
-	}
+        getWidget().setPosition(getState().itemPosition);
+        getWidget().setPoints(getState().itemPoints);
+        getWidget().setName(getState().itemName);
+    }
 }

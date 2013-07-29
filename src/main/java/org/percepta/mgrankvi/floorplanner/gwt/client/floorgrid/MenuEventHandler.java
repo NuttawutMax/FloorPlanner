@@ -4,5 +4,5 @@ import com.google.gwt.event.shared.EventHandler;
 
 public interface MenuEventHandler extends EventHandler {
 
-	void onMenuEvent(MenuEvent event);
+    void onMenuEvent(MenuEvent event);
 }
