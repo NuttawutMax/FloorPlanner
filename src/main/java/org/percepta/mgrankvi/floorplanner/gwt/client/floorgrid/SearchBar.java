@@ -7,6 +7,7 @@ import com.google.gwt.dom.client.Style.Position;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.KeyUpEvent;
 import com.google.gwt.event.dom.client.KeyUpHandler;
+import com.google.gwt.event.shared.HandlerRegistration;
 import com.google.gwt.user.client.ui.TextBox;
 
 public class SearchBar implements KeyUpHandler {
@@ -24,18 +25,30 @@ public class SearchBar implements KeyUpHandler {
 
     CGrid grid;
 
+    HandlerRegistration keyUpHandler, gridHandler;
+
     public SearchBar(final CGrid grid) {
         this.grid = grid;
 
         // grid.addDomHandler(this, ChangeEvent.getType());
-        grid.addDomHandler(this, KeyUpEvent.getType());
+        // grid.addDomHandler(this, KeyUpEvent.getType());
 
         // typeAndEdit.addChangeHandler(this);
-        typeAndEdit.addKeyUpHandler(this);
+        // keyUpHandler = typeAndEdit.addKeyUpHandler(this);
     }
 
     public void setVisible(final boolean visible) {
         this.visible = visible;
+        if (!visible && keyUpHandler != null) {
+            keyUpHandler.removeHandler();
+            gridHandler.removeHandler();
+            keyUpHandler = null;
+            gridHandler = null;
+        } else if (keyUpHandler == null) {
+            keyUpHandler = typeAndEdit.addKeyUpHandler(this);
+            gridHandler = grid.addDomHandler(this, KeyUpEvent.getType());
+        }
+
     }
 
     public boolean isVisible() {
