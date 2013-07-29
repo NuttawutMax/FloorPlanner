@@ -13,11 +13,9 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.ListBox;
 import com.google.gwt.user.client.ui.PopupPanel;
 
-public class NameSelectPopup {
+public class NameSelectPopup extends PopupPanel {
 
     public NameSelectPopup(final List<String> possibilities, final CFloor floor) {
-        final PopupPanel select = new PopupPanel();
-
         final ListBox listselect = new ListBox();
         for (final String name : possibilities) {
             listselect.addItem(name);
@@ -35,7 +33,7 @@ public class NameSelectPopup {
             @Override
             public void onClick(final ClickEvent event) {
                 floor.markTableOfSelectedPerson(listselect.getValue(listselect.getSelectedIndex()));
-                select.hide();
+                hide();
             }
         });
         ok.getElement().getStyle().setProperty("float", "right");
@@ -43,7 +41,7 @@ public class NameSelectPopup {
 
             @Override
             public void onClick(final ClickEvent event) {
-                select.hide();
+                hide();
             }
         });
         cancel.getElement().getStyle().setProperty("float", "right");
@@ -59,9 +57,9 @@ public class NameSelectPopup {
         style.setProperty("-webkit-border-radius", "4px");
         style.setPaddingBottom(25, Unit.PX);
 
-        select.add(layout);
-        select.setPopupPosition(Window.getClientWidth() / 2, Window.getClientHeight() / 2);
-        select.show();
+        add(layout);
+        setPopupPosition(Window.getClientWidth() / 2, Window.getClientHeight() / 2);
+        show();
     }
 
 }
