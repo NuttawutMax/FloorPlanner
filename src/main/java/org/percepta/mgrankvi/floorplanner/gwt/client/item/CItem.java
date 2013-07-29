@@ -16,11 +16,11 @@ import com.google.gwt.dom.client.Document;
 
 public class CItem extends VisualItem {
 
-    private Point drawPosition = new Point(0, 0);
+    protected Point drawPosition = new Point(0, 0);
     private String color = "BLACK";
 
-    private final List<Circle> circles = new LinkedList<Circle>();
-    private final List<Line> lines = new LinkedList<Line>();
+    protected final List<Circle> circles = new LinkedList<Circle>();
+    protected final List<Line> lines = new LinkedList<Line>();
 
     public CItem() {
         // dummy element
@@ -50,11 +50,11 @@ public class CItem extends VisualItem {
         }
 
         for (final Circle circle : circles) {
-            ItemUtils.paintCircle(context, circle, offset, CssColor.make(color));
+            ItemUtils.paintCircle(context, circle, drawPosition, CssColor.make(color));
         }
 
         for (final Line line : lines) {
-            ItemUtils.paintLine(context, line, offset, CssColor.make(color));
+            ItemUtils.paintLine(context, line, drawPosition, CssColor.make(color));
         }
     }
 

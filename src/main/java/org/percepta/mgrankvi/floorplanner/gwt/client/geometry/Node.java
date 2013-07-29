@@ -24,4 +24,23 @@ public class Node {
         links.add(new Link(node, weight));
         node.links.add(new Link(this, weight));
     }
+
+    public boolean hasLinkTo(final Node node) {
+        for (final Link link : links) {
+            if (link.target.equals(node)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public Link getLinkTo(final Node node) {
+        for (final Link link : links) {
+            if (link.target.equals(node)) {
+                return link;
+            }
+        }
+        return null;
+    }
+
 }

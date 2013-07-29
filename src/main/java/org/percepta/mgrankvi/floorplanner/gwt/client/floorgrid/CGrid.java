@@ -4,11 +4,15 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.percepta.mgrankvi.floorplanner.gwt.client.CommandObject;
 import org.percepta.mgrankvi.floorplanner.gwt.client.VisualItem;
 import org.percepta.mgrankvi.floorplanner.gwt.client.geometry.GeometryUtil;
+import org.percepta.mgrankvi.floorplanner.gwt.client.geometry.Node;
 import org.percepta.mgrankvi.floorplanner.gwt.client.geometry.Point;
+import org.percepta.mgrankvi.floorplanner.gwt.client.item.PathGridItem;
 import org.percepta.mgrankvi.floorplanner.gwt.client.paint.GridButton;
 import org.percepta.mgrankvi.floorplanner.gwt.client.paint.GridUtils;
 import org.percepta.mgrankvi.floorplanner.gwt.client.room.CRoom;
@@ -95,6 +99,8 @@ public class CGrid extends Composite implements ClickHandler, MouseDownHandler, 
     CFloor selectedFloor;
     LinkedList<CFloor> floors = new LinkedList<CFloor>();
     List<VisualItem> items = new LinkedList<VisualItem>();
+    PathPopup path;
+    PathGridItem pathGrid;
 
     public CGrid() {
         content = new FlowPanel();
@@ -126,7 +132,7 @@ public class CGrid extends Composite implements ClickHandler, MouseDownHandler, 
 
         final Style editStyle = typeAndEdit.getElement().getStyle();
         typeAndEdit.addChangeHandler(this);
-        typeAndEdit.addKeyUpHandler(this);
+        // typeAndEdit.addKeyUpHandler(this);
         editStyle.setPosition(Position.RELATIVE);
         editStyle.setLeft(0.0, Style.Unit.PX);
         editStyle.setProperty("margin", "0");
@@ -256,6 +262,19 @@ public class CGrid extends Composite implements ClickHandler, MouseDownHandler, 
                     selectedFloor.clickEditable(clientX, clientY);
                 } else {
                     selectedFloor.clickForRoomSelect(downX, downY);
+                }
+            }
+            if (pathing) {
+                final int x = (int) (clientX - origo.getX());
+                final int y = (int) (clientY - origo.getY());
+                if (!pathGrid.hasSelected() && pathGrid.pointInObject(x, y)) {
+                    pathGrid.selectNode(x, y);
+                } else if (pathGrid.hasSelected()) {
+                    pathGrid.link(x, y);
+                } else {
+                    // path.addPoint(x, y);
+                    Logger.getLogger("path").log(Level.ALL, "Path point position: " + x + "," + y);
+                    pathGrid.addNode(new Node(x + y, new Point(x, y)));
                 }
             }
             buttonBar.click(clientX, clientY);
@@ -452,38 +471,33 @@ public class CGrid extends Composite implements ClickHandler, MouseDownHandler, 
     protected void handleTextFieldValue(String value) {
         if (value == null) {
             value = typeAndEdit.getValue();
+            noChangeEvent = true;
+            typeAndEdit.setValue("");
         }
 
         if (value != null && !value.isEmpty()) {
             final CommandObject cmd = new CommandObject(value);
+            if (cmd.getCommand().equals(CommandObject.Command.INVALID_STRING)) {
+                return;
+            }
             if (selectedFloor != null) {
                 for (final CRoom room : selectedFloor.getRooms()) {
                     if (room.isSelected()) {
                         switch (cmd.getCommand()) {
                         case MOVE_TO:
                             room.setPosition(GeometryUtil.combine(origo, cmd.getPosition()));
-                            typeAndEdit.setValue("");
                             break;
                         case MOVE_BY:
                             room.movePosition(cmd.getX(), cmd.getY());
-                            typeAndEdit.setValue("");
                             break;
                         case SAVE:
                             fireEvent(new MenuEvent(MenuEvent.MenuEventType.UPDATE_ROOMS));
-                            typeAndEdit.setValue("");
                             break;
                         case INVALID_STRING:
                             Window.alert("Command String was invalid");
                             break;
                         case PARSE_FAILED:
                             Window.alert("Parsing coordinates failed");
-                            break;
-                        case EDIT:
-                            setEditable(!isEditable);
-                            break;
-                        case PATHING:
-                            setEditable(!pathing);
-                            setPathing(!pathing);
                             break;
                         }
                         repaint();
@@ -494,17 +508,31 @@ public class CGrid extends Composite implements ClickHandler, MouseDownHandler, 
             switch (cmd.getCommand()) {
             case PAN:
                 pan(cmd.getX(), cmd.getY());
-                typeAndEdit.setValue("");
                 repaint();
                 break;
+            case EDIT:
+                setEditable(!isEditable);
+                break;
+            case PATHING:
+                setPathing(!pathing);
+                if (pathing && path == null) {
+                    path = new PathPopup();
+                    path.show();
+                    pathGrid = new PathGridItem(path);
+                    items.add(pathGrid);
+                } else {
+                    path.hide();
+                    path = null;
+                    items.remove(pathGrid);
+                    pathGrid = null;
+                }
+                break;
             case FIND:
+                Logger.getLogger("TextHandle").log(Level.FINE, "handling search: " + cmd.getValue());
                 if (selectedFloor != null) {
                     if (selectedFloor.getNames().contains(cmd.getValue())) {
-                        typeAndEdit.setValue("");
-
                         selectedFloor.markTableOfSelectedPerson(cmd.getValue());
                     } else if (selectedFloor.namesContain(cmd)) {
-                        typeAndEdit.setValue("");
                         final LinkedList<String> possible = selectedFloor.possibilities(cmd);
                         if (possible.size() == 1) {
                             selectedFloor.markTableOfSelectedPerson(possible.getFirst());

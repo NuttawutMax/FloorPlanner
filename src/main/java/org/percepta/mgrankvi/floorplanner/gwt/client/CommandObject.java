@@ -1,5 +1,8 @@
 package org.percepta.mgrankvi.floorplanner.gwt.client;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import org.percepta.mgrankvi.floorplanner.gwt.client.geometry.Point;
 
 public class CommandObject {
@@ -13,6 +16,7 @@ public class CommandObject {
     String value;
 
     public CommandObject(final String command) {
+        Logger.getLogger("CommndObject").log(Level.INFO, "Handling command: " + command);
         final String[] split = command.substring(1).split(",");
         if (split.length == 2) {
             try {
@@ -32,14 +36,15 @@ public class CommandObject {
         }
         if (command.startsWith("s")) {
             this.command = Command.SAVE;
+        } else if (command.equalsIgnoreCase("edit")) {
+            this.command = Command.EDIT;
+        } else if (command.equalsIgnoreCase("path")) {
+            this.command = Command.PATHING;
         } else if (command.startsWith("/")) {
             this.command = Command.FIND;
             value = command.substring(1);
-        } else if (command.equals("edit")) {
-            this.command = Command.EDIT;
-        } else if (command.equals("path")) {
-            this.command = Command.PATHING;
         }
+        Logger.getLogger("CommndObject").log(Level.INFO, "Parsed command: " + this.command);
     }
 
     public Command getCommand() {

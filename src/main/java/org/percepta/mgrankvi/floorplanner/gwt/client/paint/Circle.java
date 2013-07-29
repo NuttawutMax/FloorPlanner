@@ -52,4 +52,10 @@ public class Circle {
         this.radius = radius;
     }
 
+    public boolean pointInCircle(final Point point) {
+        if (Math.abs(point.getX() - position.getX()) < radius && Math.abs(point.getY() - position.getY()) < radius) {
+            return true;
+        }
+        return false;
+    }
 }
