@@ -38,122 +38,124 @@ public class FloorPlanner extends UI {
     private PathWaypoints buildPathGrid() {
         final PathWaypoints waypoints = new PathWaypoints();
 
-        final Node node604 = new Node(604, new Point(202, 402));
-        waypoints.add(node604);
-        final Node node851 = new Node(851, new Point(450, 401));
-        waypoints.add(node851);
-        final Node node751 = new Node(751, new Point(450, 301));
-        waypoints.add(node751);
-        final Node node1004 = new Node(1004, new Point(601, 403));
-        waypoints.add(node1004);
-        final Node node1149 = new Node(1149, new Point(449, 700));
-        waypoints.add(node1149);
-        final Node node1048 = new Node(1048, new Point(350, 698));
-        waypoints.add(node1048);
+        final Node node604 = new Node(604, new Point(200, 400));
+        final Node node851 = new Node(851, new Point(450, 400));
+        final Node node751 = new Node(751, new Point(450, 300));
+        final Node node1004 = new Node(1004, new Point(600, 400));
+        final Node node1149 = new Node(1149, new Point(450, 700));
+        final Node node1048 = new Node(1048, new Point(350, 700));
+        final Node node1251 = new Node(1251, new Point(450, 800));
+        final Node node1147 = new Node(1147, new Point(350, 800));
+        final Node node1547 = new Node(1547, new Point(450, 1100));
+        final Node node1455 = new Node(1455, new Point(350, 1100));
+        final Node node1898 = new Node(1898, new Point(450, 1450));
+        final Node node1600 = new Node(1600, new Point(150, 1450));
+        final Node node2303 = new Node(2303, new Point(850, 1450));
+        final Node node2103 = new Node(2103, new Point(650, 1450));
+        final Node node1451 = new Node(1451, new Point(0, 1450));
+        final Node node1914 = new Node(1914, new Point(150, 1770));
+        final Node node2068 = new Node(2068, new Point(299, 1770));
+        final Node node2258 = new Node(2258, new Point(490, 1770));
+        final Node node2415 = new Node(2415, new Point(650, 1770));
+        final Node node2152 = new Node(2152, new Point(150, 2000));
+        final Node node2301 = new Node(2301, new Point(300, 2000));
+        final Node node2503 = new Node(2503, new Point(500, 2000));
+        final Node node2649 = new Node(2649, new Point(650, 2000));
+        final Node node2450 = new Node(2450, new Point(150, 2300));
+        final Node node2599 = new Node(2599, new Point(300, 2300));
+        final Node node2804 = new Node(2804, new Point(505, 2300));
+        final Node node2952 = new Node(2952, new Point(650, 2300));
+        final Node node2699 = new Node(2699, new Point(150, 2550));
+        final Node node2853 = new Node(2853, new Point(300, 2550));
+        final Node node3052 = new Node(3052, new Point(500, 2550));
+        final Node node3202 = new Node(3202, new Point(650, 2550));
+        final Node node2601 = new Node(2601, new Point(850, 1750));
+        final Node node2851 = new Node(2851, new Point(850, 2000));
+        final Node node3099 = new Node(3099, new Point(850, 2250));
+        final Node node3602 = new Node(3602, new Point(850, 2750));
+        final Node node3401 = new Node(3401, new Point(650, 2750));
+        final Node node2893 = new Node(2893, new Point(150, 2750));
+
         node1048.addConnectedNode(node1149, 1);
         node851.addConnectedNode(node1149, 1);
         node1004.addConnectedNode(node851, 1);
         node751.addConnectedNode(node851, 1);
         node604.addConnectedNode(node851, 1);
-        final Node node1251 = new Node(1251, new Point(451, 800));
-        waypoints.add(node1251);
-        final Node node1147 = new Node(1147, new Point(349, 798));
-        waypoints.add(node1147);
         node1147.addConnectedNode(node1251, 1);
         node1149.addConnectedNode(node1251, 1);
-        final Node node1547 = new Node(1547, new Point(448, 1099));
-        waypoints.add(node1547);
-        final Node node1455 = new Node(1455, new Point(353, 1102));
-        waypoints.add(node1455);
         node1455.addConnectedNode(node1547, 1);
         node1547.addConnectedNode(node1251, 1);
-        final Node node1898 = new Node(1898, new Point(449, 1449));
-        waypoints.add(node1898);
         node1547.addConnectedNode(node1898, 1);
-        final Node node1600 = new Node(1600, new Point(150, 1450));
-        waypoints.add(node1600);
-        final Node node2303 = new Node(2303, new Point(851, 1452));
-        waypoints.add(node2303);
-        final Node node2103 = new Node(2103, new Point(651, 1452));
-        waypoints.add(node2103);
-        final Node node1451 = new Node(1451, new Point(0, 1451));
-        waypoints.add(node1451);
         node1451.addConnectedNode(node1600, 1);
         node1600.addConnectedNode(node1898, 1);
         node1898.addConnectedNode(node2103, 1);
         node2103.addConnectedNode(node2303, 1);
-        final Node node1914 = new Node(1914, new Point(147, 1767));
-        waypoints.add(node1914);
-        final Node node2068 = new Node(2068, new Point(299, 1769));
-        waypoints.add(node2068);
-        final Node node2258 = new Node(2258, new Point(491, 1767));
-        waypoints.add(node2258);
-        final Node node2415 = new Node(2415, new Point(653, 1762));
-        waypoints.add(node2415);
         node2103.addConnectedNode(node2415, 1);
-        node2415.addConnectedNode(node2258, 1);
-        node2258.addConnectedNode(node2068, 1);
-        node2068.addConnectedNode(node1914, 1);
+        node2415.addConnectedNode(node2258, 2);
+        node2258.addConnectedNode(node2068, 2);
+        node2068.addConnectedNode(node1914, 2);
         node1914.addConnectedNode(node1600, 1);
-        final Node node2152 = new Node(2152, new Point(150, 2002));
-        waypoints.add(node2152);
-        final Node node2301 = new Node(2301, new Point(300, 2001));
-        waypoints.add(node2301);
-        final Node node2503 = new Node(2503, new Point(501, 2002));
-        waypoints.add(node2503);
-        final Node node2649 = new Node(2649, new Point(648, 2001));
-        waypoints.add(node2649);
-        final Node node2450 = new Node(2450, new Point(150, 2300));
-        waypoints.add(node2450);
-        final Node node2599 = new Node(2599, new Point(302, 2297));
-        waypoints.add(node2599);
-        final Node node2804 = new Node(2804, new Point(504, 2300));
-        waypoints.add(node2804);
-        final Node node2952 = new Node(2952, new Point(652, 2300));
-        waypoints.add(node2952);
-        final Node node2699 = new Node(2699, new Point(148, 2551));
-        waypoints.add(node2699);
-        final Node node2853 = new Node(2853, new Point(303, 2550));
-        waypoints.add(node2853);
-        final Node node3052 = new Node(3052, new Point(500, 2552));
-        waypoints.add(node3052);
-        final Node node3202 = new Node(3202, new Point(653, 2549));
-        waypoints.add(node3202);
         node2853.addConnectedNode(node2699, 1);
         node2699.addConnectedNode(node2450, 1);
-        node2450.addConnectedNode(node2152, 1);
-        node2152.addConnectedNode(node2301, 1);
-        node2301.addConnectedNode(node2503, 1);
-        node2503.addConnectedNode(node2649, 1);
+        node2450.addConnectedNode(node2152, 2);
+        node2152.addConnectedNode(node2301, 2);
+        node2301.addConnectedNode(node2503, 2);
+        node2503.addConnectedNode(node2649, 2);
         node2649.addConnectedNode(node2952, 1);
-        node2952.addConnectedNode(node3202, 1);
+        node2952.addConnectedNode(node3202, 2);
         node3202.addConnectedNode(node3052, 2);
         node3052.addConnectedNode(node2853, 2);
-        node2450.addConnectedNode(node2599, 1);
+        node2450.addConnectedNode(node2599, 2);
         node2599.addConnectedNode(node2804, 1);
         node2804.addConnectedNode(node2952, 1);
         node1914.addConnectedNode(node2152, 1);
         node2415.addConnectedNode(node2649, 1);
-        final Node node2601 = new Node(2601, new Point(850, 1751));
-        waypoints.add(node2601);
-        final Node node2851 = new Node(2851, new Point(851, 2000));
-        waypoints.add(node2851);
-        final Node node3099 = new Node(3099, new Point(851, 2248));
-        waypoints.add(node3099);
-        final Node node3602 = new Node(3602, new Point(851, 2751));
-        waypoints.add(node3602);
-        final Node node3401 = new Node(3401, new Point(650, 2751));
-        waypoints.add(node3401);
-        final Node node2893 = new Node(2893, new Point(147, 2746));
-        waypoints.add(node2893);
         node2893.addConnectedNode(node2699, 1);
-        node2893.addConnectedNode(node3401, 1);
-        node3401.addConnectedNode(node3602, 1);
-        node3202.addConnectedNode(node3401, 1);
-        node3602.addConnectedNode(node3099, 1);
+        node2893.addConnectedNode(node3401, 2);
+        node3401.addConnectedNode(node3602, 2);
+        node3202.addConnectedNode(node3401, 2);
+        node3602.addConnectedNode(node3099, 2);
         node2851.addConnectedNode(node3099, 1);
         node2601.addConnectedNode(node2851, 1);
         node2303.addConnectedNode(node2601, 1);
+
+        waypoints.add(node604);
+        waypoints.add(node851);
+        waypoints.add(node751);
+        waypoints.add(node1004);
+        waypoints.add(node1149);
+        waypoints.add(node1048);
+        waypoints.add(node1251);
+        waypoints.add(node1147);
+        waypoints.add(node1547);
+        waypoints.add(node1455);
+        waypoints.add(node1898);
+        waypoints.add(node1600);
+        waypoints.add(node2303);
+        waypoints.add(node2103);
+        waypoints.add(node1451);
+        waypoints.add(node1914);
+        waypoints.add(node2068);
+        waypoints.add(node2258);
+        waypoints.add(node2415);
+        waypoints.add(node2152);
+        waypoints.add(node2301);
+        waypoints.add(node2503);
+        waypoints.add(node2649);
+        waypoints.add(node2450);
+        waypoints.add(node2599);
+        waypoints.add(node2804);
+        waypoints.add(node2952);
+        waypoints.add(node2699);
+        waypoints.add(node2853);
+        waypoints.add(node3052);
+        waypoints.add(node3202);
+        waypoints.add(node2601);
+        waypoints.add(node2851);
+        waypoints.add(node3099);
+        waypoints.add(node3602);
+        waypoints.add(node3401);
+        waypoints.add(node2893);
 
         return waypoints;
     }
@@ -187,6 +189,12 @@ public class FloorPlanner extends UI {
         table.setSize(150, 50);
         room.addComponent(table);
         groundFloor.addRoom(room);
+
+        // Filler
+        final PointToPointItem filler = new PointToPointItem(new Point(270, 360), new Point(0, 0), new Point(240, 0), new Point(240, 90), new Point(0, 90));
+        filler.setColor("PEACHPUFF");
+        groundFloor.addComponent(filler);
+
         // GuitarHero
         room = RoomCreator.square(3, "Guitar Hero", new Point(105, 450));
         room.addComponent(new Door(Direction.UP_LEFT, new Point(300, 285), 80));
@@ -275,9 +283,16 @@ public class FloorPlanner extends UI {
         room.addComponent(new Door(Direction.UP_LEFT, new Point(0, 390), 80));
         secondFloor.addRoom(room);
 
-        final PointToPointItem level = new PointToPointItem(new Point(305, 450), new Point(0, 0), new Point(520, 0), new Point(520, 150), new Point(145, 150),
+        PointToPointItem level = new PointToPointItem(new Point(305, 450), new Point(0, 0), new Point(520, 0), new Point(520, 150), new Point(145, 150),
                 new Point(145, 600), new Point(0, 600));
+        level.setColor("PEACHPUFF");
         secondFloor.addComponent(level);
+
+        level = new PointToPointItem(new Point(-285, 2190), new Point(0, 0), new Point(285, 0), new Point(285, 260), new Point(0, 260));
+        level.setColor("PEACHPUFF");
+        secondFloor.addComponent(level);
+
+        secondFloor.addComponent(buildSecondFloorPoints());
 
         return secondFloor;
     }
@@ -389,77 +404,56 @@ public class FloorPlanner extends UI {
         table.setSize(200, 50);
         room.addComponent(table);
     }
-}
 
-// //Tiina
-// Room room = RoomType.customRoom("Tiina", new Point(0, 0), new Point(0, 0),
-// new Point(105, 0), new Point(105, 20), new Point(90, 50),
-// new Point(90, 150), new Point(0, 150));
-// room.addComponent(new Door(Direction.UP_LEFT, new Point(90, 145));
-// grid.addRoom(room);
-// // Vappula
-// room = RoomType.customRoom("Vappula", new Point(90, 0), new Point(15, 0), new
-// Point(65, 0), new Point(65, 20), new Point(80, 50), new Point(80, 120),
-// new Point(0, 120), new Point(0, 50), new Point(15, 20));
-// room.addDoor(Direction.UP_LEFT, new Point(75, 120));
-// grid.addRoom(room);
-// // Muurimaa
-// room = RoomType.customRoom("Muurimaa", new Point(155, 0), new Point(0, 0),
-// new Point(105, 0), new Point(105, 150), new Point(15, 150),
-// new Point(15, 50), new Point(0, 20));
-// room.addDoor(Direction.UP_RIGHT, new Point(15, 145));
-// grid.addRoom(room);
-// // GuitarHero
-// room = RoomType.square("Guitar Hero", new Point(35, 150));
-// room.addDoor(Direction.UP_LEFT, new Point(100, 95));
-// grid.addRoom(room);
-// // PikkuNeukkari
-// room = RoomType.square("Pikku Neukkari", new Point(35, 250));
-// room.addDoor(Direction.DOWN_RIGHT, new Point(100, 3));
-// grid.addRoom(room);
-// // Kitchen
-// room = RoomType.customRoom("Kitchen", new Point(0, 350), new Point(0, 5), new
-// Point(35, 5), new Point(35, 0), new Point(135, 0), new Point(135, 100),
-// new Point(0, 100));
-// room.addDoor(Direction.DOWN_LEFT, new Point(135, 3));
-// grid.addRoom(room);
-// // Lounge
-// room = RoomType.customRoom("Lounge", new Point(135, 150), new Point(0, 0),
-// new Point(125, 0), new Point(125, 300), new Point(0, 300));
-// room.addDoor(Direction.DOWN_RIGHT, new Point(5, 0));
-// room.addDoor(Direction.DOWN_RIGHT, new Point(5, 300));
-// grid.addRoom(room);
-//
-// // MainHall width: 560 height: 520, toilet: w80, h100
-// grid.addRoom(RoomType.customRoom("Main Hall", new Point(-150, 450), new
-// Point(0, 0), new Point(560, 0), new Point(560, 180), new Point(480, 180),
-// new Point(480, 280), new Point(560, 280), new Point(560, 520), new Point(0,
-// 520), new Point(0, 280), new Point(80, 280), new Point(80, 180),
-// new Point(0, 180)));
-//
-// // 140, 130
-// room = RoomType.customRoom(new Point(-140, 970), new Point(0, 0), new
-// Point(140, 0), new Point(140, 130), new Point(0, 130));
-// room.addDoor(Direction.DOWN_LEFT, new Point(110, 0));
-// grid.addRoom(room);
-//
-// // MetsäNeukkari
-// // room = RoomType.customRoom("Metsä neukkari", new Point(0, 970), new
-// // Point(0, 0), new Point(160, 0), new Point(160, 130), new Point(0,
-// // 130));
-// room = RoomType.customRoom("Metsä neukkari", new Point(160, 970), new
-// Point(0, 0), new Point(480, 0), new Point(480, 390), new Point(0, 390));
-// // room.addDoor(Direction.UP_LEFT, new Point(140, 0));
-// room.addDoor(Direction.UP_LEFT, new Point(460, 0));
-// grid.addRoom(room);
-//
-// // StuffRomm
-// room = RoomType.customRoom("Storage", new Point(160, 970), new Point(0, 0),
-// new Point(70, 0), new Point(70, 130), new Point(0, 130));
-// room.addDoor(Direction.UP_LEFT, new Point(60, 0));
-// grid.addRoom(room);
-// // ServerRoom
-// room = RoomType.customRoom("Server room", new Point(230, 970), new Point(0,
-// 0), new Point(50, 0), new Point(50, 130), new Point(0, 130));
-// room.addDoor(Direction.UP_RIGHT, new Point(10, 0));
-// grid.addRoom(room);
+    private PathWaypoints buildSecondFloorPoints() {
+        final PathWaypoints waypoints = new PathWaypoints();
+
+        final Node node1913 = new Node(1913, new Point(-244, 2155));
+        final Node node2006 = new Node(2006, new Point(-247, 2250));
+        final Node node2287 = new Node(2287, new Point(41, 2250));
+        final Node node1895 = new Node(1895, new Point(-359, 2250));
+        final Node node1448 = new Node(1448, new Point(350, 1099));
+        final Node node1150 = new Node(1150, new Point(350, 801));
+        final Node node1050 = new Node(1050, new Point(251, 799));
+        final Node node1043 = new Node(1043, new Point(350, 695));
+        final Node node957 = new Node(957, new Point(258, 699));
+        final Node node874 = new Node(874, new Point(350, 522));
+        final Node node971 = new Node(971, new Point(449, 522));
+        final Node node1276 = new Node(1276, new Point(750, 526));
+        final Node node1408 = new Node(1408, new Point(755, 653));
+        final Node node724 = new Node(724, new Point(357, 367));
+        final Node node813 = new Node(813, new Point(451, 362));
+
+        node2287.addConnectedNode(node2006, 1);
+        node2006.addConnectedNode(node1913, 1);
+        node1895.addConnectedNode(node2006, 1);
+        node1408.addConnectedNode(node1276, 1);
+        node1276.addConnectedNode(node971, 1);
+        node971.addConnectedNode(node874, 1);
+        node874.addConnectedNode(node1043, 1);
+        node1043.addConnectedNode(node957, 1);
+        node1050.addConnectedNode(node1150, 1);
+        node1043.addConnectedNode(node1150, 1);
+        node1150.addConnectedNode(node1448, 1);
+        node874.addConnectedNode(node724, 1);
+        node971.addConnectedNode(node813, 1);
+
+        waypoints.add(node1913);
+        waypoints.add(node2006);
+        waypoints.add(node2287);
+        waypoints.add(node1895);
+        waypoints.add(node1448);
+        waypoints.add(node1150);
+        waypoints.add(node1050);
+        waypoints.add(node1043);
+        waypoints.add(node957);
+        waypoints.add(node874);
+        waypoints.add(node971);
+        waypoints.add(node1276);
+        waypoints.add(node1408);
+        waypoints.add(node724);
+        waypoints.add(node813);
+
+        return waypoints;
+    }
+}

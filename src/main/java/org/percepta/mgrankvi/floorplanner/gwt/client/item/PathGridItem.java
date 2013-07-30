@@ -40,6 +40,10 @@ public class PathGridItem extends CItem {
         this.pathPopup = pathPopup;
     }
 
+    public void setPathPopup(final PathPopup pathPopup) {
+        this.pathPopup = pathPopup;
+    }
+
     public int size() {
         return nodes.size();
     }

@@ -518,12 +518,14 @@ public class CGrid extends Composite implements ClickHandler, MouseDownHandler, 
                 if (pathing && path == null) {
                     path = new PathPopup();
                     path.show();
-                    pathGrid = new PathGridItem(path);
-                    pathGrid.setPosition(new Point(origo.getX(), origo.getY()));
                     if (selectedFloor != null && selectedFloor.waypoints != null) {
-                        items.add(selectedFloor.waypoints);
+                        // items.add(selectedFloor.waypoints);
+                        pathGrid = selectedFloor.waypoints;
                         selectedFloor.updateWaypoints(false);
-                        // selectedFloor.waypoints.setPathPopup(path);
+                        selectedFloor.waypoints.setPathPopup(path);
+                    } else {
+                        pathGrid = new PathGridItem(path);
+                        pathGrid.setPosition(new Point(origo.getX(), origo.getY()));
                     }
                     items.add(pathGrid);
                     repaint();
