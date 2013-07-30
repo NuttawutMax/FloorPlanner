@@ -47,6 +47,7 @@ public class CFloor extends Widget implements Comparable<CFloor> {
     Point targetPoint = null;
     CGrid grid;
     PathGridItem waypoints;
+    private boolean updateWaypoints = true;
 
     public CFloor() {
         // Dummy
@@ -191,6 +192,9 @@ public class CFloor extends Widget implements Comparable<CFloor> {
 
         for (final VisualItem item : items) {
             item.movePosition(amountx, amounty);
+        }
+        if (updateWaypoints && waypoints != null) {
+            waypoints.movePosition(amountx, amounty);
         }
     }
 
@@ -373,5 +377,9 @@ public class CFloor extends Widget implements Comparable<CFloor> {
     @Override
     public int compareTo(final CFloor arg0) {
         return level == arg0.level ? 0 : level < arg0.level ? -1 : 1;
+    }
+
+    public void updateWaypoints(final boolean update) {
+        updateWaypoints = update;
     }
 }
