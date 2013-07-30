@@ -45,6 +45,9 @@ public class RoomConnector extends AbstractComponentContainerConnector {
         getWidget().setPosition(getState().position);
 
         getWidget().setName(getState().name);
+        if (getState().color != null) {
+            getWidget().setColor(getState().color);
+        }
     }
 
     @Override

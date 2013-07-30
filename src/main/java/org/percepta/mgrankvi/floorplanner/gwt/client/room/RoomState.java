@@ -18,6 +18,7 @@ public class RoomState extends AbstractComponentState {
     public List<ItemState> items = new LinkedList<ItemState>();
     public String name = "";
     public List<DoorState> door = new LinkedList<DoorState>();
+    public String color;
 
     public void addPoint(final Point point) {
         points.add(point);

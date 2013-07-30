@@ -35,6 +35,10 @@ public class Room extends AbstractComponentContainer implements HasComponents {
         return getState().id;
     }
 
+    public void setRoomColor(final String color) {
+        getState().color = color.toUpperCase();
+    }
+
     public void setPosition(final Point position) {
         getState().position = position;
     }

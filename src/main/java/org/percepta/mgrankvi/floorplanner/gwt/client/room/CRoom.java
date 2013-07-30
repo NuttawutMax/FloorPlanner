@@ -21,6 +21,7 @@ public class CRoom extends VisualItem {
     private boolean selected = false;
     private final List<VisualItem> roomItems = new LinkedList<VisualItem>();
     private CLabel roomLabel;
+    private String fillColor = "PEACHPUFF";
 
     public CRoom() {
         // dummy element
@@ -139,6 +140,12 @@ public class CRoom extends VisualItem {
         } else {
             ItemUtils.paintPointToPoint(context, points, offset, CssColor.make("BLACK"));
         }
+        if (fillColor != null) {
+            context.save();
+            context.setGlobalAlpha(0.2);
+            ItemUtils.fillPointToPoint(context, points, offset, CssColor.make(fillColor));
+            context.restore();
+        }
         for (final VisualItem item : roomItems) {
             item.paint(context, offset);
         }
@@ -217,5 +224,9 @@ public class CRoom extends VisualItem {
         if (widget instanceof VisualItem) {
             roomItems.add((VisualItem) widget);
         }
+    }
+
+    public void setColor(final String color) {
+        fillColor = color;
     }
 }
