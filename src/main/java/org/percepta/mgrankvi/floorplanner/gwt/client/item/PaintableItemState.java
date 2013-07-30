@@ -14,6 +14,8 @@ public class PaintableItemState extends ItemState {
     List<Circle> circles = new LinkedList<Circle>();
     List<Line> lines = new LinkedList<Line>();
 
+    public String fillColor;
+
     public Point getPosition() {
         return itemPosition;
     }

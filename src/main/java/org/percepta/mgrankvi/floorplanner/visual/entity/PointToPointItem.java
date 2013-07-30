@@ -28,6 +28,10 @@ public class PointToPointItem extends AbstractItem {
         getState().setPosition(position);
     }
 
+    public void setColor(final String color) {
+        getState().fillColor = color.toUpperCase();
+    }
+
     @Override
     public PaintableItemState getState() {
         return (PaintableItemState) super.getState();

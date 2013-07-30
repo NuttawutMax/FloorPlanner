@@ -41,5 +41,8 @@ public class PointToPointItemConnector extends AbstractComponentConnector {
         getWidget().setPosition(getState().itemPosition);
         getWidget().setPoints(getState().itemPoints);
         getWidget().setName(getState().itemName);
+        if (getState().fillColor != null) {
+            getWidget().setFillColor(getState().fillColor);
+        }
     }
 }

@@ -18,6 +18,7 @@ public class CItem extends VisualItem {
 
     protected Point drawPosition = new Point(0, 0);
     private String color = "BLACK";
+    private String fillColor;
 
     protected final List<Circle> circles = new LinkedList<Circle>();
     protected final List<Line> lines = new LinkedList<Line>();
@@ -41,12 +42,22 @@ public class CItem extends VisualItem {
         this.color = color;
     }
 
+    public void setFillColor(final String color) {
+        fillColor = color;
+    }
+
     @Override
     public void paint(final Context2d context, final Point offset) {
         drawPosition = GeometryUtil.combine(position, offset);
 
         if (!points.isEmpty()) {
             ItemUtils.paintPointToPoint(context, points, drawPosition, CssColor.make(color));
+            if (fillColor != null) {
+                context.save();
+                context.setGlobalAlpha(0.2);
+                ItemUtils.fillPointToPoint(context, points, drawPosition, CssColor.make(fillColor));
+                context.restore();
+            }
         }
 
         for (final Circle circle : circles) {
