@@ -13,7 +13,7 @@ import com.google.gwt.canvas.dom.client.Context2d;
 public class ButtonBar {
 
     private final int START_BUBBLE_SIZE = 20;
-    private final int BAR_HEIGHT = 300;
+    private final int BAR_HEIGHT = 150;
     private final int BAR_WIDTH = 15;
 
     private boolean visible = false;
@@ -238,5 +238,9 @@ public class ButtonBar {
 
     public void showNames() {
         grid.showNames();
+    }
+
+    public void getPath() {
+        grid.getPath();
     }
 }

@@ -4,13 +4,16 @@ import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Node implements Serializable {
+public class Node implements Serializable, Comparable<Node> {
 
     private static final long serialVersionUID = -1710389845925508445L;
 
     protected int id;
     protected List<Link> links = new LinkedList<Link>();
     protected Point position;
+
+    public double minDistance = Double.POSITIVE_INFINITY;
+    public Node previous;
 
     public Node() {
     }
@@ -59,6 +62,11 @@ public class Node implements Serializable {
 
     public Point getPosition() {
         return position;
+    }
+
+    @Override
+    public int compareTo(final Node other) {
+        return Double.compare(minDistance, other.minDistance);
     }
 
 }

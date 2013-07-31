@@ -12,6 +12,7 @@ import org.percepta.mgrankvi.floorplanner.gwt.client.VisualItem;
 import org.percepta.mgrankvi.floorplanner.gwt.client.geometry.GeometryUtil;
 import org.percepta.mgrankvi.floorplanner.gwt.client.geometry.Node;
 import org.percepta.mgrankvi.floorplanner.gwt.client.geometry.Point;
+import org.percepta.mgrankvi.floorplanner.gwt.client.item.CItem;
 import org.percepta.mgrankvi.floorplanner.gwt.client.item.PathGridItem;
 import org.percepta.mgrankvi.floorplanner.gwt.client.paint.GridButton;
 import org.percepta.mgrankvi.floorplanner.gwt.client.paint.GridUtils;
@@ -99,7 +100,8 @@ public class CGrid extends Composite implements ClickHandler, MouseDownHandler, 
     CFloor selectedFloor;
     LinkedList<CFloor> floors = new LinkedList<CFloor>();
     List<VisualItem> items = new LinkedList<VisualItem>();
-    PathPopup path;
+    CItem pathFromTo;
+    PathPopup pathPopup;
     PathGridItem pathGrid;
 
     public CGrid() {
@@ -515,23 +517,23 @@ public class CGrid extends Composite implements ClickHandler, MouseDownHandler, 
                 break;
             case PATHING:
                 setPathing(!pathing);
-                if (pathing && path == null) {
-                    path = new PathPopup();
-                    path.show();
+                if (pathing && pathPopup == null) {
+                    pathPopup = new PathPopup();
+                    pathPopup.show();
                     if (selectedFloor != null && selectedFloor.waypoints != null) {
                         // items.add(selectedFloor.waypoints);
                         pathGrid = selectedFloor.waypoints;
                         selectedFloor.updateWaypoints(false);
-                        selectedFloor.waypoints.setPathPopup(path);
+                        selectedFloor.waypoints.setPathPopup(pathPopup);
                     } else {
-                        pathGrid = new PathGridItem(path);
+                        pathGrid = new PathGridItem(pathPopup);
                         pathGrid.setPosition(new Point(origo.getX(), origo.getY()));
                     }
                     items.add(pathGrid);
                     repaint();
                 } else {
-                    path.hide();
-                    path = null;
+                    pathPopup.hide();
+                    pathPopup = null;
                     items.remove(pathGrid);
                     pathGrid = null;
                     if (selectedFloor != null && selectedFloor.waypoints != null) {
@@ -664,6 +666,21 @@ public class CGrid extends Composite implements ClickHandler, MouseDownHandler, 
         if (selectedFloor != null) {
             selectedFloor.showNames();
         }
+    }
+
+    public void getPath() {
+        new PathSearchPopup(selectedFloor, this);
+    }
+
+    public void getPath(final int fromId, final int toId) {
+        if (pathFromTo != null) {
+            items.remove(pathFromTo);
+        }
+        pathFromTo = selectedFloor.waypoints.getPath(fromId, toId);
+        if (pathFromTo != null) {
+            items.add(pathFromTo);
+        }
+        repaint();
     }
 
 }

@@ -20,6 +20,7 @@ public class CTable extends VisualItem {
     private String color = "BLACK";
     private String tableColor = "TRANSPARENT";
     private boolean showName = false;
+    private int nodeId = -99;
 
     public CTable() {
         // dummy element
@@ -29,6 +30,14 @@ public class CTable extends VisualItem {
     public CTable(final List<Point> points, final Point position) {
         this.points.addAll(points);
         this.position = position;
+    }
+
+    public int getNodeId() {
+        return nodeId;
+    }
+
+    public void setNodeId(final int nodeId) {
+        this.nodeId = nodeId;
     }
 
     @Override

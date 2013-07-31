@@ -169,6 +169,7 @@ public class FloorPlanner extends UI {
         room.addComponent(new Door(Direction.UP_LEFT, new Point(270, 445), 80));
         Table table = new Table("Tiina Wasberg", new Point(2, 150));
         table.setSize(150, 50);
+        table.linkToNode(604);
         room.addComponent(table);
         groundFloor.addRoom(room);
         // Vappula
@@ -178,6 +179,7 @@ public class FloorPlanner extends UI {
 
         table = new Table("Mikael Vappula", new Point(2, 310));
         table.setSize(150, 50);
+        table.linkToNode(751);
         room.addComponent(table);
         groundFloor.addRoom(room);
         // Muurimaa
@@ -187,6 +189,7 @@ public class FloorPlanner extends UI {
 
         table = new Table("Henri Muurimaa", new Point(165, 100));
         table.setSize(150, 50);
+        table.linkToNode(1004);
         room.addComponent(table);
         groundFloor.addRoom(room);
 
@@ -369,10 +372,12 @@ public class FloorPlanner extends UI {
         // Center-aisle-Right
         table = new Table("Joonas Lehtinen", new Point(1140, 200));
         table.setSize(50, 200);
+        table.linkToNode(2415);
         room.addComponent(table);
 
         table = new Table("Jurka Rahikkala", new Point(1140, 450));
         table.setSize(50, 200);
+        table.linkToNode(2415);
         room.addComponent(table);
 
         table = new Table("", new Point(1140, 665));

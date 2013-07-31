@@ -39,6 +39,10 @@ public class Table extends AbstractItem {
         getState().setPosition(position);
     }
 
+    public void linkToNode(final int nodeId) {
+        getState().nodeId = nodeId;
+    }
+
     @Override
     public TableState getState() {
         return (TableState) super.getState();

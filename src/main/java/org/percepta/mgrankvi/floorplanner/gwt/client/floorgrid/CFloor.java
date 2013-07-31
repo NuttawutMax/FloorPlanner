@@ -200,10 +200,14 @@ public class CFloor extends Widget implements Comparable<CFloor> {
 
     // stuff
     protected boolean namesContain(final CommandObject cmd) {
+        return namesContain(cmd.getValue());
+    }
+
+    protected boolean namesContain(final String name) {
         for (final CRoom room : rooms) {
             for (final VisualItem item : room.getRoomItems()) {
                 if (item instanceof CTable) {
-                    if (item.getName() != null && item.getName().toLowerCase().contains(cmd.getValue().toLowerCase())) {
+                    if (item.getName() != null && item.getName().toLowerCase().contains(name.toLowerCase())) {
                         return true;
                     }
                 }
@@ -213,12 +217,16 @@ public class CFloor extends Widget implements Comparable<CFloor> {
     }
 
     protected LinkedList<String> possibilities(final CommandObject cmd) {
+        return possibilities(cmd.getValue());
+    }
+
+    protected LinkedList<String> possibilities(final String name) {
         final LinkedList<String> possible = new LinkedList<String>();
 
         for (final CRoom room : rooms) {
             for (final VisualItem item : room.getRoomItems()) {
                 if (item instanceof CTable) {
-                    if (item.getName() != null && item.getName().toLowerCase().contains(cmd.getValue().toLowerCase())) {
+                    if (item.getName() != null && item.getName().toLowerCase().contains(name.toLowerCase())) {
                         possible.add(item.getName());
                     }
                 }
@@ -228,6 +236,20 @@ public class CFloor extends Widget implements Comparable<CFloor> {
         Collections.sort(possible);
 
         return possible;
+    }
+
+    public CTable getTableOfSelectedPerson(final String nameOfSelection) {
+        for (final CRoom room : rooms) {
+            for (final VisualItem item : room.getRoomItems()) {
+                if (item instanceof CTable) {
+                    final CTable table = (CTable) item;
+                    if (nameOfSelection.equals(table.getName())) {
+                        return table;
+                    }
+                }
+            }
+        }
+        return null;
     }
 
     public void markTableOfSelectedPerson(final String nameOfSelection) {
@@ -381,5 +403,18 @@ public class CFloor extends Widget implements Comparable<CFloor> {
 
     public void updateWaypoints(final boolean update) {
         updateWaypoints = update;
+    }
+
+    public void hideNames() {
+        if (showNames) {
+            return;
+        }
+        for (final CRoom room : rooms) {
+            for (final VisualItem item : room.getRoomItems()) {
+                if (item instanceof CTable) {
+                    ((CTable) item).setSelected(false);
+                }
+            }
+        }
     }
 }

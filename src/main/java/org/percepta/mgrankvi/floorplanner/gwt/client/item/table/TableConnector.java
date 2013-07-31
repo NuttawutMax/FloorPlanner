@@ -38,5 +38,6 @@ public class TableConnector extends AbstractComponentConnector {
         getWidget().setPosition(getState().itemPosition);
         getWidget().setPoints(getState().itemPoints);
         getWidget().setName(getState().itemName);
+        getWidget().setNodeId(getState().nodeId);
     }
 }

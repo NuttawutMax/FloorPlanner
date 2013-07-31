@@ -61,8 +61,9 @@ public class PathButton extends AbstractButton {
 
     @Override
     public void clicked() {
-        // TODO Auto-generated method stub
-
+        if (fillStyle.equals("ORANGE")) {
+            bar.getPath();
+        }
     }
 
 }

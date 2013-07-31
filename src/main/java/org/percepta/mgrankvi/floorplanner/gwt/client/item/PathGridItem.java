@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.percepta.mgrankvi.floorplanner.gwt.client.floorgrid.Dijkstra;
 import org.percepta.mgrankvi.floorplanner.gwt.client.floorgrid.PathPopup;
 import org.percepta.mgrankvi.floorplanner.gwt.client.geometry.DelinkedLink;
 import org.percepta.mgrankvi.floorplanner.gwt.client.geometry.GeometryUtil;
@@ -19,6 +20,9 @@ import org.percepta.mgrankvi.floorplanner.gwt.client.paint.ItemUtils;
 
 import com.google.gwt.canvas.dom.client.Context2d;
 import com.google.gwt.canvas.dom.client.CssColor;
+import com.google.gwt.dom.client.Style;
+import com.google.gwt.dom.client.Style.Unit;
+import com.vaadin.client.ui.VNotification;
 
 public class PathGridItem extends CItem {
 
@@ -86,6 +90,38 @@ public class PathGridItem extends CItem {
         }
     }
 
+    public CItem getPath(final int from, final int to) {
+        final Node n1 = idNodes.get(from);
+        final Node n2 = idNodes.get(to);
+
+        if (n1 == null || n2 == null) {
+            final VNotification notification = new VNotification();
+            final Style style = notification.getElement().getStyle();
+            style.setBackgroundColor("#c8ccd0");
+            style.setPadding(15.0, Unit.PX);
+            style.setProperty("border-radius", "4px");
+            style.setProperty("-moz-border-radius", "4px");
+            style.setProperty("-webkit-border-radius", "4px");
+            notification.show("Could not find nodes for both ends!", VNotification.CENTERED_TOP, null);
+            return null;
+        }
+        for (final Node node : nodes) {
+            node.minDistance = Double.POSITIVE_INFINITY;
+            node.previous = null;
+        }
+
+        Dijkstra.computePaths(n1);
+        final LinkedList<Node> pathNodes = Dijkstra.getShortestPathTo(n2);
+        final CItem path = new CItem(new LinkedList<Point>(), new Point(position.getX(), position.getY()));
+        for (int i = 0; i < pathNodes.size() - 1; i++) {
+            path.lines.add(new Line(pathNodes.get(i).getPosition(), pathNodes.get(i + 1).getPosition()));
+            path.setColor("RED");
+        }
+        path.circles.add(new Circle(pathNodes.getFirst().getPosition(), 0, 2 * Math.PI, 4));
+        path.circles.add(new Circle(pathNodes.getLast().getPosition(), 0, 2 * Math.PI, 4));
+        return path;
+    }
+
     public boolean hasSelected() {
         return selected != null;
     }
@@ -96,6 +132,19 @@ public class PathGridItem extends CItem {
                 selected = circle;
             }
         }
+        notifyOfSelection(nodeMap.get(selected).getId());
+    }
+
+    private void notifyOfSelection(final int id) {
+        final VNotification notification = new VNotification();
+        final Style style = notification.getElement().getStyle();
+        style.setBackgroundColor("#c8ccd0");
+        style.setPadding(5.0, Unit.PX);
+        style.setProperty("border-radius", "4px");
+        style.setProperty("-moz-border-radius", "4px");
+        style.setProperty("-webkit-border-radius", "4px");
+
+        notification.show("Selected node [" + id + "]", VNotification.BOTTOM_RIGHT, null);
     }
 
     public void link(final double x, final double y) {
