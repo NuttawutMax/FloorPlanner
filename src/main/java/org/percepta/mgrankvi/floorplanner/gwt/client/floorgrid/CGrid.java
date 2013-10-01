@@ -12,8 +12,10 @@ import org.percepta.mgrankvi.floorplanner.gwt.client.VisualItem;
 import org.percepta.mgrankvi.floorplanner.gwt.client.geometry.GeometryUtil;
 import org.percepta.mgrankvi.floorplanner.gwt.client.geometry.Node;
 import org.percepta.mgrankvi.floorplanner.gwt.client.geometry.Point;
+import org.percepta.mgrankvi.floorplanner.gwt.client.geometry.Rectangle;
 import org.percepta.mgrankvi.floorplanner.gwt.client.item.CItem;
 import org.percepta.mgrankvi.floorplanner.gwt.client.item.PathGridItem;
+import org.percepta.mgrankvi.floorplanner.gwt.client.item.table.CTable;
 import org.percepta.mgrankvi.floorplanner.gwt.client.paint.GridButton;
 import org.percepta.mgrankvi.floorplanner.gwt.client.paint.GridUtils;
 import org.percepta.mgrankvi.floorplanner.gwt.client.room.CRoom;
@@ -101,7 +103,7 @@ public class CGrid extends Composite implements ClickHandler, MouseDownHandler, 
     LinkedList<CFloor> floors = new LinkedList<CFloor>();
     List<VisualItem> items = new LinkedList<VisualItem>();
     CItem pathFromTo;
-    PathPopup pathPopup;
+    GeneratedCodePopup codePopup;
     PathGridItem pathGrid;
 
     public CGrid() {
@@ -517,23 +519,23 @@ public class CGrid extends Composite implements ClickHandler, MouseDownHandler, 
                 break;
             case PATHING:
                 setPathing(!pathing);
-                if (pathing && pathPopup == null) {
-                    pathPopup = new PathPopup();
-                    pathPopup.show();
+                if (pathing && codePopup == null) {
+                    codePopup = new GeneratedCodePopup();
+                    codePopup.show();
                     if (selectedFloor != null && selectedFloor.waypoints != null) {
                         // items.add(selectedFloor.waypoints);
                         pathGrid = selectedFloor.waypoints;
                         selectedFloor.updateWaypoints(false);
-                        selectedFloor.waypoints.setPathPopup(pathPopup);
+                        selectedFloor.waypoints.setPathPopup(codePopup);
                     } else {
-                        pathGrid = new PathGridItem(pathPopup);
+                        pathGrid = new PathGridItem(codePopup);
                         pathGrid.setPosition(new Point(origo.getX(), origo.getY()));
                     }
                     items.add(pathGrid);
                     repaint();
                 } else {
-                    pathPopup.hide();
-                    pathPopup = null;
+                    codePopup.hide();
+                    codePopup = null;
                     items.remove(pathGrid);
                     pathGrid = null;
                     if (selectedFloor != null && selectedFloor.waypoints != null) {
@@ -580,7 +582,7 @@ public class CGrid extends Composite implements ClickHandler, MouseDownHandler, 
         }
         event.preventDefault();
         mouseDown = false;
-        selectedFloor.selected = null;
+        // selectedFloor.selected = null;
 
         final int x = event.getNativeEvent().getClientX();
         final int y = event.getNativeEvent().getClientY();
@@ -628,6 +630,27 @@ public class CGrid extends Composite implements ClickHandler, MouseDownHandler, 
             }
         }));
 
+        rootMenu.addItem(new MenuItem("New table", new Command() {
+            @Override
+            public void execute() {
+                if (codePopup == null) {
+                    codePopup = new GeneratedCodePopup();
+                }
+                final CRoom room = selectedFloor.getSelectedRoom();
+                if (room != null) {
+                    codePopup.addLabel("Table table = new Table(\"Name\", new Point(" + (x + room.getPositionX()) + ", " + (y + room.getPositionY()) + "));");
+                    final CTable table = new CTable(Arrays.asList(new Rectangle(150, 50).getCorners()), new Point(x, y));
+                    room.add(table);
+                    repaint();
+                } else {
+                    codePopup.addLabel("Table table = new Table(\"Name\", new Point(" + (x - origo.getX()) + ", " + (y - origo.getY()) + "));");
+                }
+                codePopup.addLabel("table.setSize(150, 50);");
+                contextMenu.hide();
+                contextMenu = null;
+            }
+        }));
+
         contextMenu.setPopupPosition(x, y);
         contextMenu.show();
     }
@@ -642,6 +665,10 @@ public class CGrid extends Composite implements ClickHandler, MouseDownHandler, 
 
     public void setEditable(final boolean editable) {
         isEditable = editable;
+        if (codePopup != null) {
+            codePopup.hide();
+            codePopup = null;
+        }
     }
 
     public void setPathing(final boolean pathing) {

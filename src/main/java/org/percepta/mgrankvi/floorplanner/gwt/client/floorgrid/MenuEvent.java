@@ -7,7 +7,7 @@ import com.google.gwt.event.shared.GwtEvent;
 public class MenuEvent extends GwtEvent<MenuEventHandler> {
 
     public static enum MenuEventType {
-        ADD_ROOM, REMOVE_ROOM, OPEN_ROOM_INFO, UPDATE_ROOMS
+        ADD_ROOM, REMOVE_ROOM, OPEN_ROOM_INFO, UPDATE_ROOMS, ADD_TABLE
     }
 
     private static Type<MenuEventHandler> TYPE;

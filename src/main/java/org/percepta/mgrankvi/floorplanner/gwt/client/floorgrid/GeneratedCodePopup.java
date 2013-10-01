@@ -13,15 +13,15 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.PopupPanel;
 import com.google.gwt.user.client.ui.ScrollPanel;
 
-public class PathPopup extends PopupPanel {
+public class GeneratedCodePopup extends PopupPanel {
 
     final ScrollPanel layout = new ScrollPanel();
     FlowPanel flow = new FlowPanel();
 
     Map<String, Label> linkLabels = new HashMap<String, Label>();
 
-    public PathPopup() {
-        layout.setWidth("350px");
+    public GeneratedCodePopup() {
+        layout.setWidth("400px");
         layout.setHeight("200px");
         layout.add(flow);
 
@@ -51,5 +51,9 @@ public class PathPopup extends PopupPanel {
         final Label link = linkLabels.get(node1.getId() + ":" + node2.getId());
         linkLabels.remove(node1.getId() + ":" + node2.getId());
         flow.remove(link);
+    }
+
+    public void addLabel(final String content) {
+        flow.add(new Label(content));
     }
 }

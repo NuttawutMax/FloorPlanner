@@ -75,6 +75,13 @@ public class FloorPlanner extends UI {
         final Node node3602 = new Node(3602, new Point(850, 2750));
         final Node node3401 = new Node(3401, new Point(650, 2750));
         final Node node2893 = new Node(2893, new Point(150, 2750));
+        final Node node1449 = new Node(1449, new Point(-152, 1601));
+        final Node node1247 = new Node(1247, new Point(-352, 1599));
+        final Node node2651 = new Node(2651, new Point(-99, 2750));
+        final Node node2201 = new Node(2201, new Point(-99, 2300));
+        final Node node3298 = new Node(3298, new Point(425, 2873));
+        final Node node3403 = new Node(3403, new Point(421, 2982));
+        final Node node2855 = new Node(2855, new Point(-137, 2992));
 
         node1048.addConnectedNode(node1149, 1);
         node851.addConnectedNode(node1149, 1);
@@ -118,6 +125,14 @@ public class FloorPlanner extends UI {
         node2851.addConnectedNode(node3099, 1);
         node2601.addConnectedNode(node2851, 1);
         node2303.addConnectedNode(node2601, 1);
+        node1247.addConnectedNode(node1449, 1);
+        node1449.addConnectedNode(node1451, 1);
+        node2201.addConnectedNode(node2651, 1);
+        node2651.addConnectedNode(node2893, 1);
+        node3298.addConnectedNode(node3403, 1);
+        node3298.addConnectedNode(node3401, 1);
+        node3298.addConnectedNode(node2893, 1);
+        node2855.addConnectedNode(node2651, 1);
 
         waypoints.add(node604);
         waypoints.add(node851);
@@ -156,6 +171,13 @@ public class FloorPlanner extends UI {
         waypoints.add(node3602);
         waypoints.add(node3401);
         waypoints.add(node2893);
+        waypoints.add(node1449);
+        waypoints.add(node1247);
+        waypoints.add(node2651);
+        waypoints.add(node2201);
+        waypoints.add(node3298);
+        waypoints.add(node3403);
+        waypoints.add(node2855);
 
         return waypoints;
     }
@@ -395,6 +417,7 @@ public class FloorPlanner extends UI {
         // Left-top-corner
         table = new Table("Kim Leppänen", new Point(125, 3));
         table.setSize(50, 200);
+        table.linkToNode(1247);
         room.addComponent(table);
 
         table = new Table("", new Point(125, 320));

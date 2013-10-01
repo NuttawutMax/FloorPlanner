@@ -8,7 +8,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.percepta.mgrankvi.floorplanner.gwt.client.floorgrid.Dijkstra;
-import org.percepta.mgrankvi.floorplanner.gwt.client.floorgrid.PathPopup;
+import org.percepta.mgrankvi.floorplanner.gwt.client.floorgrid.GeneratedCodePopup;
 import org.percepta.mgrankvi.floorplanner.gwt.client.geometry.DelinkedLink;
 import org.percepta.mgrankvi.floorplanner.gwt.client.geometry.GeometryUtil;
 import org.percepta.mgrankvi.floorplanner.gwt.client.geometry.Line;
@@ -34,17 +34,17 @@ public class PathGridItem extends CItem {
     private static final String COLOR = "BLACK";
     private static final String SELECTED_COLOR = "GREEN";
 
-    private PathPopup pathPopup;
+    private GeneratedCodePopup pathPopup;
 
     public PathGridItem() {
 
     }
 
-    public PathGridItem(final PathPopup pathPopup) {
+    public PathGridItem(final GeneratedCodePopup pathPopup) {
         this.pathPopup = pathPopup;
     }
 
-    public void setPathPopup(final PathPopup pathPopup) {
+    public void setPathPopup(final GeneratedCodePopup pathPopup) {
         this.pathPopup = pathPopup;
     }
 
