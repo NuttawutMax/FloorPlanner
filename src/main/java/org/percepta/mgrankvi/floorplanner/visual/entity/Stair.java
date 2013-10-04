@@ -60,6 +60,12 @@ public class Stair extends AbstractItem {
         lineList.add(line);
     }
 
+    public void addLines(final Line... lines) {
+        for (final Line line : lines) {
+            addLine(line);
+        }
+    }
+
     public void setSegmentCircle(final double degrees) {
         getState().degrees = degrees;
     }

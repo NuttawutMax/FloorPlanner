@@ -1,5 +1,6 @@
 package org.percepta.mgrankvi.floorplanner;
 
+import org.percepta.mgrankvi.floorplanner.gwt.client.geometry.Line;
 import org.percepta.mgrankvi.floorplanner.gwt.client.geometry.Node;
 import org.percepta.mgrankvi.floorplanner.gwt.client.geometry.Point;
 import org.percepta.mgrankvi.floorplanner.gwt.client.item.door.DoorState.Direction;
@@ -223,33 +224,14 @@ public class FloorPlanner extends UI {
         filler.setColor("PEACHPUFF");
         groundFloor.addComponent(filler);
 
-        // GuitarHero
-        // room = RoomCreator.square(3, "Guitar Hero", new Point(105, 450));
-        // room.addComponent(new Door(Direction.UP_LEFT, new Point(300, 285),
-        // 80));
-        // groundFloor.addRoom(room);
-        // // PikkuNeukkari
-        // room = RoomCreator.square(3, "Pikku Neukkari", new Point(105, 750));
-        // room.addComponent(new Door(Direction.DOWN_RIGHT, new Point(300, 9),
-        // 80));
-        // groundFloor.addRoom(room);
-        // // Kitchen
-        // room = RoomCreator.customRoom("Kitchen", new Point(0, 1050), new
-        // Point(0, 15), new Point(105, 15), new Point(105, 0), new Point(405,
-        // 0), new Point(405,
-        // 300), new Point(0, 300));
-        // room.addComponent(new Door(Direction.DOWN_LEFT, new Point(405, 9),
-        // 80));
-        // groundFloor.addRoom(room);
-        // Lounge
-        // room = RoomCreator.customRoom("Lounge", new Point(405, 450), new
-        // Point(0, 0), new Point(375, 0), new Point(375, 900), new Point(0,
-        // 900));
-
         room = RoomCreator.customRoom("Lounge", new Point(0, 450), new Point(105, 0), new Point(780, 0), new Point(780, 900), new Point(0, 900), new Point(0,
                 615), new Point(105, 615));
         room.addComponent(new Door(Direction.DOWN_RIGHT, new Point(420, 0), 80));
         room.addComponent(new Door(Direction.DOWN_RIGHT, new Point(420, 900), 80));
+        Stair stair = new Stair("", new Point(625, 150));
+        stair.addCircle(new Circle(new Point(0, 0), Math.PI * 1.5, Math.PI, 120));
+        stair.setSegmentCircle(20);
+        room.addComponent(stair);
         groundFloor.addRoom(room);
 
         // MainHall width: 560 height: 520, toilet: w80, h100
@@ -259,6 +241,11 @@ public class FloorPlanner extends UI {
         room.addComponent(new Door(Direction.DOWN_RIGHT, new Point(1360, 1560), 80));
         room.addComponent(new Door(Direction.DOWN_LEFT, new Point(1480, 1560), 40));
         addMainHallTables(room);
+        stair = new Stair("", new Point(120, 980));
+        stair.addCircle(new Circle(new Point(0, 0), 0, Math.PI * 2, 120));
+        stair.setSegmentCircle(20);
+        room.addComponent(stair);
+
         groundFloor.addRoom(room);
 
         // 140, 130
@@ -284,15 +271,21 @@ public class FloorPlanner extends UI {
         room.addComponent(new Door(Direction.UP_RIGHT, new Point(30, 0), 80));
         groundFloor.addRoom(room);
 
-        Stair stair = new Stair("", new Point(625, 600));
-        stair.addCircle(new Circle(new Point(0, 0), Math.PI * 1.5, Math.PI, 120));
-        stair.setSegmentCircle(20);
-        groundFloor.addComponent(stair);
+        room = RoomCreator.customRoom("Hallway", new Point(-470, 1350), new Point(0, 0), new Point(20, 0), new Point(20, 1560), new Point(50, 1560), new Point(
+                50, 1950), new Point(1310, 1950), new Point(1310, 1560), new Point(1870, 1560), new Point(1870, 0), new Point(1970, 0), new Point(1990, 1400),
+                new Point(2190, 1400), new Point(2190, 800), new Point(2900, 800), new Point(2900, 1500), new Point(2240, 1500), new Point(2240, 1670),
+                new Point(2100, 1670), new Point(2100, 1570), new Point(2000, 1570), new Point(2000, 1670), new Point(1870, 1670), new Point(1870, 2050),
+                new Point(0, 2050));
+        room.setRoomColor("gray");
+        groundFloor.addComponent(room);
 
-        stair = new Stair("", new Point(-330, 2330));
-        stair.addCircle(new Circle(new Point(0, 0), 0, Math.PI * 2, 120));
-        stair.setSegmentCircle(20);
-        groundFloor.addComponent(stair);
+        room = RoomCreator.square("Stairway", new Point(1530, 2920));
+        groundFloor.addComponent(room);
+        stair = new Stair("", new Point(0, 50));
+        stair.addLines(new Line(new Point(0, 0), new Point(70, 0)), new Line(new Point(10, 0), new Point(10, 50)),
+                new Line(new Point(20, 0), new Point(20, 50)), new Line(new Point(30, 0), new Point(30, 50)), new Line(new Point(40, 0), new Point(40, 50)),
+                new Line(new Point(50, 0), new Point(50, 50)), new Line(new Point(60, 0), new Point(60, 50)), new Line(new Point(70, 0), new Point(70, 50)));
+        room.addComponent(stair);
 
         groundFloor.addComponent(buildPathGrid());
         return groundFloor;
@@ -326,15 +319,28 @@ public class FloorPlanner extends UI {
 
         PointToPointItem level = new PointToPointItem(new Point(305, 450), new Point(0, 0), new Point(320, 0), new Point(320, 150), new Point(145, 150),
                 new Point(145, 600), new Point(0, 600));
-        level.setColor("PEACHPUFF");
+        level.setColor("GRAY");
         secondFloor.addComponent(level);
 
         level = new PointToPointItem(new Point(-330, 2190), new Point(0, 0), new Point(330, 0), new Point(330, 260), new Point(120, 260), new Point(120, 140),
                 new Point(0, 140));
-        level.setColor("PEACHPUFF");
+        level.setColor("GRAY");
         secondFloor.addComponent(level);
 
-        Stair stair = new Stair("", new Point(625, 600));
+        room = RoomCreator.square("Stairway", new Point(1530, 2920));
+        secondFloor.addComponent(room);
+        Stair stair = new Stair("", new Point(0, 0));
+        stair.addLines(new Line(new Point(0, 50), new Point(70, 50)), new Line(new Point(10, 0), new Point(10, 50)), new Line(new Point(20, 0), new Point(20,
+                50)), new Line(new Point(30, 0), new Point(30, 50)), new Line(new Point(40, 0), new Point(40, 50)), new Line(new Point(50, 0),
+                new Point(50, 50)), new Line(new Point(60, 0), new Point(60, 50)), new Line(new Point(70, 0), new Point(70, 50)));
+        room.addComponent(stair);
+
+        room = RoomCreator.customRoom("hallway", new Point(1630, 2750), new Point(0, 0), new Point(200, 0), new Point(200, -600), new Point(250, -600),
+                new Point(250, 0), new Point(300, 0), new Point(400, 0), new Point(400, 100), new Point(250, 100), new Point(250, 375), new Point(0, 375));
+        room.setRoomColor("gray");
+        secondFloor.addComponent(room);
+
+        stair = new Stair("", new Point(625, 600));
         stair.addCircle(new Circle(new Point(0, 0), Math.PI * 1.5, Math.PI, 120));
         stair.setSegmentCircle(20);
         secondFloor.addComponent(stair);

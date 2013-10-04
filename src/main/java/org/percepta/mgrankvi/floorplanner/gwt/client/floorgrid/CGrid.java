@@ -644,8 +644,10 @@ public class CGrid extends Composite implements ClickHandler, MouseDownHandler, 
                 }
                 final CRoom room = selectedFloor.getSelectedRoom();
                 if (room != null) {
-                    codePopup.addLabel("Table table = new Table(\"Name\", new Point(" + (x + room.getPositionX()) + ", " + (y + room.getPositionY()) + "));");
-                    final CTable table = new CTable(Arrays.asList(new Rectangle(150, 50).getCorners()), new Point(x, y));
+                    codePopup.addLabel("Table table = new Table(\"Name\", new Point(" + (x - (room.getPositionX() - offsetX)) + ", "
+                            + (y - (room.getPositionY() - offsetY)) + "));");
+                    final CTable table = new CTable(Arrays.asList(new Rectangle(150, 50).getCorners()), new Point(x - (room.getPositionX() - offsetX), y
+                            - (room.getPositionY() - offsetY)));
                     room.add(table);
                     repaint();
                 } else {
