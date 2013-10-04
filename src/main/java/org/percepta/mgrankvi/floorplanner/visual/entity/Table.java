@@ -43,6 +43,10 @@ public class Table extends AbstractItem {
         getState().nodeId = nodeId;
     }
 
+    public void setImageUrl(final String url) {
+        getState().imageUrl = url;
+    }
+
     @Override
     public TableState getState() {
         return (TableState) super.getState();

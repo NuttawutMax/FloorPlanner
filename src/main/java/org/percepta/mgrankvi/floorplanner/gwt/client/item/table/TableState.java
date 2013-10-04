@@ -13,6 +13,7 @@ public class TableState extends ItemState {
     private List<DrawCommand> commands = new LinkedList<DrawCommand>();
 
     public int nodeId = -99;
+    public String imageUrl = null;
 
     public Point getPosition() {
         return itemPosition;

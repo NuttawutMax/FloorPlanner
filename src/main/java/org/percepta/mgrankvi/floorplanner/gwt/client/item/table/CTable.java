@@ -11,6 +11,8 @@ import org.percepta.mgrankvi.floorplanner.gwt.client.paint.ItemUtils;
 import com.google.gwt.canvas.dom.client.Context2d;
 import com.google.gwt.canvas.dom.client.CssColor;
 import com.google.gwt.dom.client.Document;
+import com.google.gwt.dom.client.ImageElement;
+import com.google.gwt.user.client.ui.Image;
 
 public class CTable extends VisualItem {
 
@@ -20,6 +22,7 @@ public class CTable extends VisualItem {
     private String color = "BLACK";
     private String tableColor = "TRANSPARENT";
     private boolean showName = false;
+    private String imageUrl = null;
     private int nodeId = -99;
 
     public CTable() {
@@ -55,6 +58,14 @@ public class CTable extends VisualItem {
 
     public void setSelected(final boolean selected) {
         showName = selected;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(final String image) {
+        imageUrl = image;
     }
 
     @Override
@@ -98,6 +109,11 @@ public class CTable extends VisualItem {
         context.beginPath();
 
         context.fillText(getName(), drawPosition.getX(), drawPosition.getY() + 12);
+
+        if (imageUrl != null) {
+            final Image image = new Image(imageUrl);
+            context.drawImage(ImageElement.as(image.getElement()), this.drawPosition.getX(), this.drawPosition.getY());
+        }
 
         context.closePath();
         context.restore();
