@@ -3,10 +3,12 @@ package org.percepta.mgrankvi.floorplanner;
 import org.percepta.mgrankvi.floorplanner.gwt.client.geometry.Node;
 import org.percepta.mgrankvi.floorplanner.gwt.client.geometry.Point;
 import org.percepta.mgrankvi.floorplanner.gwt.client.item.door.DoorState.Direction;
+import org.percepta.mgrankvi.floorplanner.gwt.client.paint.Circle;
 import org.percepta.mgrankvi.floorplanner.visual.entity.Door;
 import org.percepta.mgrankvi.floorplanner.visual.entity.PointToPointItem;
 import org.percepta.mgrankvi.floorplanner.visual.entity.Room;
 import org.percepta.mgrankvi.floorplanner.visual.entity.RoomCreator;
+import org.percepta.mgrankvi.floorplanner.visual.entity.Stair;
 import org.percepta.mgrankvi.floorplanner.visual.entity.Table;
 
 import com.vaadin.server.VaadinRequest;
@@ -212,6 +214,7 @@ public class FloorPlanner extends UI {
         table = new Table("Henri Muurimaa", new Point(165, 100));
         table.setSize(150, 50);
         table.linkToNode(1004);
+        table.setImageUrl("https://lh5.googleusercontent.com/-qkwWg6kmP5M/AAAAAAAAAAI/AAAAAAAAAAA/DFvSHP2ouRw/s24-c-k-no/photo.jpg");
         room.addComponent(table);
         groundFloor.addRoom(room);
 
@@ -221,22 +224,32 @@ public class FloorPlanner extends UI {
         groundFloor.addComponent(filler);
 
         // GuitarHero
-        room = RoomCreator.square(3, "Guitar Hero", new Point(105, 450));
-        room.addComponent(new Door(Direction.UP_LEFT, new Point(300, 285), 80));
-        groundFloor.addRoom(room);
-        // PikkuNeukkari
-        room = RoomCreator.square(3, "Pikku Neukkari", new Point(105, 750));
-        room.addComponent(new Door(Direction.DOWN_RIGHT, new Point(300, 9), 80));
-        groundFloor.addRoom(room);
-        // Kitchen
-        room = RoomCreator.customRoom("Kitchen", new Point(0, 1050), new Point(0, 15), new Point(105, 15), new Point(105, 0), new Point(405, 0), new Point(405,
-                300), new Point(0, 300));
-        room.addComponent(new Door(Direction.DOWN_LEFT, new Point(405, 9), 80));
-        groundFloor.addRoom(room);
+        // room = RoomCreator.square(3, "Guitar Hero", new Point(105, 450));
+        // room.addComponent(new Door(Direction.UP_LEFT, new Point(300, 285),
+        // 80));
+        // groundFloor.addRoom(room);
+        // // PikkuNeukkari
+        // room = RoomCreator.square(3, "Pikku Neukkari", new Point(105, 750));
+        // room.addComponent(new Door(Direction.DOWN_RIGHT, new Point(300, 9),
+        // 80));
+        // groundFloor.addRoom(room);
+        // // Kitchen
+        // room = RoomCreator.customRoom("Kitchen", new Point(0, 1050), new
+        // Point(0, 15), new Point(105, 15), new Point(105, 0), new Point(405,
+        // 0), new Point(405,
+        // 300), new Point(0, 300));
+        // room.addComponent(new Door(Direction.DOWN_LEFT, new Point(405, 9),
+        // 80));
+        // groundFloor.addRoom(room);
         // Lounge
-        room = RoomCreator.customRoom("Lounge", new Point(405, 450), new Point(0, 0), new Point(375, 0), new Point(375, 900), new Point(0, 900));
-        room.addComponent(new Door(Direction.DOWN_RIGHT, new Point(15, 0), 80));
-        room.addComponent(new Door(Direction.DOWN_RIGHT, new Point(15, 900), 80));
+        // room = RoomCreator.customRoom("Lounge", new Point(405, 450), new
+        // Point(0, 0), new Point(375, 0), new Point(375, 900), new Point(0,
+        // 900));
+
+        room = RoomCreator.customRoom("Lounge", new Point(0, 450), new Point(105, 0), new Point(780, 0), new Point(780, 900), new Point(0, 900), new Point(0,
+                615), new Point(105, 615));
+        room.addComponent(new Door(Direction.DOWN_RIGHT, new Point(420, 0), 80));
+        room.addComponent(new Door(Direction.DOWN_RIGHT, new Point(420, 900), 80));
         groundFloor.addRoom(room);
 
         // MainHall width: 560 height: 520, toilet: w80, h100
@@ -271,6 +284,16 @@ public class FloorPlanner extends UI {
         room.addComponent(new Door(Direction.UP_RIGHT, new Point(30, 0), 80));
         groundFloor.addRoom(room);
 
+        Stair stair = new Stair("", new Point(625, 600));
+        stair.addCircle(new Circle(new Point(0, 0), Math.PI * 1.5, Math.PI, 120));
+        stair.setSegmentCircle(20);
+        groundFloor.addComponent(stair);
+
+        stair = new Stair("", new Point(-330, 2330));
+        stair.addCircle(new Circle(new Point(0, 0), 0, Math.PI * 2, 120));
+        stair.setSegmentCircle(20);
+        groundFloor.addComponent(stair);
+
         groundFloor.addComponent(buildPathGrid());
         return groundFloor;
     }
@@ -281,23 +304,16 @@ public class FloorPlanner extends UI {
 
         Room room = RoomCreator.customRoom("Vihreä Neukkari", new Point(0, 0), new Point(0, 0), new Point(412, 0), new Point(412, 450), new Point(0, 450));
         room.addComponent(new Door(Direction.UP_LEFT, new Point(407, 450), 80));
+        room.setRoomColor("green");
         secondFloor.addRoom(room);
 
         room = RoomCreator.customRoom("Violetti Neukkari", new Point(412, 0), new Point(0, 0), new Point(413, 0), new Point(413, 450), new Point(0, 450));
         room.addComponent(new Door(Direction.UP_RIGHT, new Point(5, 450), 80));
+        room.setRoomColor("violet");
         secondFloor.addRoom(room);
 
-        room = RoomCreator.customRoom("", new Point(105, 450), new Point(0, 0), new Point(200, 0), new Point(200, 300), new Point(0, 300));
-        room.addComponent(new Door(Direction.UP_LEFT, new Point(200, 295), 80));
-        secondFloor.addRoom(room);
-
-        room = RoomCreator.customRoom("", new Point(105, 750), new Point(0, 0), new Point(200, 0), new Point(200, 300), new Point(0, 300));
-        room.addComponent(new Door(Direction.DOWN_LEFT, new Point(200, 5), 80));
-        secondFloor.addRoom(room);
-
-        room = RoomCreator.customRoom("Merketing", new Point(0, 1050), new Point(0, 15), new Point(105, 15), new Point(105, 0), new Point(405, 0), new Point(
-                405, 300), new Point(0, 300));
-        room.addComponent(new Door(Direction.UP_LEFT, new Point(400, 0), 80));
+        room = RoomCreator.customRoom("Marketing", new Point(0, 450), new Point(0, 615), new Point(105, 615), new Point(105, 0), new Point(305, 0), new Point(
+                305, 600), new Point(405, 600), new Point(405, 900), new Point(0, 900));
         secondFloor.addRoom(room);
 
         room = RoomCreator.customRoom("Sales", new Point(-450, 1890), new Point(0, 0), new Point(450, 0), new Point(450, 300), new Point(0, 300));
@@ -308,14 +324,25 @@ public class FloorPlanner extends UI {
         room.addComponent(new Door(Direction.UP_LEFT, new Point(0, 390), 80));
         secondFloor.addRoom(room);
 
-        PointToPointItem level = new PointToPointItem(new Point(305, 450), new Point(0, 0), new Point(520, 0), new Point(520, 150), new Point(145, 150),
+        PointToPointItem level = new PointToPointItem(new Point(305, 450), new Point(0, 0), new Point(320, 0), new Point(320, 150), new Point(145, 150),
                 new Point(145, 600), new Point(0, 600));
         level.setColor("PEACHPUFF");
         secondFloor.addComponent(level);
 
-        level = new PointToPointItem(new Point(-285, 2190), new Point(0, 0), new Point(285, 0), new Point(285, 260), new Point(0, 260));
+        level = new PointToPointItem(new Point(-330, 2190), new Point(0, 0), new Point(330, 0), new Point(330, 260), new Point(120, 260), new Point(120, 140),
+                new Point(0, 140));
         level.setColor("PEACHPUFF");
         secondFloor.addComponent(level);
+
+        Stair stair = new Stair("", new Point(625, 600));
+        stair.addCircle(new Circle(new Point(0, 0), Math.PI * 1.5, Math.PI, 120));
+        stair.setSegmentCircle(20);
+        secondFloor.addComponent(stair);
+
+        stair = new Stair("", new Point(-330, 2330));
+        stair.addCircle(new Circle(new Point(0, 0), 0, Math.PI * 1.5, 120));
+        stair.setSegmentCircle(20);
+        secondFloor.addComponent(stair);
 
         secondFloor.addComponent(buildSecondFloorPoints());
 
@@ -418,6 +445,7 @@ public class FloorPlanner extends UI {
         table = new Table("Kim Leppänen", new Point(125, 3));
         table.setSize(50, 200);
         table.linkToNode(1247);
+        table.setImageUrl("https://lh4.googleusercontent.com/-2R6G15_tu4Y/AAAAAAAAAAI/AAAAAAAAAAA/mIxIsE5vC5Y/s24-c-k-no/photo.jpg");
         room.addComponent(table);
 
         table = new Table("", new Point(125, 320));
