@@ -250,11 +250,17 @@ public class CGrid extends Composite implements ClickHandler, MouseDownHandler, 
                 } else if (hasFloorAbove && clientY > up.getPosition().getY() && clientY < up.getPosition().getY() + BUTTON_SIZE) {
                     final int selectedFloorIndex = floors.indexOf(selectedFloor);
                     setFloor(floors.get(selectedFloorIndex + 1));
+                    if (pathFromTo != null) {
+                        items.remove(pathFromTo);
+                    }
                     repaint();
                     return;
                 } else if (hasFloorBelow && clientY > down.getPosition().getY() && clientY < down.getPosition().getY() + BUTTON_SIZE) {
                     final int selectedFloorIndex = floors.indexOf(selectedFloor);
                     setFloor(floors.get(selectedFloorIndex - 1));
+                    if (pathFromTo != null) {
+                        items.remove(pathFromTo);
+                    }
                     repaint();
                     return;
                 }
