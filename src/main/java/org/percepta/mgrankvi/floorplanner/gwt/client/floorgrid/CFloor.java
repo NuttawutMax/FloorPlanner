@@ -28,6 +28,7 @@ import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.MenuBar;
 import com.google.gwt.user.client.ui.MenuItem;
 import com.google.gwt.user.client.ui.Widget;
+import com.vaadin.client.VConsole;
 
 public class CFloor extends Widget implements Comparable<CFloor> {
 
@@ -105,12 +106,18 @@ public class CFloor extends Widget implements Comparable<CFloor> {
 
         boolean selected = false;
         for (final CRoom room : rooms) {
-            if (room.pointInObject(clientX, clientY) && !selected) {
+            if (!selected && room.pointInObject(clientX, clientY)) {
                 room.setSelection(true);
+                this.selected = room;
                 selected = true;
+                VConsole.log("Room selected. " + this.selected);
             } else {
                 room.setSelection(false);
             }
+        }
+        if (!selected) {
+            VConsole.log("Removed room selection. " + this.selected);
+            this.selected = null;
         }
     }
 
@@ -142,13 +149,14 @@ public class CFloor extends Widget implements Comparable<CFloor> {
 
     public void mouseDownEditable(final int downX, final int downY) {
         for (final CRoom room : rooms) {
-            if (room.isSelected()) {
-                targetPoint = room.selectedPoint(downX, downY);
-                if (targetPoint != null || room.pointInObject(downX, downY)) {
-                    selected = room;
-                    break;
-                }
-            }
+            // if (room.isSelected()) {
+            // targetPoint = room.selectedPoint(downX, downY);
+            // if (targetPoint != null || room.pointInObject(downX, downY)) {
+            // selected = room;
+            // VConsole.log("Room selected on mouseDown. " + selected);
+            // break;
+            // }
+            // }
             room.clicked(downX, downY);
         }
     }
@@ -324,6 +332,15 @@ public class CFloor extends Widget implements Comparable<CFloor> {
         }
     }
 
+    public CRoom getSelectedRoom() {
+        for (final CRoom room : rooms) {
+            if (room.isSelected()) {
+                return room;
+            }
+        }
+        return null;
+    }
+
     protected void checkForRemoveAndAddItem(final MenuBar rootMenu) {
         CRoom selectedRoom = null;
         for (final CRoom room : rooms) {
@@ -376,6 +393,28 @@ public class CFloor extends Widget implements Comparable<CFloor> {
             grid.repaint();
         }
     }
+
+    // public class NewTableCommand implements Command {
+    // private final CRoom selectedRoom;
+    //
+    // private final int x, y;
+    //
+    // public NewTableCommand(final CRoom selectedRoom, final int x, final int
+    // y) {
+    // this.selectedRoom = selectedRoom;
+    // this.x = x;
+    // this.y = y;
+    // }
+    //
+    // @Override
+    // public void execute() {
+    // fireEvent(new MenuEvent(MenuEvent.MenuEventType.ADD_TABLE, selectedRoom,
+    // x, y));
+    // grid.contextMenu.hide();
+    // grid.contextMenu = null;
+    // grid.repaint();
+    // }
+    // }
 
     public ScheduledCommand addCommand(final int i, final int x, final int y) {
         return new AddCommand(i, x, y);
