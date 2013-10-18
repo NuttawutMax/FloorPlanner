@@ -565,6 +565,20 @@ public class CGrid extends Composite implements ClickHandler, MouseDownHandler, 
                             new NameSelectPopup(possible, selectedFloor);
                         }
                     } else {
+                        for (final CFloor floor : floors) {
+                            if (floor.namesContain(cmd)) {
+                                final LinkedList<String> possible = floor.possibilities(cmd);
+                                if (possible.size() == 1) {
+                                    final int selectedFloorIndex = floors.indexOf(floor);
+                                    setFloor(floors.get(selectedFloorIndex));
+                                    floor.markTableOfSelectedPerson(possible.getFirst());
+                                    return;
+                                } else if (possible.size() > 1) {
+                                    new NameSelectPopup(possible, floor);
+                                    return;
+                                }
+                            }
+                        }
                         final VNotification notification = new VNotification();
                         final Style style = notification.getElement().getStyle();
                         style.setBackgroundColor("#c8ccd0");
