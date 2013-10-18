@@ -1,6 +1,7 @@
 package org.percepta.mgrankvi.floorplanner.gwt.client.floorgrid;
 
 import java.util.LinkedList;
+import java.util.List;
 
 import org.percepta.mgrankvi.floorplanner.gwt.client.item.table.CTable;
 
@@ -20,7 +21,7 @@ public class PathSearchPopup extends PopupPanel {
     CTable fromTable;
     CTable toTable;
 
-    public PathSearchPopup(final CFloor floor, final CGrid grid) {
+    public PathSearchPopup(final List<CFloor> floors, final CGrid grid) {
         final TextBox from = new TextBox();
         final TextBox to = new TextBox();
 
@@ -33,16 +34,17 @@ public class PathSearchPopup extends PopupPanel {
             @Override
             public void onClick(final ClickEvent event) {
 
-                fromTable = getSingleName(floor, from.getValue());
-                toTable = getSingleName(floor, to.getValue());
+                fromTable = getSingleName(floors, from.getValue());
+                toTable = getSingleName(floors, to.getValue());
 
                 if (fromTable != null && toTable != null) {
-                    floor.hideNames();
+                    for (final CFloor floor : floors) {
+                        floor.hideNames();
+                    }
                     fromTable.setSelected(true);
                     toTable.setSelected(true);
                     grid.getPath(fromTable.getNodeId(), toTable.getNodeId());
                     hide();
-
                 } else if (fromTable == null) {
 
                     final VNotification notification = new VNotification();
@@ -93,13 +95,15 @@ public class PathSearchPopup extends PopupPanel {
         show();
     }
 
-    public CTable getSingleName(final CFloor floor, final String name) {
-        if (floor.getNames().contains(name)) {
-            return floor.getTableOfSelectedPerson(name);
-        } else if (floor.namesContain(name)) {
-            final LinkedList<String> possible = floor.possibilities(name);
-            if (possible.size() == 1) {
-                return floor.getTableOfSelectedPerson(possible.getFirst());
+    public CTable getSingleName(final List<CFloor> floors, final String name) {
+        for (final CFloor floor : floors) {
+            if (floor.getNames().contains(name)) {
+                return floor.getTableOfSelectedPerson(name);
+            } else if (floor.namesContain(name)) {
+                final LinkedList<String> possible = floor.possibilities(name);
+                if (possible.size() == 1) {
+                    return floor.getTableOfSelectedPerson(possible.getFirst());
+                }
             }
         }
         return null;

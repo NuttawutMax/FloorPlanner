@@ -73,8 +73,10 @@ public class PathGridItem extends CItem {
     public void addLink(final int nodeId, final DelinkedLink dlLink) {
         final Node from = idNodes.get(nodeId);
         final Node to = idNodes.get(dlLink.target);
-        final Link link = new Link(to, dlLink.weight);
-        from.getLinks().add(link);
+        if (to != null) {
+            final Link link = new Link(to, dlLink.weight);
+            from.getLinks().add(link);
+        }
     }
 
     public void buildLinks() {

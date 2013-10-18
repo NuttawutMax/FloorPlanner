@@ -718,7 +718,7 @@ public class CGrid extends Composite implements ClickHandler, MouseDownHandler, 
     }
 
     public void getPath() {
-        new PathSearchPopup(selectedFloor, this);
+        new PathSearchPopup(floors, this);
     }
 
     public void getPath(final int fromId, final int toId) {
