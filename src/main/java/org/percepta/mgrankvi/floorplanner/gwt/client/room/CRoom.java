@@ -8,6 +8,7 @@ import org.percepta.mgrankvi.floorplanner.gwt.client.geometry.GeometryUtil;
 import org.percepta.mgrankvi.floorplanner.gwt.client.geometry.Line;
 import org.percepta.mgrankvi.floorplanner.gwt.client.geometry.Point;
 import org.percepta.mgrankvi.floorplanner.gwt.client.item.CLabel;
+import org.percepta.mgrankvi.floorplanner.gwt.client.item.stairs.CStair;
 import org.percepta.mgrankvi.floorplanner.gwt.client.paint.ItemUtils;
 
 import com.google.gwt.canvas.dom.client.Context2d;
@@ -128,6 +129,8 @@ public class CRoom extends VisualItem {
 
     @Override
     public void paint(final Context2d context) {
+        final int width = context.getCanvas().getWidth();
+        final int height = context.getCanvas().getHeight();
         paint(context, position);
     }
 
@@ -223,6 +226,9 @@ public class CRoom extends VisualItem {
     public void add(final Widget widget) {
         if (widget instanceof VisualItem) {
             roomItems.add((VisualItem) widget);
+        }
+        if (widget instanceof CStair) {
+            ((CStair) widget).setMoveYourself(false);
         }
     }
 

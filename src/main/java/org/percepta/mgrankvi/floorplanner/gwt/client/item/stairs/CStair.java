@@ -29,6 +29,7 @@ public class CStair extends VisualItem {
 
     private Circle circleNoZoom;
     private List<Line> linesNoZoom;
+    private boolean moveYourself = true;
 
     public CStair() {
         // dummy element
@@ -51,6 +52,10 @@ public class CStair extends VisualItem {
     @Override
     public void paint(final Context2d context) {
         paint(context, new Point(0, 0));
+    }
+
+    public void setMoveYourself(final boolean moveYourself) {
+        this.moveYourself = moveYourself;
     }
 
     public void setColor(final String color) {
@@ -133,16 +138,16 @@ public class CStair extends VisualItem {
     public void scale(final double scale) {
         super.scale(scale);
         if (circle != null) {
-            circleNoZoom = new Circle(new Point(circle.getPosition().getX(), circle.getPosition().getY()), circle.getStartAngle(), circle.getEndAngle(),
-                    circle.getRadius());
-            // circle.getPosition().setX((int)
-            // Math.ceil(circle.getPosition().getX() * scale));
-            // circle.getPosition().setY((int)
-            // Math.ceil(circle.getPosition().getY() * scale));
+            if (circleNoZoom == null) {
+                circleNoZoom = new Circle(new Point(circle.getPosition().getX(), circle.getPosition().getY()), circle.getStartAngle(), circle.getEndAngle(),
+                        circle.getRadius());
+            }
             circle.setRadius(circle.getRadius() * scale);
         }
         if (lines != null) {
-            linesNoZoom = new LinkedList<Line>();
+            if (linesNoZoom == null) {
+                linesNoZoom = new LinkedList<Line>();
+            }
             for (final Line line : lines) {
                 linesNoZoom.add(new Line(new Point(line.start.getX(), line.start.getY()), new Point(line.end.getX(), line.end.getY())));
                 line.start.setX((int) Math.ceil(line.start.getX() * scale));
@@ -152,13 +157,17 @@ public class CStair extends VisualItem {
                 line.end.setY((int) Math.ceil(line.end.getY() * scale));
             }
         }
-        for (final Point p : points) {
-            p.setX((int) Math.ceil(p.getX() * scale));
-            p.setY((int) Math.ceil(p.getY() * scale));
+        if (moveYourself) {
+
+            for (final Point p : points) {
+                p.setX((int) Math.ceil(p.getX() * scale));
+                p.setY((int) Math.ceil(p.getY() * scale));
+            }
+            position.setX((int) Math.ceil(position.getX() * scale));
+            position.setY((int) Math.ceil(position.getY() * scale));
+            pointMoved();
         }
 
-        position.setX((int) Math.ceil(position.getX() * scale));
-        position.setY((int) Math.ceil(position.getY() * scale));
     }
 
     @Override
