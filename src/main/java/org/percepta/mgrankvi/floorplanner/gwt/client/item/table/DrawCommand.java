@@ -1,6 +1,10 @@
 package org.percepta.mgrankvi.floorplanner.gwt.client.item.table;
 
-public class DrawCommand {
+import java.io.Serializable;
+
+public class DrawCommand implements Serializable {
+
+    private static final long serialVersionUID = -4499945967654023522L;
 
     public DrawCommand() {
     }
