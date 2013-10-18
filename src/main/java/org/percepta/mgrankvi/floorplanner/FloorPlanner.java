@@ -38,149 +38,143 @@ public class FloorPlanner extends UI {
 
     }
 
+    private int i = 1;
+
+    private int getNumber() {
+        return i++;
+    }
+
+    private Node loungeStairNode, mainhallNode, outsideNode;
+
     private PathWaypoints buildPathGrid() {
         final PathWaypoints waypoints = new PathWaypoints();
 
-        final Node node604 = new Node(604, new Point(200, 400));
-        final Node node851 = new Node(851, new Point(450, 400));
-        final Node node751 = new Node(751, new Point(450, 300));
-        final Node node1004 = new Node(1004, new Point(600, 400));
-        final Node node1149 = new Node(1149, new Point(450, 700));
-        final Node node1048 = new Node(1048, new Point(350, 700));
-        final Node node1251 = new Node(1251, new Point(450, 800));
-        final Node node1147 = new Node(1147, new Point(350, 800));
-        final Node node1547 = new Node(1547, new Point(450, 1100));
-        final Node node1455 = new Node(1455, new Point(350, 1100));
-        final Node node1898 = new Node(1898, new Point(450, 1450));
-        final Node node1600 = new Node(1600, new Point(150, 1450));
-        final Node node2303 = new Node(2303, new Point(850, 1450));
-        final Node node2103 = new Node(2103, new Point(650, 1450));
-        final Node node1451 = new Node(1451, new Point(0, 1450));
-        final Node node1914 = new Node(1914, new Point(150, 1770));
-        final Node node2068 = new Node(2068, new Point(299, 1770));
-        final Node node2258 = new Node(2258, new Point(490, 1770));
-        final Node node2415 = new Node(2415, new Point(650, 1770));
-        final Node node2152 = new Node(2152, new Point(150, 2000));
-        final Node node2301 = new Node(2301, new Point(300, 2000));
-        final Node node2503 = new Node(2503, new Point(500, 2000));
-        final Node node2649 = new Node(2649, new Point(650, 2000));
-        final Node node2450 = new Node(2450, new Point(150, 2300));
-        final Node node2599 = new Node(2599, new Point(300, 2300));
-        final Node node2804 = new Node(2804, new Point(505, 2300));
-        final Node node2952 = new Node(2952, new Point(650, 2300));
-        final Node node2699 = new Node(2699, new Point(150, 2550));
-        final Node node2853 = new Node(2853, new Point(300, 2550));
-        final Node node3052 = new Node(3052, new Point(500, 2550));
-        final Node node3202 = new Node(3202, new Point(650, 2550));
-        final Node node2601 = new Node(2601, new Point(850, 1750));
-        final Node node2851 = new Node(2851, new Point(850, 2000));
-        final Node node3099 = new Node(3099, new Point(850, 2250));
-        final Node node3602 = new Node(3602, new Point(850, 2750));
-        final Node node3401 = new Node(3401, new Point(650, 2750));
-        final Node node2893 = new Node(2893, new Point(150, 2750));
-        final Node node1449 = new Node(1449, new Point(-152, 1601));
-        final Node node1247 = new Node(1247, new Point(-352, 1599));
-        final Node node2651 = new Node(2651, new Point(-99, 2750));
-        final Node node2201 = new Node(2201, new Point(-99, 2300));
-        final Node node3298 = new Node(3298, new Point(425, 2873));
-        final Node node3403 = new Node(3403, new Point(421, 2982));
-        final Node node2855 = new Node(2855, new Point(-137, 2992));
+        final Node node604 = new Node(604, new Point(202, 402));
+        final Node node865 = new Node(865, new Point(463, 402));
+        final Node node736 = new Node(736, new Point(460, 276));
+        final Node node1013 = new Node(1013, new Point(612, 401));
+        final Node node979 = new Node(979, new Point(451, 528));
+        final Node node1198 = new Node(1198, new Point(658, 540));
+        loungeStairNode = node1198;
+        final Node node1756 = new Node(1756, new Point(455, 1301));
+        final Node node1901 = new Node(1901, new Point(448, 1453));
+        final Node node2103 = new Node(2103, new Point(651, 1452));
+        final Node node2400 = new Node(2400, new Point(950, 1450));
+        final Node node1599 = new Node(1599, new Point(149, 1450));
+        final Node node2602 = new Node(2602, new Point(949, 1653));
+        final Node node2773 = new Node(2773, new Point(948, 1825));
+        final Node node3752 = new Node(3752, new Point(949, 2803));
+        final Node node3418 = new Node(3418, new Point(623, 2795));
+        final Node node2925 = new Node(2925, new Point(135, 2790));
+        final Node node2679 = new Node(2679, new Point(-115, 2794));
+        final Node node2890 = new Node(2890, new Point(-121, 3011));
+        final Node node2701 = new Node(2701, new Point(149, 2552));
+        final Node node3197 = new Node(3197, new Point(649, 2548));
+        final Node node2514 = new Node(2514, new Point(150, 2364));
+        final Node node3001 = new Node(3001, new Point(648, 2353));
+        final Node node2156 = new Node(2156, new Point(151, 2005));
+        final Node node2654 = new Node(2654, new Point(651, 2003));
+        final Node node1799 = new Node(1799, new Point(148, 1651));
+        final Node node2301 = new Node(2301, new Point(651, 1650));
+        final Node node1351 = new Node(1351, new Point(-99, 1450));
+        final Node node1698 = new Node(1698, new Point(-100, 1798));
+        final Node node1428 = new Node(1428, new Point(-371, 1799));
+        final Node node1093 = new Node(1093, new Point(-357, 1450));
+        final Node node2188 = new Node(2188, new Point(-116, 2304));
+        final Node node2039 = new Node(2039, new Point(-267, 2306));
+        mainhallNode = node2039;
+        final Node node3947 = new Node(3947, new Point(965, 2982));
+        final Node node4450 = new Node(4450, new Point(1471, 2979));
+        final Node node4310 = new Node(4310, new Point(1465, 2845));
+        final Node node4551 = new Node(4551, new Point(1699, 2852));
+        final Node node4648 = new Node(4648, new Point(1699, 2949));
+        final Node node4549 = new Node(4549, new Point(1598, 2951));
+        outsideNode = node4549;
+        //
 
-        node1048.addConnectedNode(node1149, 1);
-        node851.addConnectedNode(node1149, 1);
-        node1004.addConnectedNode(node851, 1);
-        node751.addConnectedNode(node851, 1);
-        node604.addConnectedNode(node851, 1);
-        node1147.addConnectedNode(node1251, 1);
-        node1149.addConnectedNode(node1251, 1);
-        node1455.addConnectedNode(node1547, 1);
-        node1547.addConnectedNode(node1251, 1);
-        node1547.addConnectedNode(node1898, 1);
-        node1451.addConnectedNode(node1600, 1);
-        node1600.addConnectedNode(node1898, 1);
-        node1898.addConnectedNode(node2103, 1);
-        node2103.addConnectedNode(node2303, 1);
-        node2103.addConnectedNode(node2415, 1);
-        node2415.addConnectedNode(node2258, 2);
-        node2258.addConnectedNode(node2068, 2);
-        node2068.addConnectedNode(node1914, 2);
-        node1914.addConnectedNode(node1600, 1);
-        node2853.addConnectedNode(node2699, 1);
-        node2699.addConnectedNode(node2450, 1);
-        node2450.addConnectedNode(node2152, 2);
-        node2152.addConnectedNode(node2301, 2);
-        node2301.addConnectedNode(node2503, 2);
-        node2503.addConnectedNode(node2649, 2);
-        node2649.addConnectedNode(node2952, 1);
-        node2952.addConnectedNode(node3202, 2);
-        node3202.addConnectedNode(node3052, 2);
-        node3052.addConnectedNode(node2853, 2);
-        node2450.addConnectedNode(node2599, 2);
-        node2599.addConnectedNode(node2804, 1);
-        node2804.addConnectedNode(node2952, 1);
-        node1914.addConnectedNode(node2152, 1);
-        node2415.addConnectedNode(node2649, 1);
-        node2893.addConnectedNode(node2699, 1);
-        node2893.addConnectedNode(node3401, 2);
-        node3401.addConnectedNode(node3602, 2);
-        node3202.addConnectedNode(node3401, 2);
-        node3602.addConnectedNode(node3099, 2);
-        node2851.addConnectedNode(node3099, 1);
-        node2601.addConnectedNode(node2851, 1);
-        node2303.addConnectedNode(node2601, 1);
-        node1247.addConnectedNode(node1449, 1);
-        node1449.addConnectedNode(node1451, 1);
-        node2201.addConnectedNode(node2651, 1);
-        node2651.addConnectedNode(node2893, 1);
-        node3298.addConnectedNode(node3403, 1);
-        node3298.addConnectedNode(node3401, 1);
-        node3298.addConnectedNode(node2893, 1);
-        node2855.addConnectedNode(node2651, 1);
+        node604.addConnectedNode(node865, 1);
+        node865.addConnectedNode(node1013, 1);
+        node865.addConnectedNode(node736, 1);
+        node865.addConnectedNode(node979, 1);
+        node979.addConnectedNode(node1198, 1);
+        node979.addConnectedNode(node1756, 1);
+        node1756.addConnectedNode(node1901, 1);
+        node1901.addConnectedNode(node2103, 1);
+        node2103.addConnectedNode(node2400, 1);
+        node2400.addConnectedNode(node2602, 1);
+        node2602.addConnectedNode(node2773, 1);
+        node1901.addConnectedNode(node1599, 1);
+        node1599.addConnectedNode(node1351, 1);
+        node1351.addConnectedNode(node1698, 1);
+        node1698.addConnectedNode(node1428, 1);
+        node1428.addConnectedNode(node1093, 1);
+        node1599.addConnectedNode(node1799, 1);
+        node2103.addConnectedNode(node2301, 1);
+        node1799.addConnectedNode(node2156, 1);
+        node2301.addConnectedNode(node2654, 1);
+        node2156.addConnectedNode(node2514, 1);
+        node2654.addConnectedNode(node3001, 1);
+        node2514.addConnectedNode(node2701, 1);
+        node3001.addConnectedNode(node3197, 1);
+        node2773.addConnectedNode(node3752, 1);
+        node3197.addConnectedNode(node3418, 1);
+        node3418.addConnectedNode(node3752, 1);
+        node2701.addConnectedNode(node2925, 1);
+        node2925.addConnectedNode(node3418, 1);
+        node2679.addConnectedNode(node2925, 1);
+        node2679.addConnectedNode(node2188, 1);
+        node2039.addConnectedNode(node2188, 1);
+        node2188.addConnectedNode(node1698, 1);
+        node3752.addConnectedNode(node3947, 1);
+        node3947.addConnectedNode(node4450, 1);
+        node4450.addConnectedNode(node4310, 1);
+        node4310.addConnectedNode(node4551, 1);
+        node4551.addConnectedNode(node4648, 1);
+        node4648.addConnectedNode(node4549, 1);
+        node2679.addConnectedNode(node2890, 1);
+        node2701.addConnectedNode(node3197, 2);
+        node2514.addConnectedNode(node3001, 2);
+        node2156.addConnectedNode(node2654, 2);
+        node1799.addConnectedNode(node2301, 2);
 
         waypoints.add(node604);
-        waypoints.add(node851);
-        waypoints.add(node751);
-        waypoints.add(node1004);
-        waypoints.add(node1149);
-        waypoints.add(node1048);
-        waypoints.add(node1251);
-        waypoints.add(node1147);
-        waypoints.add(node1547);
-        waypoints.add(node1455);
-        waypoints.add(node1898);
-        waypoints.add(node1600);
-        waypoints.add(node2303);
+        waypoints.add(node865);
+        waypoints.add(node736);
+        waypoints.add(node1013);
+        waypoints.add(node979);
+        waypoints.add(node1198);
+        waypoints.add(node1756);
+        waypoints.add(node1901);
         waypoints.add(node2103);
-        waypoints.add(node1451);
-        waypoints.add(node1914);
-        waypoints.add(node2068);
-        waypoints.add(node2258);
-        waypoints.add(node2415);
-        waypoints.add(node2152);
+        waypoints.add(node2400);
+        waypoints.add(node1599);
+        waypoints.add(node2602);
+        waypoints.add(node2773);
+        waypoints.add(node3752);
+        waypoints.add(node3418);
+        waypoints.add(node2925);
+        waypoints.add(node2679);
+        waypoints.add(node2890);
+        waypoints.add(node2701);
+        waypoints.add(node3197);
+        waypoints.add(node2514);
+        waypoints.add(node3001);
+        waypoints.add(node2156);
+        waypoints.add(node2654);
+        waypoints.add(node1799);
         waypoints.add(node2301);
-        waypoints.add(node2503);
-        waypoints.add(node2649);
-        waypoints.add(node2450);
-        waypoints.add(node2599);
-        waypoints.add(node2804);
-        waypoints.add(node2952);
-        waypoints.add(node2699);
-        waypoints.add(node2853);
-        waypoints.add(node3052);
-        waypoints.add(node3202);
-        waypoints.add(node2601);
-        waypoints.add(node2851);
-        waypoints.add(node3099);
-        waypoints.add(node3602);
-        waypoints.add(node3401);
-        waypoints.add(node2893);
-        waypoints.add(node1449);
-        waypoints.add(node1247);
-        waypoints.add(node2651);
-        waypoints.add(node2201);
-        waypoints.add(node3298);
-        waypoints.add(node3403);
-        waypoints.add(node2855);
+        waypoints.add(node1351);
+        waypoints.add(node1698);
+        waypoints.add(node1428);
+        waypoints.add(node1093);
+        waypoints.add(node2188);
+        waypoints.add(node2039);
+        waypoints.add(node3947);
+        waypoints.add(node4450);
+        waypoints.add(node4310);
+        waypoints.add(node4551);
+        waypoints.add(node4648);
+        waypoints.add(node4549);
 
         return waypoints;
     }
@@ -204,7 +198,7 @@ public class FloorPlanner extends UI {
 
         table = new Table("Mikael Vappula", new Point(2, 310));
         table.setSize(150, 50);
-        table.linkToNode(751);
+        table.linkToNode(736);
         room.addComponent(table);
         groundFloor.addRoom(room);
         // Muurimaa
@@ -214,7 +208,7 @@ public class FloorPlanner extends UI {
 
         table = new Table("Henri Muurimaa", new Point(165, 100));
         table.setSize(150, 50);
-        table.linkToNode(1004);
+        table.linkToNode(1013);
         table.setImageUrl("https://lh5.googleusercontent.com/-qkwWg6kmP5M/AAAAAAAAAAI/AAAAAAAAAAA/DFvSHP2ouRw/s24-c-k-no/photo.jpg");
         room.addComponent(table);
         groundFloor.addRoom(room);
@@ -309,13 +303,68 @@ public class FloorPlanner extends UI {
                 305, 600), new Point(405, 600), new Point(405, 900), new Point(0, 900));
         secondFloor.addRoom(room);
 
-        room = RoomCreator.customRoom("Sales", new Point(-450, 1890), new Point(0, 0), new Point(450, 0), new Point(450, 300), new Point(0, 300));
+        Table table = new Table("-9", new Point(105, 100));
+        table.linkToNode(906);
+        table.setSize(150, 50);
+        room.addComponent(table);
+        table = new Table("-8", new Point(105, 155));
+        table.linkToNode(1067);
+        table.setSize(150, 50);
+        room.addComponent(table);
+        table = new Table("-7", new Point(105, 355));
+        table.linkToNode(1067);
+        table.setSize(150, 50);
+        room.addComponent(table);
+        table = new Table("-6", new Point(105, 460));
+        table.linkToNode(1261);
+        table.setSize(50, 150);
+        room.addComponent(table);
+        table = new Table("-3", new Point(350, 580));
+        table.linkToNode(1261);
+        table.setSize(50, 150);
+        room.addComponent(table);
+        table = new Table("-5", new Point(5, 845));
+        table.linkToNode(1368);
+        table.setSize(150, 50);
+        room.addComponent(table);
+        table = new Table("-4", new Point(250, 845));
+        table.linkToNode(1368);
+        table.setSize(150, 50);
+        room.addComponent(table);
+
+        room = RoomCreator.customRoom("Freedom", new Point(-450, 1890), new Point(0, 0), new Point(450, 0), new Point(450, 300), new Point(0, 300));
         room.addComponent(new Door(Direction.UP_LEFT, new Point(245, 300), 80));
         secondFloor.addRoom(room);
 
-        room = RoomCreator.customRoom("Design", new Point(0, 1890), new Point(0, 0), new Point(405, 0), new Point(405, 560), new Point(0, 560));
+        table = new Table("-2", new Point(185, 5));
+        table.linkToNode(1834);
+        table.setSize(50, 150);
+        room.addComponent(table);
+        table = new Table("-1", new Point(240, 5));
+        table.linkToNode(1834);
+        table.setSize(50, 150);
+        room.addComponent(table);
+
+        room = RoomCreator.customRoom("Sales", new Point(0, 1890), new Point(0, 0), new Point(405, 0), new Point(405, 560), new Point(0, 560));
         room.addComponent(new Door(Direction.UP_LEFT, new Point(0, 390), 80));
         secondFloor.addRoom(room);
+
+        table = new Table("1", new Point(150, 5));
+        table.linkToNode(2286);
+        table.setSize(50, 150);
+        room.addComponent(table);
+        table = new Table("2", new Point(205, 5));
+        table.linkToNode(2286);
+        table.setSize(50, 150);
+        room.addComponent(table);
+        table = new Table("3", new Point(150, 405));
+        table.linkToNode(2286);
+        table.setSize(50, 150);
+        room.addComponent(table);
+        table = new Table("4", new Point(205, 405));
+        table.linkToNode(2286);
+        table.setSize(50, 150);
+        room.addComponent(table);
 
         PointToPointItem level = new PointToPointItem(new Point(305, 450), new Point(0, 0), new Point(320, 0), new Point(320, 150), new Point(145, 150),
                 new Point(145, 600), new Point(0, 600));
@@ -329,14 +378,16 @@ public class FloorPlanner extends UI {
 
         room = RoomCreator.square("Stairway", new Point(1530, 2920));
         secondFloor.addComponent(room);
+
         Stair stair = new Stair("", new Point(0, 0));
         stair.addLines(new Line(new Point(0, 50), new Point(70, 50)), new Line(new Point(10, 0), new Point(10, 50)), new Line(new Point(20, 0), new Point(20,
                 50)), new Line(new Point(30, 0), new Point(30, 50)), new Line(new Point(40, 0), new Point(40, 50)), new Line(new Point(50, 0),
                 new Point(50, 50)), new Line(new Point(60, 0), new Point(60, 50)), new Line(new Point(70, 0), new Point(70, 50)));
         room.addComponent(stair);
 
-        room = RoomCreator.customRoom("hallway", new Point(1630, 2750), new Point(0, 0), new Point(200, 0), new Point(200, -600), new Point(250, -600),
-                new Point(250, 0), new Point(300, 0), new Point(400, 0), new Point(400, 100), new Point(250, 100), new Point(250, 375), new Point(0, 375));
+        room = RoomCreator.customRoom("hallway", new Point(1630, 2650), new Point(0, 0), new Point(200, 0), new Point(200, -1750), new Point(425, -1750),
+                new Point(425, -1500), new Point(250, -1500), new Point(250, 0), new Point(774, 0), new Point(774, -500), new Point(974, -500), new Point(974,
+                        0), new Point(1374, 0), new Point(1504, 0), new Point(1504, 200), new Point(50, 200), new Point(50, 475), new Point(0, 475));
         room.setRoomColor("gray");
         secondFloor.addComponent(room);
 
@@ -350,171 +401,557 @@ public class FloorPlanner extends UI {
         stair.setSegmentCircle(20);
         secondFloor.addComponent(stair);
 
+        room = RoomCreator.customRoom("Blue meetin groom ", new Point(1880, 1450), new Point(0, 0), new Point(262, 0), new Point(262, 450), new Point(0, 450));
+        room.addComponent(new Door(Direction.DOWN_LEFT, new Point(257, 0), 80));
+        room.setRoomColor("blue");
+        secondFloor.addRoom(room);
+        room = RoomCreator
+                .customRoom("Green meetin groom 2", new Point(2142, 1450), new Point(0, 0), new Point(262, 0), new Point(262, 450), new Point(0, 450));
+        room.addComponent(new Door(Direction.DOWN_RIGHT, new Point(5, 0), 80));
+        room.setRoomColor("mossgreen");
+        secondFloor.addRoom(room);
+
+        room = RoomCreator.customRoom("Server room", new Point(1880, 1150), new Point(0, 0), new Point(175, 0), new Point(175, 300), new Point(0, 300));
+        room.addComponent(new Door(Direction.DOWN_LEFT, new Point(175, 50), 50));
+        secondFloor.addRoom(room);
+
+        room = RoomCreator.customRoom("Kitchen", new Point(2055, 675), new Point(0, 0), new Point(200, 0), new Point(200, 225), new Point(0, 225));
+        room.addComponent(new Door(Direction.UP_LEFT, new Point(195, 225), 50));
+        secondFloor.addRoom(room);
+
+        room = RoomCreator.customRoom("Toilet", new Point(2255, 675), new Point(0, 0), new Point(200, 0), new Point(200, 113), new Point(0, 113));
+        room.addComponent(new Door(Direction.DOWN_RIGHT, new Point(200, 5), 50));
+        secondFloor.addRoom(room);
+        room = RoomCreator.customRoom("Toilet", new Point(2255, 788), new Point(0, 0), new Point(200, 0), new Point(200, 112), new Point(0, 112));
+        room.addComponent(new Door(Direction.UP_RIGHT, new Point(200, 107), 50));
+        secondFloor.addRoom(room);
+
+        room = RoomCreator.customRoom("Silent Room", new Point(2604, 2150), new Point(0, 0), new Point(300, 0), new Point(300, 425), new Point(200, 425),
+                new Point(200, 500), new Point(0, 500));
+        room.addComponent(new Door(Direction.UP_RIGHT, new Point(300, 420), 50));
+        room.addComponent(new Door(Direction.UP_LEFT, new Point(300, 420), 50));
+        secondFloor.addRoom(room);
+
+        room = RoomCreator.customRoom("Toilet", new Point(2804, 2650), new Point(0, 0), new Point(100, 0), new Point(100, 200), new Point(0, 200));
+        room.addComponent(new Door(Direction.UP_RIGHT, new Point(5, 0), 50));
+        secondFloor.addRoom(room);
+
+        room = RoomCreator.customRoom("Recreation", new Point(2904, 2150), new Point(0, 0), new Point(300, 0), new Point(300, 700), new Point(0, 700),
+                new Point(0, 500), new Point(-100, 500), new Point(-100, 425), new Point(0, 425));
+        // room.addComponent(new Door(Direction.UP_RIGHT, new Point(50, 0),
+        // 50));
+        secondFloor.addRoom(room);
+
+        secondFloor.addRoom(createSecondFloorMainHall());
+
+        room = RoomCreator.customRoom("Closet", new Point(2705, 275), new Point(0, 0), new Point(100, 0), new Point(100, 200), new Point(0, 200));
+        room.addComponent(new Door(Direction.UP_LEFT, new Point(0, 190), 50));
+        secondFloor.addRoom(room);
+
+        secondFloor.addRoom(createRoomHammer());
+
+        secondFloor.addRoom(createRoomFixer());
+
         secondFloor.addComponent(buildSecondFloorPoints());
 
         return secondFloor;
     }
 
+    private Room createRoomHammer() {
+        final Room room = RoomCreator.customRoom("Team Hammer", new Point(2555, -125), new Point(0, 0), new Point(650, 0), new Point(650, 650), new Point(250,
+                650), new Point(250, 400), new Point(0, 400));
+        room.addComponent(new Door(Direction.DOWN_LEFT, new Point(95, 400), 50));
+
+        Table table = new Table("Matti Hosio", new Point(100, 5));
+        table.linkToNode(2747);
+        table.setImageUrl("https://lh6.googleusercontent.com/-g_JG4V8dxBo/AAAAAAAAAAI/AAAAAAAAAAA/BFmjUrRDmSM/s24-c-k-no/photo.jpg");
+        table.setSize(50, 150);
+        room.addComponent(table);
+        table = new Table("5", new Point(155, 55));
+        table.setSize(50, 100);
+        room.addComponent(table);
+        table = new Table("Michael Tzukanov", new Point(350, 55));
+        table.linkToNode(2949);
+        table.setImageUrl("https://lh6.googleusercontent.com/-YZYtH4MMnA8/AAAAAAAAAAI/AAAAAAAAAAA/9dYxG3VaHdM/s24-c-k-no/photo.jpg");
+        table.setSize(50, 100);
+        room.addComponent(table);
+        table = new Table("Mikael Grankvist", new Point(550, 5));
+        table.linkToNode(3262);
+        table.setImageUrl("https://lh3.googleusercontent.com/-xB4QFSL2fMc/AAAAAAAAAAI/AAAAAAAAAH8/dRUN0bPDt3o/s24-c-k-no/photo.jpg");
+        table.setSize(50, 150);
+        room.addComponent(table);
+        table = new Table("Thomas Mattsson", new Point(495, 350));
+        table.linkToNode(3262);
+        table.setImageUrl("https://lh4.googleusercontent.com/-gy7d6awMTqc/AAAAAAAAAAI/AAAAAAAAAAA/4PZ2kHixBrI/s24-c-k-no/photo.jpg");
+        table.setSize(150, 50);
+        room.addComponent(table);
+        table = new Table("Mikolaj Olszewski", new Point(255, 425));
+        table.linkToNode(3420);
+        table.setImageUrl("https://lh3.googleusercontent.com/-StJG2xriV4M/AAAAAAAAAAI/AAAAAAAAAB8/j4egmaCUPRU/s24-c-k-no/photo.jpg");
+        table.setSize(150, 50);
+        room.addComponent(table);
+        table = new Table("6", new Point(560, 475));
+        table.setSize(50, 100);
+        room.addComponent(table);
+
+        return room;
+    }
+
+    private Room createRoomFixer() {
+        final Room room = RoomCreator.customRoom("Team Fixers", new Point(1780, -125), new Point(0, 0), new Point(775, 0), new Point(775, 500), new Point(225,
+                500), new Point(0, 250));
+        room.addComponent(new Door(Direction.UP_LEFT, new Point(775, 495), 50));
+
+        Table table = new Table("7", new Point(5, 75));
+        table.linkToNode(1922);
+        table.setSize(150, 50);
+        room.addComponent(table);
+        table = new Table("Anna Koskinen", new Point(5, 135));
+        table.linkToNode(2154);
+        table.setImageUrl("https://lh5.googleusercontent.com/-A0C5A7-q2Cg/AAAAAAAAAAI/AAAAAAAAAB0/Fw3THEt9H3c/s24-c-k-no/photo.jpg");
+        table.setSize(150, 50);
+        room.addComponent(table);
+        table = new Table("8", new Point(300, 75));
+        table.linkToNode(1922);
+        table.setSize(150, 50);
+        room.addComponent(table);
+        table = new Table("9", new Point(300, 135));
+        table.linkToNode(2312);
+        table.setSize(150, 50);
+        room.addComponent(table);
+        table = new Table("10", new Point(455, 75));
+        table.linkToNode(2443);
+        table.setSize(150, 50);
+        room.addComponent(table);
+
+        table = new Table("11", new Point(670, 50));
+        table.linkToNode(2443);
+        table.setSize(50, 150);
+        room.addComponent(table);
+        table = new Table("12", new Point(670, 270));
+        table.linkToNode(2443);
+        table.setSize(50, 150);
+        room.addComponent(table);
+
+        return room;
+    }
+
+    private Room createSecondFloorMainHall() {
+        final Room room = RoomCreator.customRoom("Main secon floor hall", new Point(2055, 900), new Point(0, 0), new Point(400, 0), new Point(400, -225),
+                new Point(500, -225), new Point(500, -625), new Point(650, -625), new Point(650, -425), new Point(725, -425), new Point(725, -275), new Point(
+                        650, -275), new Point(650, -50), new Point(750, -50), new Point(750, -375), new Point(1150, -375), new Point(1150, 1250), new Point(
+                        350, 1250), new Point(350, 550), new Point(0, 550));
+        // room.addComponent(new Door(Direction.DOWN_LEFT, new Point(175, 50),
+        // 50));
+
+        // top right
+        Table table = new Table("13", new Point(895, -290));
+        table.linkToNode(3599);
+        table.setSize(50, 150);
+        room.addComponent(table);
+        table = new Table("14", new Point(895, -135));
+        table.linkToNode(3599);
+        table.setSize(50, 150);
+        room.addComponent(table);
+        table = new Table("15", new Point(950, -290));
+        table.linkToNode(3842);
+        table.setSize(50, 150);
+        room.addComponent(table);
+        table = new Table("16", new Point(950, -135));
+        table.linkToNode(3842);
+        table.setSize(50, 150);
+        room.addComponent(table);
+
+        // Right side
+        table = new Table("17", new Point(830, 250));
+        table.linkToNode(3885);
+        table.setSize(150, 50);
+        room.addComponent(table);
+        table = new Table("Johannes Dahlström", new Point(985, 250));
+        table.linkToNode(3885);
+        table.setImageUrl("https://lh5.googleusercontent.com/-xYDLkQL1s34/AAAAAAAAAAI/AAAAAAAAAAA/bYJ7JhKlNwI/s24-c-k-no/photo.jpg");
+        table.setSize(150, 50);
+        room.addComponent(table);
+        table = new Table("18", new Point(830, 305));
+        table.linkToNode(4109);
+        table.setSize(150, 50);
+        room.addComponent(table);
+        table = new Table("Matti Tahvonen", new Point(985, 305));
+        table.linkToNode(4109);
+        table.setImageUrl("https://lh6.googleusercontent.com/-oFaq0p6rlv4/AAAAAAAAAAI/AAAAAAAAAGI/PKMXTinmcVA/s24-c-k-no/photo.jpg");
+        table.setSize(150, 50);
+        room.addComponent(table);
+
+        table = new Table("19", new Point(830, 555));
+        table.linkToNode(4109);
+        table.setSize(150, 50);
+        room.addComponent(table);
+        table = new Table("20", new Point(985, 555));
+        table.linkToNode(4109);
+        table.setSize(150, 50);
+        room.addComponent(table);
+        table = new Table("21", new Point(830, 610));
+        table.linkToNode(4368);
+        table.setSize(150, 50);
+        room.addComponent(table);
+        table = new Table("22", new Point(985, 610));
+        table.linkToNode(4368);
+        table.setSize(150, 50);
+        room.addComponent(table);
+
+        table = new Table("23", new Point(830, 845));
+        table.linkToNode(4368);
+        table.setSize(150, 50);
+        room.addComponent(table);
+        table = new Table("24", new Point(985, 845));
+        table.linkToNode(4368);
+        table.setSize(150, 50);
+        room.addComponent(table);
+
+        // Left-bottom
+        table = new Table("25", new Point(355, 500));
+        table.linkToNode(4109);
+        table.setSize(150, 50);
+        room.addComponent(table);
+        table = new Table("26", new Point(355, 555));
+        table.linkToNode(4368);
+        table.setSize(150, 50);
+        room.addComponent(table);
+        table = new Table("27", new Point(510, 500));
+        table.linkToNode(4109);
+        table.setSize(150, 50);
+        room.addComponent(table);
+        table = new Table("28", new Point(510, 555));
+        table.linkToNode(4368);
+        table.setSize(150, 50);
+        room.addComponent(table);
+
+        table = new Table("29", new Point(355, 845));
+        table.linkToNode(4368);
+        table.setSize(150, 50);
+        room.addComponent(table);
+        table = new Table("30", new Point(355, 900));
+        table.linkToNode(4739);
+        table.setSize(150, 50);
+        room.addComponent(table);
+        table = new Table("31", new Point(510, 845));
+        table.linkToNode(4368);
+        table.setSize(150, 50);
+        room.addComponent(table);
+        table = new Table("32", new Point(510, 900));
+        table.linkToNode(4739);
+        table.setSize(150, 50);
+        room.addComponent(table);
+
+        return room;
+    }
+
     private void addMainHallTables(final Room room) {
         // Right-top-cornet
-        Table table = new Table("", new Point(1475, 3));
+        Table table = new Table("33", new Point(1475, 3));
+        table.linkToNode(2400);
         table.setSize(200, 50);
         room.addComponent(table);
 
-        table = new Table("Tomi Virkki", new Point(1475, 295));
+        table = new Table("34", new Point(1475, 295));
+        table.linkToNode(2602);
         table.setSize(200, 50);
         room.addComponent(table);
 
-        table = new Table("", new Point(1475, 360));
+        table = new Table("35", new Point(1475, 360));
+        table.linkToNode(2773);
         table.setSize(200, 50);
         room.addComponent(table);
 
         // Center-aisle-left
-        table = new Table("Johan Ånäs", new Point(490, 200));
+        table = new Table("36", new Point(490, 200));
+        table.linkToNode(1799);
         table.setSize(50, 200);
         room.addComponent(table);
 
-        table = new Table("Johannes Tuikkala", new Point(490, 450));
+        table = new Table("37", new Point(490, 450));
+        table.linkToNode(2156);
         table.setSize(50, 200);
         room.addComponent(table);
 
-        table = new Table("", new Point(490, 665));
+        table = new Table("38", new Point(490, 665));
+        table.linkToNode(2514);
         table.setSize(50, 200);
         room.addComponent(table);
 
-        table = new Table("", new Point(490, 915));
+        table = new Table("39", new Point(490, 915));
+        table.linkToNode(2514);
         table.setSize(50, 200);
         room.addComponent(table);
 
-        table = new Table("Henrik Paul", new Point(490, 1130));
+        table = new Table("40", new Point(490, 1130));
+        table.linkToNode(2701);
         table.setSize(50, 200);
         room.addComponent(table);
 
         // Center-aisle-middle-left
-        table = new Table("", new Point(640, 200));
+        table = new Table("41", new Point(640, 200));
+        table.linkToNode(1799);
         table.setSize(200, 50);
         room.addComponent(table);
 
-        table = new Table("Jonas Granvik", new Point(640, 735));
+        table = new Table("42", new Point(640, 735));
+        table.linkToNode(2156);
         table.setSize(200, 50);
         room.addComponent(table);
 
-        table = new Table("Matti Vesa", new Point(640, 790));
+        table = new Table("43", new Point(640, 790));
+        table.linkToNode(2514);
         table.setSize(200, 50);
         room.addComponent(table);
 
-        table = new Table("Anna Koskinen", new Point(640, 1280));
+        table = new Table("Risto Yrjänä", new Point(640, 1280));
+        table.linkToNode(2701);
+        table.setImageUrl("https://lh5.googleusercontent.com/--Fanu7lbOq8/AAAAAAAAAAI/AAAAAAAABt8/_fWRmH0oGtQ/s24-c-k-no/photo.jpg");
         table.setSize(200, 50);
         room.addComponent(table);
 
         // Center-aisle-middle-right
-        table = new Table("", new Point(845, 200));
+        table = new Table("44", new Point(845, 200));
+        table.linkToNode(2301);
         table.setSize(200, 50);
         room.addComponent(table);
 
-        table = new Table("", new Point(845, 735));
+        table = new Table("45", new Point(845, 735));
+        table.linkToNode(2654);
         table.setSize(200, 50);
         room.addComponent(table);
 
-        table = new Table("", new Point(845, 790));
+        table = new Table("46", new Point(845, 790));
+        table.linkToNode(3001);
         table.setSize(200, 50);
         room.addComponent(table);
 
-        table = new Table("", new Point(845, 1280));
+        table = new Table("47", new Point(845, 1280));
+        table.linkToNode(3197);
         table.setSize(200, 50);
         room.addComponent(table);
 
         // Center-aisle-Right
-        table = new Table("Joonas Lehtinen", new Point(1140, 200));
+        table = new Table("48", new Point(1140, 200));
+        table.linkToNode(2301);
         table.setSize(50, 200);
-        table.linkToNode(2415);
         room.addComponent(table);
 
         table = new Table("Jurka Rahikkala", new Point(1140, 450));
-        table.setSize(50, 200);
-        table.linkToNode(2415);
-        room.addComponent(table);
-
-        table = new Table("", new Point(1140, 665));
-        table.setSize(50, 200);
-
-        room.addComponent(table);
-        table = new Table("Haijan Wang", new Point(1140, 915));
+        table.linkToNode(2654);
         table.setSize(50, 200);
         room.addComponent(table);
 
-        table = new Table("Risto Yrjänä", new Point(1140, 1130));
+        table = new Table("49", new Point(1140, 665));
+        table.linkToNode(3001);
+        table.setSize(50, 200);
+        room.addComponent(table);
+
+        table = new Table("50", new Point(1140, 915));
+        table.linkToNode(3001);
+        table.setSize(50, 200);
+        room.addComponent(table);
+
+        table = new Table("51", new Point(1140, 1130));
+        table.linkToNode(3197);
         table.setSize(50, 200);
         room.addComponent(table);
 
         // Left-top-corner
-        table = new Table("Kim Leppänen", new Point(125, 3));
-        table.setSize(50, 200);
-        table.linkToNode(1247);
-        table.setImageUrl("https://lh4.googleusercontent.com/-2R6G15_tu4Y/AAAAAAAAAAI/AAAAAAAAAAA/mIxIsE5vC5Y/s24-c-k-no/photo.jpg");
-        room.addComponent(table);
-
-        table = new Table("", new Point(125, 320));
+        table = new Table("52", new Point(125, 3));
+        table.linkToNode(1093);
         table.setSize(50, 200);
         room.addComponent(table);
 
-        table = new Table("", new Point(180, 3));
+        table = new Table("53", new Point(125, 205));
+        table.linkToNode(1428);
         table.setSize(50, 200);
         room.addComponent(table);
 
-        table = new Table("", new Point(180, 340));
-        table.setSize(200, 50);
+        // Bottom-Left-corner
+        table = new Table("54", new Point(200, 1125));
+        table.linkToNode(2188);
+        table.setSize(50, 150);
         room.addComponent(table);
+        table = new Table("55", new Point(200, 1280));
+        table.linkToNode(2679);
+        table.setSize(50, 150);
+        room.addComponent(table);
+
     }
 
     private PathWaypoints buildSecondFloorPoints() {
         final PathWaypoints waypoints = new PathWaypoints();
+        //
+        final Node node1834 = new Node(1834, new Point(-245, 2079));
+        final Node node1999 = new Node(1999, new Point(-250, 2249));
+        final Node node2286 = new Node(2286, new Point(43, 2243));
+        final Node node1896 = new Node(1896, new Point(-378, 2274));
+        final Node node906 = new Node(906, new Point(373, 533));
+        final Node node1067 = new Node(1067, new Point(368, 699));
+        final Node node1261 = new Node(1261, new Point(360, 901));
+        final Node node1368 = new Node(1368, new Point(268, 1100));
+        final Node node1182 = new Node(1182, new Point(656, 526));
+        final Node node4527 = new Node(4527, new Point(1575, 2952));
+        final Node node4608 = new Node(4608, new Point(1655, 2953));
+        final Node node4413 = new Node(4413, new Point(1662, 2751));
+        final Node node4594 = new Node(4594, new Point(1851, 2743));
+        final Node node2953 = new Node(2953, new Point(1860, 1093));
+        final Node node3206 = new Node(3206, new Point(2105, 1101));
+        final Node node3356 = new Node(3356, new Point(2378, 978));
+        final Node node3608 = new Node(3608, new Point(2633, 975));
+        final Node node2961 = new Node(2961, new Point(2623, 338));
+        final Node node2747 = new Node(2747, new Point(2627, 120));
+        final Node node2949 = new Node(2949, new Point(2833, 116));
+        final Node node3126 = new Node(3126, new Point(3019, 107));
+        final Node node3262 = new Node(3262, new Point(3160, 102));
+        final Node node3420 = new Node(3420, new Point(3026, 394));
 
-        final Node node1913 = new Node(1913, new Point(-244, 2155));
-        final Node node2006 = new Node(2006, new Point(-247, 2250));
-        final Node node2287 = new Node(2287, new Point(41, 2250));
-        final Node node1895 = new Node(1895, new Point(-359, 2250));
-        final Node node1448 = new Node(1448, new Point(350, 1099));
-        final Node node1150 = new Node(1150, new Point(350, 801));
-        final Node node1050 = new Node(1050, new Point(251, 799));
-        final Node node1043 = new Node(1043, new Point(350, 695));
-        final Node node957 = new Node(957, new Point(258, 699));
-        final Node node874 = new Node(874, new Point(350, 522));
-        final Node node971 = new Node(971, new Point(449, 522));
-        final Node node1276 = new Node(1276, new Point(750, 526));
-        final Node node1408 = new Node(1408, new Point(755, 653));
-        final Node node724 = new Node(724, new Point(357, 367));
-        final Node node813 = new Node(813, new Point(451, 362));
+        final Node node3857 = new Node(3857, new Point(2881, 976));
+        final Node node3599 = new Node(3599, new Point(2877, 722));
+        final Node node4101 = new Node(4101, new Point(3124, 977));
+        final Node node3842 = new Node(3842, new Point(3123, 719));
+        final Node node3885 = new Node(3885, new Point(2779, 1106));
+        final Node node4109 = new Node(4109, new Point(2786, 1323));
+        final Node node4368 = new Node(4368, new Point(2786, 1582));
+        final Node node4739 = new Node(4739, new Point(2792, 1947));
+        final Node node2774 = new Node(2774, new Point(2433, 341));
+        final Node node2636 = new Node(2636, new Point(2304, 332));
+        final Node node2443 = new Node(2443, new Point(2297, 146));
+        final Node node2312 = new Node(2312, new Point(2154, 158));
+        final Node node2154 = new Node(2154, new Point(1998, 156));
+        final Node node1922 = new Node(1922, new Point(2002, -80));
 
-        node2287.addConnectedNode(node2006, 1);
-        node2006.addConnectedNode(node1913, 1);
-        node1895.addConnectedNode(node2006, 1);
-        node1408.addConnectedNode(node1276, 1);
-        node1276.addConnectedNode(node971, 1);
-        node971.addConnectedNode(node874, 1);
-        node874.addConnectedNode(node1043, 1);
-        node1043.addConnectedNode(node957, 1);
-        node1050.addConnectedNode(node1150, 1);
-        node1043.addConnectedNode(node1150, 1);
-        node1150.addConnectedNode(node1448, 1);
-        node874.addConnectedNode(node724, 1);
-        node971.addConnectedNode(node813, 1);
+        node1834.addConnectedNode(node1999, 1);
+        node1999.addConnectedNode(node2286, 1);
+        node1999.addConnectedNode(node1896, 1);
 
-        waypoints.add(node1913);
-        waypoints.add(node2006);
-        waypoints.add(node2287);
-        waypoints.add(node1895);
-        waypoints.add(node1448);
-        waypoints.add(node1150);
-        waypoints.add(node1050);
-        waypoints.add(node1043);
-        waypoints.add(node957);
-        waypoints.add(node874);
-        waypoints.add(node971);
-        waypoints.add(node1276);
-        waypoints.add(node1408);
-        waypoints.add(node724);
-        waypoints.add(node813);
+        node1368.addConnectedNode(node1261, 1);
+        node1261.addConnectedNode(node1067, 1);
+        node1067.addConnectedNode(node906, 1);
+        node906.addConnectedNode(node1182, 1);
+
+        node4527.addConnectedNode(node4608, 1);
+        node4608.addConnectedNode(node4413, 1);
+        node4413.addConnectedNode(node4594, 1);
+        node4594.addConnectedNode(node2953, 1);
+        node2953.addConnectedNode(node3206, 1);
+        node3206.addConnectedNode(node3356, 1);
+        node3356.addConnectedNode(node3608, 1);
+        node3608.addConnectedNode(node2961, 1);
+        node2961.addConnectedNode(node2747, 1);
+        node2747.addConnectedNode(node2949, 1);
+        node2949.addConnectedNode(node3126, 1);
+        node3126.addConnectedNode(node3262, 1);
+        node3126.addConnectedNode(node3420, 1);
+
+        node3608.addConnectedNode(node3857, 1);
+        node3857.addConnectedNode(node3599, 1);
+        node3857.addConnectedNode(node4101, 1);
+        node4101.addConnectedNode(node3842, 1);
+        node3608.addConnectedNode(node3885, 1);
+        node3857.addConnectedNode(node3885, 1);
+        node3885.addConnectedNode(node4109, 1);
+        node4109.addConnectedNode(node4368, 1);
+        node4368.addConnectedNode(node4739, 1);
+        node2961.addConnectedNode(node2774, 1);
+        node2774.addConnectedNode(node2636, 1);
+        node2636.addConnectedNode(node2443, 1);
+        node2443.addConnectedNode(node2312, 1);
+        node2312.addConnectedNode(node2154, 1);
+        node2154.addConnectedNode(node1922, 1);
+
+        // 1896 is stairs connection for main hall.
+        node1896.addConnectedNode(mainhallNode, 1);
+        // 1182 is stairs connection for lounge
+        node1182.addConnectedNode(loungeStairNode, 1);
+        // 4527 is connection node for outside
+        node4527.addConnectedNode(outsideNode, 1);
+
+        // final Node node1913 = new Node(1913, new Point(-244, 2155));
+        // final Node node2006 = new Node(2006, new Point(-247, 2250));
+        // final Node node2287 = new Node(2287, new Point(41, 2250));
+        // final Node node1895 = new Node(1895, new Point(-359, 2250));
+        // final Node node1448 = new Node(1448, new Point(350, 1099));
+        // final Node node1150 = new Node(1150, new Point(350, 801));
+        // final Node node1050 = new Node(1050, new Point(251, 799));
+        // final Node node1043 = new Node(1043, new Point(350, 695));
+        // final Node node957 = new Node(957, new Point(258, 699));
+        // final Node node874 = new Node(874, new Point(350, 522));
+        // final Node node971 = new Node(971, new Point(449, 522));
+        // final Node node1276 = new Node(1276, new Point(750, 526));
+        // final Node node1408 = new Node(1408, new Point(755, 653));
+        // final Node node724 = new Node(724, new Point(357, 367));
+        // final Node node813 = new Node(813, new Point(451, 362));
+        //
+        // node2287.addConnectedNode(node2006, 1);
+        // node2006.addConnectedNode(node1913, 1);
+        // node1895.addConnectedNode(node2006, 1);
+        // node1408.addConnectedNode(node1276, 1);
+        // node1276.addConnectedNode(node971, 1);
+        // node971.addConnectedNode(node874, 1);
+        // node874.addConnectedNode(node1043, 1);
+        // node1043.addConnectedNode(node957, 1);
+        // node1050.addConnectedNode(node1150, 1);
+        // node1043.addConnectedNode(node1150, 1);
+        // node1150.addConnectedNode(node1448, 1);
+        // node874.addConnectedNode(node724, 1);
+        // node971.addConnectedNode(node813, 1);
+        //
+        // waypoints.add(node1913);
+        // waypoints.add(node2006);
+        // waypoints.add(node2287);
+        // waypoints.add(node1895);
+        // waypoints.add(node1448);
+        // waypoints.add(node1150);
+        // waypoints.add(node1050);
+        // waypoints.add(node1043);
+        // waypoints.add(node957);
+        // waypoints.add(node874);
+        // waypoints.add(node971);
+        // waypoints.add(node1276);
+        // waypoints.add(node1408);
+        // waypoints.add(node724);
+        // waypoints.add(node813);
+        //
+        waypoints.add(node1834);
+        waypoints.add(node1999);
+        waypoints.add(node2286);
+        waypoints.add(node1896);
+        waypoints.add(node906);
+        waypoints.add(node1067);
+        waypoints.add(node1261);
+        waypoints.add(node1368);
+        waypoints.add(node1182);
+        waypoints.add(node4527);
+        waypoints.add(node4608);
+        waypoints.add(node4413);
+        waypoints.add(node4594);
+        waypoints.add(node2953);
+        waypoints.add(node3206);
+        waypoints.add(node3356);
+        waypoints.add(node3608);
+        waypoints.add(node2961);
+        waypoints.add(node2747);
+        waypoints.add(node2949);
+        waypoints.add(node3126);
+        waypoints.add(node3262);
+        waypoints.add(node3420);
+        waypoints.add(node3857);
+        waypoints.add(node3599);
+        waypoints.add(node4101);
+        waypoints.add(node3842);
+        waypoints.add(node3885);
+        waypoints.add(node4109);
+        waypoints.add(node4368);
+        waypoints.add(node4739);
+        waypoints.add(node2774);
+        waypoints.add(node2636);
+        waypoints.add(node2443);
+        waypoints.add(node2312);
+        waypoints.add(node2154);
+        waypoints.add(node1922);
 
         return waypoints;
     }
