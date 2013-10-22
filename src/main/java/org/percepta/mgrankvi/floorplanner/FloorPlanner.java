@@ -245,6 +245,18 @@ public class FloorPlanner extends UI {
         // 140, 130
         room = RoomCreator.customRoom(new Point(-420, 2910), new Point(0, 0), new Point(420, 0), new Point(420, 390), new Point(0, 390));
         room.addComponent(new Door(Direction.DOWN_LEFT, new Point(330, 0), 80));
+        // TODO: ADD 3 tables.
+
+        table = new Table("89", new Point(5, 140));
+        table.setSize(150, 50);
+        room.addComponent(table);
+        table = new Table("Johannes Häyry", new Point(5, 215));
+        table.setImageUrl("https://lh5.googleusercontent.com/-ukjWUw7gwEw/AAAAAAAAAAI/AAAAAAAAAAA/7799InohCRw/s24-c-k-no/photo.jpg");
+        table.setSize(150, 50);
+        room.addComponent(table);
+        table = new Table("86", new Point(275, 235));
+        table.setSize(50, 150);
+        room.addComponent(table);
         groundFloor.addRoom(room);
 
         // MetsäNeukkari
@@ -315,7 +327,8 @@ public class FloorPlanner extends UI {
         table.linkToNode(1067);
         table.setSize(150, 50);
         room.addComponent(table);
-        table = new Table("-6", new Point(105, 460));
+        table = new Table("Jouni Koivuviita", new Point(105, 460));
+        table.setImageUrl("https://lh3.googleusercontent.com/-55qm1sK3Wy4/AAAAAAAAAAI/AAAAAAAAAAA/LcPgHVOa9u0/s24-c-k-no/photo.jpg");
         table.linkToNode(1261);
         table.setSize(50, 150);
         room.addComponent(table);
@@ -336,7 +349,7 @@ public class FloorPlanner extends UI {
         room.addComponent(new Door(Direction.UP_LEFT, new Point(245, 300), 80));
         secondFloor.addRoom(room);
 
-        table = new Table("-2", new Point(185, 5));
+        table = new Table("Petri Heinonen", new Point(185, 5));
         table.linkToNode(1834);
         table.setSize(50, 150);
         room.addComponent(table);
@@ -357,7 +370,8 @@ public class FloorPlanner extends UI {
         table.linkToNode(2286);
         table.setSize(50, 150);
         room.addComponent(table);
-        table = new Table("3", new Point(150, 405));
+        table = new Table("Pekka Perälä", new Point(150, 405));
+        table.setImageUrl("https://lh5.googleusercontent.com/-oMAFnbvY8EY/AAAAAAAAAAI/AAAAAAAAAAA/YLxukbFcOVg/s24-c-k-no/photo.jpg");
         table.linkToNode(2286);
         table.setSize(50, 150);
         room.addComponent(table);
@@ -515,11 +529,13 @@ public class FloorPlanner extends UI {
         table.linkToNode(1922);
         table.setSize(150, 50);
         room.addComponent(table);
-        table = new Table("9", new Point(300, 135));
+        table = new Table("Jonas Granvik", new Point(300, 135));
+        table.setImageUrl("https://lh4.googleusercontent.com/-ZLQngo506OI/AAAAAAAAAAI/AAAAAAAABcA/f1KCnDZvK_M/s24-c-k-no/photo.jpg");
         table.linkToNode(2312);
         table.setSize(150, 50);
         room.addComponent(table);
-        table = new Table("10", new Point(455, 75));
+        table = new Table("Tapio Aali", new Point(455, 75));
+        table.setImageUrl("https://lh6.googleusercontent.com/-L8k_Fqrmob8/AAAAAAAAAAI/AAAAAAAAAAA/ZneK_N2QjlE/s24-c-k-no/photo.jpg");
         table.linkToNode(2443);
         table.setSize(150, 50);
         room.addComponent(table);
@@ -545,7 +561,8 @@ public class FloorPlanner extends UI {
         // 50));
 
         // top right
-        Table table = new Table("13", new Point(895, -290));
+        Table table = new Table("Rolf Smeds", new Point(895, -290));
+        table.setImageUrl("https://lh6.googleusercontent.com/-KH2gjgc7QXM/AAAAAAAAAAI/AAAAAAAAACM/E36FVK5kk7Y/s24-c-k-no/photo.jpg");
         table.linkToNode(3599);
         table.setSize(50, 150);
         room.addComponent(table);
@@ -572,7 +589,8 @@ public class FloorPlanner extends UI {
         table.setImageUrl("https://lh5.googleusercontent.com/-xYDLkQL1s34/AAAAAAAAAAI/AAAAAAAAAAA/bYJ7JhKlNwI/s24-c-k-no/photo.jpg");
         table.setSize(150, 50);
         room.addComponent(table);
-        table = new Table("18", new Point(830, 305));
+        table = new Table("Juho Nurminen", new Point(830, 305));
+        table.setImageUrl("https://lh4.googleusercontent.com/-_TGVegElB2M/AAAAAAAAAAI/AAAAAAAAAAA/OP6fEwGdBng/s24-c-k-no/photo.jpg");
         table.linkToNode(4109);
         table.setSize(150, 50);
         room.addComponent(table);
@@ -594,7 +612,8 @@ public class FloorPlanner extends UI {
         table.linkToNode(4368);
         table.setSize(150, 50);
         room.addComponent(table);
-        table = new Table("22", new Point(985, 610));
+        table = new Table("Henri Sara", new Point(985, 610));
+        table.setImageUrl("https://lh5.googleusercontent.com/-_Ekbh7-R3KI/AAAAAAAAAAI/AAAAAAAAAAA/HzgFL2Yz7Pc/s24-c-k-no/photo.jpg");
         table.linkToNode(4368);
         table.setSize(150, 50);
         room.addComponent(table);
@@ -603,7 +622,8 @@ public class FloorPlanner extends UI {
         table.linkToNode(4368);
         table.setSize(150, 50);
         room.addComponent(table);
-        table = new Table("24", new Point(985, 845));
+        table = new Table("Artur Signell", new Point(985, 845));
+        table.setImageUrl("https://lh5.googleusercontent.com/-pz8oj0nWKyo/AAAAAAAAAAI/AAAAAAAAADI/XJaHbQYLMjc/s24-c-k-no/photo.jpg");
         table.linkToNode(4368);
         table.setSize(150, 50);
         room.addComponent(table);
@@ -613,7 +633,8 @@ public class FloorPlanner extends UI {
         table.linkToNode(4109);
         table.setSize(150, 50);
         room.addComponent(table);
-        table = new Table("26", new Point(355, 555));
+        table = new Table("Joonas Lehtinen", new Point(355, 555));
+        table.setImageUrl("https://lh3.googleusercontent.com/-n0K5zTgKf0M/AAAAAAAAAAI/AAAAAAAAAAA/JDemsVdbQnQ/s24-c-k-no/photo.jpg");
         table.linkToNode(4368);
         table.setSize(150, 50);
         room.addComponent(table);
@@ -626,7 +647,8 @@ public class FloorPlanner extends UI {
         table.setSize(150, 50);
         room.addComponent(table);
 
-        table = new Table("29", new Point(355, 845));
+        table = new Table("Henrik Paul", new Point(355, 845));
+        table.setImageUrl("https://lh5.googleusercontent.com/-oclvAMrHF5E/AAAAAAAAAAI/AAAAAAAAAPE/B0f94LomOoE/s24-c-k-no/photo.jpg");
         table.linkToNode(4368);
         table.setSize(150, 50);
         room.addComponent(table);
@@ -634,11 +656,12 @@ public class FloorPlanner extends UI {
         table.linkToNode(4739);
         table.setSize(150, 50);
         room.addComponent(table);
-        table = new Table("31", new Point(510, 845));
+        table = new Table("Leif Åstrand", new Point(510, 845));
+        table.setImageUrl("https://lh4.googleusercontent.com/-FU-9qRxrbcQ/AAAAAAAAAAI/AAAAAAAAAAA/GQCNNwcq0cI/s24-c-k-no/photo.jpg");
         table.linkToNode(4368);
         table.setSize(150, 50);
         room.addComponent(table);
-        table = new Table("32", new Point(510, 900));
+        table = new Table("Mika Murtojärvi", new Point(510, 900));
         table.linkToNode(4739);
         table.setSize(150, 50);
         room.addComponent(table);
@@ -658,18 +681,21 @@ public class FloorPlanner extends UI {
         table.setSize(200, 50);
         room.addComponent(table);
 
-        table = new Table("35", new Point(1475, 360));
+        table = new Table("Tomi Virtanen", new Point(1475, 360));
+        table.setImageUrl("https://lh5.googleusercontent.com/-0Iw96KXaE2A/AAAAAAAAAAI/AAAAAAAAAAA/2zswC_t4DYg/s24-c-k-no/photo.jpg");
         table.linkToNode(2773);
         table.setSize(200, 50);
         room.addComponent(table);
 
         // Center-aisle-left
-        table = new Table("36", new Point(490, 200));
+        table = new Table("Sebastian Nyholm", new Point(490, 200));
+        table.setImageUrl("https://lh3.googleusercontent.com/-eCTMndw5CDY/AAAAAAAAAAI/AAAAAAAAAAA/KsfT0boFV84/s24-c-k-no/photo.jpg");
         table.linkToNode(1799);
         table.setSize(50, 200);
         room.addComponent(table);
 
-        table = new Table("37", new Point(490, 450));
+        table = new Table("Petter Holmström", new Point(490, 450));
+        table.setImageUrl("https://lh6.googleusercontent.com/-4uF8sUtybY8/AAAAAAAAAAI/AAAAAAAAAAA/KiPgh8PuYUE/s24-c-k-no/photo.jpg");
         table.linkToNode(2156);
         table.setSize(50, 200);
         room.addComponent(table);
@@ -690,7 +716,8 @@ public class FloorPlanner extends UI {
         room.addComponent(table);
 
         // Center-aisle-middle-left
-        table = new Table("41", new Point(640, 200));
+        table = new Table("Maciej Przepióra", new Point(640, 200));
+        table.setImageUrl("https://lh5.googleusercontent.com/-8obi0i3Ue6s/AAAAAAAAAAI/AAAAAAAAAAA/d4slT0cNH8I/s24-c-k-no/photo.jpg");
         table.linkToNode(1799);
         table.setSize(200, 50);
         room.addComponent(table);
@@ -700,7 +727,8 @@ public class FloorPlanner extends UI {
         table.setSize(200, 50);
         room.addComponent(table);
 
-        table = new Table("43", new Point(640, 790));
+        table = new Table("Antti Tanhuanpää", new Point(640, 790));
+        table.setImageUrl("https://lh5.googleusercontent.com/-op2dCy0gRGs/AAAAAAAAAAI/AAAAAAAAAAA/vexFYBRo2O8/s24-c-k-no/photo.jpg");
         table.linkToNode(2514);
         table.setSize(200, 50);
         room.addComponent(table);
@@ -743,7 +771,7 @@ public class FloorPlanner extends UI {
         table.setSize(50, 200);
         room.addComponent(table);
 
-        table = new Table("49", new Point(1140, 665));
+        table = new Table("Teppo Kurki", new Point(1140, 665));
         table.linkToNode(3001);
         table.setSize(50, 200);
         room.addComponent(table);
@@ -753,7 +781,8 @@ public class FloorPlanner extends UI {
         table.setSize(50, 200);
         room.addComponent(table);
 
-        table = new Table("51", new Point(1140, 1130));
+        table = new Table("Jens Jansson", new Point(1140, 1130));
+        table.setImageUrl("https://lh6.googleusercontent.com/-JVtQYjbiMEk/AAAAAAAAAAI/AAAAAAAAAAA/azRDQ2L5PSQ/s24-c-k-no/photo.jpg");
         table.linkToNode(3197);
         table.setSize(50, 200);
         room.addComponent(table);
@@ -770,11 +799,13 @@ public class FloorPlanner extends UI {
         room.addComponent(table);
 
         // Bottom-Left-corner
-        table = new Table("54", new Point(200, 1125));
+        table = new Table("Samuli Penttilä", new Point(200, 1125));
+        table.setImageUrl("https://lh6.googleusercontent.com/-x6yRxm9KVQE/AAAAAAAAAAI/AAAAAAAAAAA/krEINGDOb04/s24-c-k-no/photo.jpg");
         table.linkToNode(2188);
         table.setSize(50, 150);
         room.addComponent(table);
-        table = new Table("55", new Point(200, 1280));
+        table = new Table("Jonni Nakari", new Point(200, 1280));
+        table.setImageUrl("https://lh5.googleusercontent.com/-ZywnCECrsNU/AAAAAAAAAAI/AAAAAAAAAAA/qJx4TlklP-A/s24-c-k-no/photo.jpg");
         table.linkToNode(2679);
         table.setSize(50, 150);
         room.addComponent(table);
